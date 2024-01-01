@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Settings;
 using TMPro;
-using UI.Buttons;
-using UI.Popups;
+using UI.Screens;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Screens
+namespace UI.Screen
 {
-    public class MainScreen : DefaultScreen
+    public class CityScreen : DefaultScreen
     {
         private TabType _currentTab;
         [SerializeField] private TMP_Text _titleText;
@@ -24,14 +23,14 @@ namespace UI.Screens
 
         private void Awake()
         {
-            _startButton.onClick.AddListener(() => { SelectTab(TabType.Start); });
-            _settingsButton.onClick.AddListener(() => { SelectTab(TabType.Settings); });
-            _exitButton.onClick.AddListener(() => { SelectTab(TabType.Exit); });
+            _startButton.onClick.AddListener(() => { SelectTab(TabType.Guild); });
+            _settingsButton.onClick.AddListener(() => { SelectTab(TabType.Forge); });
+            _exitButton.onClick.AddListener(() => { SelectTab(TabType.Back); });
         }
 
         public override void Setup(ScreenSettings settings)
         {
-            if (settings is not MainScreenSettings mainScreenSettings)
+            if (settings is not CityScreenSettings mainScreenSettings)
                 return;
 
             SelectTab(mainScreenSettings.TabType);
@@ -78,7 +77,7 @@ namespace UI.Screens
             }
 
             _titleText.text = tabType.ToString();
-            var elements = SettingsProvider.Get<MainScreenTabsSettings>().TabSettings.First(x => x.TabType == tabType)
+            var elements = SettingsProvider.Get<CityScreenSettings>().TabType.First(x => x.TabType == tabType)
                 .Elements;
 
             foreach (var elementType in elements)
@@ -99,32 +98,38 @@ namespace UI.Screens
                 }
             }
         }
-
+        public void Home()
+        {
+            NavigationController.Instance.ScreenTransition<MainScreen>(new MainScreenSettings()
+            {
+                TabType = MainScreen.MainTabType.Start
+            });
+        }
         /*public void ShowBuyHeartsPopup()
         {
             PopupSystem.ShowPopup<HeartPurchasePopup>();
         }*/
 
-        public enum TabType
+        public enum CityTabType
         {
             None = 0,
-            Start = 1,
-            Settings = 2,
-            Exit = 3,
+            Guild = 1,
+            Forge = 2,
+            Back = 3,
         }
 
         [Serializable]
         public class ScreenBottomIcons
         {
-            public TabType TabType;
+            public CityTabType TabType;
             public Image Icon;
             public Sprite Unselected;
             public Sprite Selected;
         }
     }
 
-    public class MainScreenSettings : ScreenSettings
+    public class CityScreenSettings : ScreenSettings
     {
-        public MainScreen.TabType TabType;
+        public CityScreen.CityTabType TabType;
     }
 }

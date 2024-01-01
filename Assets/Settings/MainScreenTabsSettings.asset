@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7466a5ead1dfae41983fcbe17d92d0a, type: 3}
   m_Name: MainScreenTabsSettings
   m_EditorClassIdentifier: 
-  <TabSettings>k__BackingField: []
+  <TabSettings>k__BackingField:
+  - TabType: 0
+    Elements: 02000000

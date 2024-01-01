@@ -14,7 +14,7 @@ namespace Settings
     [Serializable]
     public struct TabSetting
     {
-        public MainScreen.TabType TabType;
+        public MainScreen.MainTabType TabType;
         public List<ElementType> Elements;
 
         public enum ElementType

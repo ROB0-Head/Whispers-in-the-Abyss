@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Settings;
 using UI.Screens;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using Sequence = DG.Tweening.Sequence;
 using SettingsProvider = Settings.SettingsProvider;
@@ -31,7 +26,7 @@ public class NavigationController : MonoBehaviour
     {
         ScreenTransition<MainScreen>(new MainScreenSettings()
         {
-            TabType = MainScreen.TabType.Chats
+            TabType = MainScreen.MainTabType.Start
         });
     }
 
