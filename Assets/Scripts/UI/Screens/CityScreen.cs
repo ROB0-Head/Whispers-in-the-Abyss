@@ -1,31 +1,31 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Settings;
+using Navigation;
 using TMPro;
-using UI.Screens;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Screen
+namespace UI.Screens
 {
     public class CityScreen : DefaultScreen
     {
-        private TabType _currentTab;
+        private CityTabType _currentTab;
         [SerializeField] private TMP_Text _titleText;
+        /*
         [SerializeField] private GameObject _contentParent;
+        */
 
-        [SerializeField] private Button _startButton;
-        [SerializeField] private Button _settingsButton;
-        [SerializeField] private Button _exitButton;
+        [SerializeField] private Button _guildButton;
+        [SerializeField] private Button _forgeButton;
+        [SerializeField] private Button _backButton;
 
+        /*
         [SerializeField] private List<ScreenBottomIcons> _screenBottomIcons;
+        */
 
         private void Awake()
         {
-            _startButton.onClick.AddListener(() => { SelectTab(TabType.Guild); });
-            _settingsButton.onClick.AddListener(() => { SelectTab(TabType.Forge); });
-            _exitButton.onClick.AddListener(() => { SelectTab(TabType.Back); });
+            _guildButton.onClick.AddListener(() => { SelectTab(CityTabType.Guild); });
+            _forgeButton.onClick.AddListener(() => { SelectTab(CityTabType.Forge); });
+            _backButton.onClick.AddListener(() => { SelectTab(CityTabType.Exit); });
         }
 
         public override void Setup(ScreenSettings settings)
@@ -45,10 +45,10 @@ namespace UI.Screen
         {
         }
 
-        public void SelectTab(TabType tabType)
+        public void SelectTab(CityTabType tabType)
         {
             _currentTab = tabType;
-            foreach (var screenBottomIcon in _screenBottomIcons)
+            /*foreach (var screenBottomIcon in _screenBottomIcons)
             {
                 if (screenBottomIcon.TabType == tabType)
                 {
@@ -74,35 +74,33 @@ namespace UI.Screen
             foreach (var child in allChildren)
             {
                 Destroy(child);
-            }
+            }*/
 
             _titleText.text = tabType.ToString();
-            var elements = SettingsProvider.Get<CityScreenSettings>().TabType.First(x => x.TabType == tabType)
-                .Elements;
-
-            foreach (var elementType in elements)
-            {
-                switch (elementType)
+            switch (tabType)
                 {
-                    case TabSetting.ElementType.Start:
+                    case CityTabType.Guild:
 
                         break;
-                    case TabSetting.ElementType.Settings:
+                    case CityTabType.Forge:
 
                         break;
-                    case TabSetting.ElementType.Exit:
+                    case CityTabType.Backpack:
                         
                         break;
+                    case CityTabType.Exit:
+                        Home();
+                        break;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        break;
                 }
-            }
+            
         }
         public void Home()
         {
             NavigationController.Instance.ScreenTransition<MainScreen>(new MainScreenSettings()
             {
-                TabType = MainScreen.MainTabType.Start
+                TabType = MainScreen.MainTabType.Main
             });
         }
         /*public void ShowBuyHeartsPopup()
@@ -112,20 +110,21 @@ namespace UI.Screen
 
         public enum CityTabType
         {
-            None = 0,
+            City = 0,
             Guild = 1,
             Forge = 2,
-            Back = 3,
+            Backpack = 3,
+            Exit = 4
         }
 
-        [Serializable]
+        /*[Serializable]
         public class ScreenBottomIcons
         {
             public CityTabType TabType;
             public Image Icon;
             public Sprite Unselected;
             public Sprite Selected;
-        }
+        }*/
     }
 
     public class CityScreenSettings : ScreenSettings

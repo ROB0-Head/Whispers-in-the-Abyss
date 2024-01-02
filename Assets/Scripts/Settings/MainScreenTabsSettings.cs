@@ -19,10 +19,10 @@ namespace Settings
 
         public enum ElementType
         {
-            Start = 0,
-            Settings = 1,
-            Back = 2,
-            Exit = 3,
+            None = 0,
+            Start = 1,
+            Settings = 2,
+            Exit = 4,
         }
     }
 }

@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
+using Navigation;
 using Settings;
 using TMPro;
-using UI.Buttons;
-using UI.Panels;
-using UI.Popups;
-using UI.Screens;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,13 +12,9 @@ namespace UI.Screens
     {
         private MainTabType _currentTab;
         [SerializeField] private TMP_Text _titleText;
-        [SerializeField] private GameObject _contentParent;
-
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _exitButton;
-
-        [SerializeField] private List<ScreenBottomIcons> _screenBottomIcons;
 
         private void Awake()
         {
@@ -48,33 +39,6 @@ namespace UI.Screens
         public void SelectTab(MainTabType tabType)
         {
             _currentTab = tabType;
-            foreach (var screenBottomIcon in _screenBottomIcons)
-            {
-                if (screenBottomIcon.TabType == tabType)
-                {
-                    screenBottomIcon.Icon.sprite = screenBottomIcon.Selected;
-                    screenBottomIcon.Icon.color = new Color(screenBottomIcon.Icon.color.r,
-                        screenBottomIcon.Icon.color.g, screenBottomIcon.Icon.color.b, 1);
-                }
-                else
-                {
-                    screenBottomIcon.Icon.sprite = screenBottomIcon.Unselected;
-                    screenBottomIcon.Icon.color = new Color(screenBottomIcon.Icon.color.r,
-                        screenBottomIcon.Icon.color.g, screenBottomIcon.Icon.color.b, 0.5f);
-                }
-            }
-
-            var allChildren = new List<GameObject>();
-
-            foreach (Transform child in _contentParent.transform)
-            {
-                allChildren.Add(child.gameObject);
-            }
-
-            foreach (var child in allChildren)
-            {
-                Destroy(child);
-            }
 
             _titleText.text = tabType.ToString();
 
@@ -85,13 +49,14 @@ namespace UI.Screens
             {
                 switch (elementType)
                 {
+                    case TabSetting.ElementType.None:
+                        break;
                     case TabSetting.ElementType.Start:
-                        
                         NavigationController.Instance.ScreenTransition<CityScreen>(new CityScreenSettings()
                         {
-                            TabType = MainScreen.MainTabType.Start
+                            TabType = CityScreen.CityTabType.City
                         });
-                        
+
                         break;
                     case TabSetting.ElementType.Settings:
 
@@ -110,26 +75,12 @@ namespace UI.Screens
             Debug.Log("Exit button clicked");
         }
 
-        /*public void ShowBuyHeartsPopup()
-        {
-            PopupSystem.ShowPopup<HeartPurchasePopup>();
-        }*/
-
         public enum MainTabType
         {
-            None = 0,
+            Main = 0,
             Start = 1,
             Settings = 2,
             Exit = 3
-        }
-
-        [Serializable]
-        public class ScreenBottomIcons
-        {
-            public MainTabType TabType;
-            public Image Icon;
-            public Sprite Unselected;
-            public Sprite Selected;
         }
     }
 

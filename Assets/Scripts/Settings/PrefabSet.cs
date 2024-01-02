@@ -15,7 +15,6 @@ namespace Settings
         [field: SerializeField] public List<DefaultScreen> Screens { private set; get; }
         [field: SerializeField] public List<BasePopup> Popups { private set; get; }
         [field: SerializeField] public List<BaseButton> Buttons { private set; get; }
-        [field: SerializeField] public GameObject Separator { private set; get; }
         [field: SerializeField] public RewardContainer RewardContainer { private set; get; }
 
         public T GetPanel<T>() where T : BasePanel

@@ -9,15 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7466a5ead1dfae41983fcbe17d92d0a, type: 3}
-  m_Name: MainScreenTabsSettings
+  m_Script: {fileID: 11500000, guid: aa1de62a83c44035ac30548049d84809, type: 3}
+  m_Name: CityScreenTabsSettings
   m_EditorClassIdentifier: 
   <TabSettings>k__BackingField:
-  - TabType: 0
-    Elements: 00000000
   - TabType: 1
-    Elements: 01000000
-  - TabType: 2
-    Elements: 02000000
-  - TabType: 3
-    Elements: 04000000
+    Elements: 
