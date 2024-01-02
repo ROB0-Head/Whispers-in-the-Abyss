@@ -1,4 +1,6 @@
+using Map;
 using Navigation;
+using Settings;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -80,7 +82,7 @@ namespace UI.Screens
             switch (tabType)
                 {
                     case CityTabType.Guild:
-
+                       Instantiate(SettingsProvider.Get<PrefabSet>().MapView);
                         break;
                     case CityTabType.Forge:
 
