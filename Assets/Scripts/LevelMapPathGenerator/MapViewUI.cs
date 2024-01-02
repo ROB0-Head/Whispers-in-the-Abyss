@@ -107,7 +107,7 @@ namespace Map
             tr.anchoredPosition = Vector2.zero;
         }
 
-        protected override MapNode CreateMapNode(Node node)
+        protected override MapNode CreateMapNode(Node node, Transform nodeParent)
         {
             var mapNodeObject = Instantiate(nodePrefab, mapParent.transform);
             var mapNode = mapNodeObject.GetComponent<MapNode>();
@@ -164,7 +164,7 @@ namespace Map
             image.pixelsPerUnitMultiplier = backgroundPPUMultiplier;
         }
 
-        protected override void AddLineConnection(MapNode from, MapNode to)
+        protected override void AddLineConnection(MapNode from, MapNode to, Transform linesParent)
         {
             if (uiLinePrefab == null) return;
             

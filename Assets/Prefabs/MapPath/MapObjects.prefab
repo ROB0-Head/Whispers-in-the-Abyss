@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5337413450055484460}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 38306197627197040}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5337413450055484461
 MonoBehaviour:
@@ -71,12 +72,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5337413451174954174}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 38306197627197040}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5337413451174954175
 MonoBehaviour:
@@ -116,12 +118,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5337413451386887166}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 38306197627197040}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5337413451386887161
 MonoBehaviour:
@@ -139,17 +142,15 @@ MonoBehaviour:
   orientation: 3
   allMapConfigs:
   - {fileID: 11400000, guid: 19bf411c79e522b4b8e54f82b0140314, type: 2}
-  nodePrefab: {fileID: 6746199761131337685, guid: 621ccae6afb8e8949ba963674577578a,
-    type: 3}
+  nodePrefab: {fileID: 6746199761131337685, guid: 621ccae6afb8e8949ba963674577578a, type: 3}
   orientationOffset: -4
-  background: {fileID: 21300000, guid: 154be9da94274494592f60439cfd560e, type: 3}
+  background: {fileID: 21300000, guid: b9c03072529c0e947943da0afb64ffd3, type: 3}
   backgroundColor:
     serializedVersion: 2
     rgba: 4294967295
   xSize: 11.5
   yOffset: 2
-  linePrefab: {fileID: 5857439060437771865, guid: 71ba31cc6fc8c2748afbb475b9f1307a,
-    type: 3}
+  linePrefab: {fileID: 5857439060437771865, guid: 71ba31cc6fc8c2748afbb475b9f1307a, type: 3}
   linePointsCount: 10
   offsetFromNodes: 0.5
   visitedColor:
@@ -187,13 +188,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6173653652465991376}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5337413451386887160}
   - {fileID: 5337413451174954168}
   - {fileID: 5337413450055484462}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

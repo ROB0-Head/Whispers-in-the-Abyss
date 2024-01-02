@@ -22,36 +22,42 @@ namespace Map
             "List of all the MapConfig scriptable objects from the Assets folder that might be used to construct maps. " +
             "Similar to Acts in Slay The Spire (define general layout, types of bosses.)")]
         public List<MapConfig> allMapConfigs;
+
         public GameObject nodePrefab;
+
         [Tooltip("Offset of the start/end nodes of the map from the edges of the screen")]
         public float orientationOffset;
-        [Header("Background Settings")]
-        [Tooltip("If the background sprite is null, background will not be shown")]
+
+        [Header("Background Settings")] [Tooltip("If the background sprite is null, background will not be shown")]
         public Sprite background;
+
         public Color32 backgroundColor = Color.white;
         public float xSize;
         public float yOffset;
-        [Header("Line Settings")]
-        public GameObject linePrefab;
-        [Tooltip("Line point count should be > 2 to get smooth color gradients")]
-        [Range(3, 10)]
+        [Header("Line Settings")] public GameObject linePrefab;
+
+        [Tooltip("Line point count should be > 2 to get smooth color gradients")] [Range(3, 10)]
         public int linePointsCount = 10;
+
         [Tooltip("Distance from the node till the line starting point")]
         public float offsetFromNodes = 0.5f;
-        [Header("Colors")]
-        [Tooltip("Node Visited or Attainable color")]
+
+        [Header("Colors")] [Tooltip("Node Visited or Attainable color")]
         public Color32 visitedColor = Color.white;
-        [Tooltip("Locked node color")]
-        public Color32 lockedColor = Color.gray;
+
+        [Tooltip("Locked node color")] public Color32 lockedColor = Color.gray;
+
         [Tooltip("Visited or available path color")]
         public Color32 lineVisitedColor = Color.white;
-        [Tooltip("Unavailable path color")]
-        public Color32 lineLockedColor = Color.gray;
+
+        [Tooltip("Unavailable path color")] public Color32 lineLockedColor = Color.gray;
 
         protected GameObject firstParent;
         protected GameObject mapParent;
         private List<List<Point>> paths;
+
         private Camera cam;
+
         // ALL nodes:
         public readonly List<MapNode> MapNodes = new List<MapNode>();
         protected readonly List<LineConnection> lineConnections = new List<LineConnection>();
@@ -75,6 +81,16 @@ namespace Map
             lineConnections.Clear();
         }
 
+        public void Back()
+        {
+            if (firstParent != null)
+                Destroy(firstParent);
+            
+            MapNodes.Clear();
+            lineConnections.Clear();
+            Destroy(gameObject);
+        }
+        
         public virtual void ShowMap(Map m)
         {
             if (m == null)
@@ -127,24 +143,28 @@ namespace Map
             mapParent = new GameObject("MapParentWithAScroll");
             mapParent.transform.SetParent(firstParent.transform);
             var scrollNonUi = mapParent.AddComponent<ScrollNonUI>();
-            scrollNonUi.freezeX = orientation == MapOrientation.BottomToTop || orientation == MapOrientation.TopToBottom;
-            scrollNonUi.freezeY = orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft;
+            scrollNonUi.freezeX =
+                orientation == MapOrientation.BottomToTop || orientation == MapOrientation.TopToBottom;
+            scrollNonUi.freezeY =
+                orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft;
             var boxCollider = mapParent.AddComponent<BoxCollider>();
             boxCollider.size = new Vector3(100, 100, 1);
         }
 
         protected void CreateNodes(IEnumerable<Node> nodes)
         {
+            var nodeParent = new GameObject("NodeParent");
+            nodeParent.transform.SetParent(mapParent.transform);
             foreach (var node in nodes)
             {
-                var mapNode = CreateMapNode(node);
+                var mapNode = CreateMapNode(node, nodeParent.transform);
                 MapNodes.Add(mapNode);
             }
         }
 
-        protected virtual MapNode CreateMapNode(Node node)
+        protected virtual MapNode CreateMapNode(Node node, Transform nodeParent)
         {
-            var mapNodeObject = Instantiate(nodePrefab, mapParent.transform);
+            var mapNodeObject = Instantiate(nodePrefab, nodeParent);
             var mapNode = mapNodeObject.GetComponent<MapNode>();
             var blueprint = GetBlueprint(node.blueprintName);
             mapNode.SetUp(node, blueprint);
@@ -239,6 +259,7 @@ namespace Map
                         scrollNonUi.yConstraints.max = 0;
                         scrollNonUi.yConstraints.min = -(span + 2f * offset);
                     }
+
                     firstParent.transform.localPosition += new Vector3(0, offset, 0);
                     break;
                 case MapOrientation.TopToBottom:
@@ -248,6 +269,7 @@ namespace Map
                         scrollNonUi.yConstraints.min = 0;
                         scrollNonUi.yConstraints.max = span + 2f * offset;
                     }
+
                     // factor in map span:
                     firstParent.transform.localPosition += new Vector3(0, -offset, 0);
                     break;
@@ -261,6 +283,7 @@ namespace Map
                         scrollNonUi.xConstraints.max = span + 2f * offset;
                         scrollNonUi.xConstraints.min = 0;
                     }
+
                     break;
                 case MapOrientation.LeftToRight:
                     offset *= cam.aspect;
@@ -271,6 +294,7 @@ namespace Map
                         scrollNonUi.xConstraints.max = 0;
                         scrollNonUi.xConstraints.min = -(span + 2f * offset);
                     }
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -279,10 +303,12 @@ namespace Map
 
         private void DrawLines()
         {
+            var linesParent = new GameObject("LinesParent");
+            linesParent.transform.SetParent(mapParent.transform);
             foreach (var node in MapNodes)
             {
                 foreach (var connection in node.Node.outgoing)
-                    AddLineConnection(node, GetNode(connection));
+                    AddLineConnection(node, GetNode(connection),linesParent.transform);
             }
         }
 
@@ -292,11 +318,10 @@ namespace Map
                 node.transform.rotation = Quaternion.identity;
         }
 
-        protected virtual void AddLineConnection(MapNode from, MapNode to)
+        protected virtual void AddLineConnection(MapNode from, MapNode to, Transform linesParent)
         {
             if (linePrefab == null) return;
-
-            var lineObject = Instantiate(linePrefab, mapParent.transform);
+            var lineObject = Instantiate(linePrefab, linesParent);
             var lineRenderer = lineObject.GetComponent<LineRenderer>();
             var fromPoint = from.transform.position +
                             (to.transform.position - from.transform.position).normalized * offsetFromNodes;
