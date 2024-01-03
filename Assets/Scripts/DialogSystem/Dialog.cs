@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewDialog", menuName = "WITA/Dialog")]
+[CreateAssetMenu(fileName = "Dialog", menuName = "WITA/Dialog")]
 public class Dialog : ScriptableObject
-{
+{    
+    public string speakerName;
+    public DialogNode dialogNodes;
+
+    
     [System.Serializable]
     public struct DialogNode
     {
-        public string speakerName;
         public string dialogText;
         public Sprite speakerImage;
         public List<DialogOption> options;
@@ -20,5 +23,5 @@ public class Dialog : ScriptableObject
         public Dialog nextDialog;
     }
 
-    public List<DialogNode> dialogNodes = new List<DialogNode>();
+  
 }

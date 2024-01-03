@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Navigation;
+using UI.Screens;
 using UnityEngine;
 
 namespace Map
@@ -83,12 +85,7 @@ namespace Map
 
         public void Back()
         {
-            if (firstParent != null)
-                Destroy(firstParent);
-            
-            MapNodes.Clear();
-            lineConnections.Clear();
-            Destroy(gameObject);
+            NavigationController.Instance.ScreenTransition<MainScreen>();
         }
         
         public virtual void ShowMap(Map m)

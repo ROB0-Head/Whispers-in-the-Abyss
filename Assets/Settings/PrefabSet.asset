@@ -16,7 +16,8 @@ MonoBehaviour:
   <Screens>k__BackingField:
   - {fileID: 7415031504927046476, guid: f08ff209a129acf4ab0cc1d61d625d62, type: 3}
   - {fileID: 3717332573393927373, guid: dc3c159fa501dfc4c82036a7ff57e101, type: 3}
+  - {fileID: 1218785235721801173, guid: f4711c928b70dc24b9d09ee3295a6e64, type: 3}
+  - {fileID: 6046812971995610640, guid: d5d23cf612f489542b2f2b5f9d5dcdb4, type: 3}
   <Popups>k__BackingField: []
   <Buttons>k__BackingField: []
   <RewardContainer>k__BackingField: {fileID: 0}
-  <MapView>k__BackingField: {fileID: 6173653652465991376, guid: 6dc8f4ee6004b5345a5925b01e34cb27, type: 3}

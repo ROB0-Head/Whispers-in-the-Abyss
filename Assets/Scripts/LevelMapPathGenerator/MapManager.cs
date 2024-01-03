@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
+using UI.Screens;
 
 namespace Map
 {
-    public class MapManager : MonoBehaviour
+    public class MapManager : DefaultScreen
     {
         public MapConfig config;
         public MapView view;

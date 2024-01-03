@@ -82,10 +82,10 @@ namespace UI.Screens
             switch (tabType)
                 {
                     case CityTabType.Guild:
-                       Instantiate(SettingsProvider.Get<PrefabSet>().MapView);
+                        NavigationController.Instance.ScreenTransition<MapManager>();
                         break;
                     case CityTabType.Forge:
-
+                        NavigationController.Instance.ScreenTransition<DialogManager>();
                         break;
                     case CityTabType.Backpack:
                         

@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using Navigation;
+using Settings;
+using TMPro;
+using UI.Screens;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogManager : MonoBehaviour
+public class DialogManager : DefaultScreen
 {
-    public Text dialogText;
+    public TextMeshProUGUI dialogText;
     public Image speakerImage;
     public GameObject dialogPanel;
     public GameObject optionsPanel;
@@ -12,11 +16,11 @@ public class DialogManager : MonoBehaviour
 
     private Dialog.DialogNode currentDialogNode;
 
-    public void StartDialog(Dialog dialog)
+    private void Awake()
     {
         dialogPanel.SetActive(true);
         optionsPanel.SetActive(false);
-        DisplayDialogNode(dialog.dialogNodes[0]);
+        DisplayDialogNode(SettingsProvider.Get<Dialog>().dialogNodes);
     }
 
     void DisplayDialogNode(Dialog.DialogNode node)
@@ -39,7 +43,6 @@ public class DialogManager : MonoBehaviour
     {
         optionsPanel.SetActive(true);
 
-        // Clear existing buttons
         foreach (Transform child in optionsPanel.transform)
         {
             Destroy(child.gameObject);
@@ -48,7 +51,7 @@ public class DialogManager : MonoBehaviour
         foreach (var option in options)
         {
             Button optionButton = Instantiate(optionButtonPrefab, optionsPanel.transform);
-            optionButton.GetComponentInChildren<Text>().text = option.optionText;
+            optionButton.GetComponentInChildren<TextMeshProUGUI>().text = option.optionText;
             optionButton.onClick.AddListener(() => OnOptionSelected(option.nextDialog));
         }
     }
@@ -57,12 +60,16 @@ public class DialogManager : MonoBehaviour
     {
         if (nextDialog != null)
         {
-            DisplayDialogNode(nextDialog.dialogNodes[0]);
+            DisplayDialogNode(nextDialog.dialogNodes);
         }
         else
         {
-            dialogPanel.SetActive(false);
-            optionsPanel.SetActive(false);
+            Back();
         }
+    }
+
+    public void Back()
+    {
+        NavigationController.Instance.ScreenTransition<CityScreen>();
     }
 }

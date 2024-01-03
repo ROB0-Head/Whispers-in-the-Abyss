@@ -69,6 +69,7 @@ namespace Map
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.MinorEnemy:
+                    
                     break;
                 case NodeType.EliteEnemy:
                     break;
