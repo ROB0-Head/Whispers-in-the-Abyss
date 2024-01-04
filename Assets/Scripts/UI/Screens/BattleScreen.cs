@@ -1,38 +1,24 @@
 using Map;
 using Navigation;
-using Settings;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Screens
 {
-    public class CityScreen : DefaultScreen
+    public class BattleScreen : DefaultScreen
     {
-        private CityTabType _currentTab;
-        [SerializeField] private TMP_Text _titleText;
-        /*
-        [SerializeField] private GameObject _contentParent;
-        */
-
-        [SerializeField] private Button _guildButton;
-        [SerializeField] private Button _forgeButton;
+        private BattleTabType _currentTab;
         [SerializeField] private Button _backButton;
-
-        /*
-        [SerializeField] private List<ScreenBottomIcons> _screenBottomIcons;
-        */
 
         private void Awake()
         {
-            _guildButton.onClick.AddListener(() => { SelectTab(CityTabType.Guild); });
-            _forgeButton.onClick.AddListener(() => { SelectTab(CityTabType.Forge); });
-            _backButton.onClick.AddListener(() => { SelectTab(CityTabType.Exit); });
+            _backButton.onClick.AddListener(() => { SelectTab(BattleTabType.Exit); });
         }
 
         public override void Setup(ScreenSettings settings)
         {
-            if (settings is not CityScreenSettings mainScreenSettings)
+            if (settings is not BattleScreenSettings mainScreenSettings)
                 return;
 
             SelectTab(mainScreenSettings.TabType);
@@ -47,7 +33,7 @@ namespace UI.Screens
         {
         }
 
-        public void SelectTab(CityTabType tabType)
+        public void SelectTab(BattleTabType tabType)
         {
             _currentTab = tabType;
             /*foreach (var screenBottomIcon in _screenBottomIcons)
@@ -78,19 +64,18 @@ namespace UI.Screens
                 Destroy(child);
             }*/
 
-            _titleText.text = tabType.ToString();
             switch (tabType)
                 {
-                    case CityTabType.Guild:
+                    case BattleTabType.Guild:
                         NavigationController.Instance.ScreenTransition<MapManager>();
                         break;
-                    case CityTabType.Forge:
+                    case BattleTabType.Forge:
                         NavigationController.Instance.ScreenTransition<DialogManager>();
                         break;
-                    case CityTabType.Backpack:
+                    case BattleTabType.Backpack:
                         
                         break;
-                    case CityTabType.Exit:
+                    case BattleTabType.Exit:
                         Home();
                         break;
                     default:
@@ -102,12 +87,8 @@ namespace UI.Screens
         {
             NavigationController.Instance.ScreenTransition<MainScreen>();
         }
-        /*public void ShowBuyHeartsPopup()
-        {
-            PopupSystem.ShowPopup<HeartPurchasePopup>();
-        }*/
 
-        public enum CityTabType
+        public enum BattleTabType
         {
             City = 0,
             Guild = 1,
@@ -126,8 +107,8 @@ namespace UI.Screens
         }*/
     }
 
-    public class CityScreenSettings : ScreenSettings
+    public class BattleScreenSettings : ScreenSettings
     {
-        public CityScreen.CityTabType TabType;
+        public BattleScreen.BattleTabType TabType;
     }
 }

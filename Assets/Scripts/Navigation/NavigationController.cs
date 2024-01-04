@@ -26,10 +26,7 @@ namespace Navigation
 
         void Start()
         {
-            ScreenTransition<MainScreen>(new MainScreenSettings()
-            {
-                TabType = MainScreen.MainTabType.Main
-            });
+            ScreenTransition<MainScreen>();
         }
 
         public void UpdateScreen()

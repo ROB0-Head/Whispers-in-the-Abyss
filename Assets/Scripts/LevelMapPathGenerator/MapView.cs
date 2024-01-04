@@ -85,7 +85,7 @@ namespace Map
 
         public void Back()
         {
-            NavigationController.Instance.ScreenTransition<MainScreen>();
+            NavigationController.Instance.ScreenTransition<CityScreen>();
         }
         
         public virtual void ShowMap(Map m)
