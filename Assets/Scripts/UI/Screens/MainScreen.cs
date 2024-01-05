@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Navigation;
 using Settings;
 using TMPro;
@@ -10,7 +9,6 @@ namespace UI.Screens
 {
     public class MainScreen : DefaultScreen
     {
-        private MainTabType _currentTab;
         [SerializeField] private TMP_Text _titleText;
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _settingsButton;
@@ -31,41 +29,28 @@ namespace UI.Screens
             SelectTab(mainScreenSettings.TabType);
         }
 
-        public override void UpdateScreen()
-        {
-            SelectTab(_currentTab);
-        }
-
         public void SelectTab(MainTabType tabType)
         {
-            _currentTab = tabType;
-
             _titleText.text = tabType.ToString();
 
-            var elements = SettingsProvider.Get<MainScreenTabsSettings>().TabSettings.First(x => x.TabType == tabType)
-                .Elements;
-
-            foreach (var elementType in elements)
+            switch (tabType)
             {
-                switch (elementType)
-                {
-                    case TabSetting.ElementType.None:
-                        break;
-                    case TabSetting.ElementType.Start:
-                        NavigationController.Instance.ScreenTransition<CityScreen>(new CityScreenSettings()
-                        {
-                            TabType = CityScreen.CityTabType.City
-                        });
-
-                        break;
-                    case TabSetting.ElementType.Settings:
-                        break;
-                    case TabSetting.ElementType.Exit:
-                        Exit();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                case MainTabType.Start:
+                    
+                    NavigationController.Instance.ScreenTransition<CityScreen>(new CityScreenSettings()
+                    {
+                        TabType = CityScreen.CityTabType.City
+                    });
+                    
+                    break;
+                case MainTabType.Settings:
+                    
+                    break;
+                case MainTabType.Exit:
+                    
+                    Exit();
+                    
+                    break;
             }
         }
 
@@ -76,10 +61,9 @@ namespace UI.Screens
 
         public enum MainTabType
         {
-            Main = 0,
-            Start = 1,
-            Settings = 2,
-            Exit = 3
+            Start = 0,
+            Settings = 1,
+            Exit = 2
         }
     }
 

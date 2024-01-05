@@ -29,11 +29,6 @@ namespace Navigation
             ScreenTransition<MainScreen>();
         }
 
-        public void UpdateScreen()
-        {
-            _currentScreen.UpdateScreen();
-        }
-
         public void ScreenTransition<T>(ScreenSettings settings = null) where T : DefaultScreen
         {
             if (_currentScreen != null)
@@ -58,13 +53,6 @@ namespace Navigation
                 _currentScreen = Instantiate(SettingsProvider.Get<PrefabSet>().GetScreen<T>(), Canvas.transform);
                 _currentScreen.Setup(settings);
             }
-        }
-
-        public enum ScreenType
-        {
-            MainScreen,
-            ChatScreen,
-            ProfileScreen
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DialogSystem;
 using Navigation;
 using Settings;
 using TMPro;
