@@ -10,7 +10,7 @@ namespace UI.Screens
     {
         private BattleTabType _currentTab;
         [SerializeField] private Button _backButton;
-
+        
         private void Awake()
         {
             _backButton.onClick.AddListener(() => { SelectTab(BattleTabType.Exit); });

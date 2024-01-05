@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using DG.Tweening;
+using Navigation;
+using UI.Screens;
 using UnityEngine;
 
 namespace Map
@@ -69,7 +71,7 @@ namespace Map
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.MinorEnemy:
-                    
+                    NavigationController.Instance.ScreenTransition<BattleScreen>();
                     break;
                 case NodeType.EliteEnemy:
                     break;

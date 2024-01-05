@@ -59,7 +59,6 @@ namespace UI.Screens
 
                         break;
                     case TabSetting.ElementType.Settings:
-                        NavigationController.Instance.ScreenTransition<BattleScreen>();
                         break;
                     case TabSetting.ElementType.Exit:
                         Exit();

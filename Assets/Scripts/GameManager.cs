@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
+using BattleSystem;
 using DefaultNamespace;
+using SaveSystem;
 using Settings;
 using UI.Popups;
 using UnityEngine;
@@ -22,7 +24,7 @@ public class GameManager : MonoBehaviour
     private static bool _timeAfterStart40Send;
     private static bool _timeAfterStart50Send;
     private static bool _timeAfterStart60Send;
-    
+
     public static int SubscribePopupCloseCounter;
     public static bool IsFirstSessionForAnalytics { get; private set; }
 
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
         DailyRewardSystem.Setup();
         _startDateTime = DateTime.Now;
+
 
         StartCoroutine(PlayTimer());
     }
@@ -98,7 +101,17 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         if (IsFirstLaunch)
-        {          
+        {
+            var userData = SaveManager.LoadUserData();
+            userData.Cards = new List<Card>();
+
+            for (int i = 0; i < 7; i++)
+            {
+                var cards = SettingsProvider.Get<Deck>();
+                userData.Cards.Add(cards.CardDeck[0]);
+            }
+
+            SaveManager.SaveUserData(userData);
             IsFirstSessionForAnalytics = true;
             IsFirstLaunch = false;
             DailyRewardSystem.ShowRewardPopup();
@@ -128,9 +141,6 @@ public class GameManager : MonoBehaviour
                     SaveDataManager.SaveUserData(userData);
                 }
             }*/
-
         }
     }
-
-  
 }
