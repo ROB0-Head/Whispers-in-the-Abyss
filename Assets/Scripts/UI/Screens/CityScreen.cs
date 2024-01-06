@@ -9,8 +9,6 @@ namespace UI.Screens
 {
     public class CityScreen : DefaultScreen
     {
-        private CityTabType _currentTab;
-        [SerializeField] private TMP_Text _titleText;
         /*
         [SerializeField] private GameObject _contentParent;
         */
@@ -38,18 +36,12 @@ namespace UI.Screens
             SelectTab(mainScreenSettings.TabType);
         }
 
-        public override void UpdateScreen()
-        {
-            SelectTab(_currentTab);
-        }
-
         public override void Deactivate()
         {
         }
 
         public void SelectTab(CityTabType tabType)
         {
-            _currentTab = tabType;
             /*foreach (var screenBottomIcon in _screenBottomIcons)
             {
                 if (screenBottomIcon.TabType == tabType)
@@ -78,26 +70,25 @@ namespace UI.Screens
                 Destroy(child);
             }*/
 
-            _titleText.text = tabType.ToString();
             switch (tabType)
-                {
-                    case CityTabType.Guild:
-                        NavigationController.Instance.ScreenTransition<MapManager>();
-                        break;
-                    case CityTabType.Forge:
-                        NavigationController.Instance.ScreenTransition<DialogManager>();
-                        break;
-                    case CityTabType.Backpack:
-                        
-                        break;
-                    case CityTabType.Exit:
-                        Home();
-                        break;
-                    default:
-                        break;
-                }
-            
+            {
+                case CityTabType.Guild:
+                    NavigationController.Instance.ScreenTransition<MapManager>();
+                    break;
+                case CityTabType.Forge:
+                    NavigationController.Instance.ScreenTransition<DialogManager>();
+                    break;
+                case CityTabType.Backpack:
+
+                    break;
+                case CityTabType.Exit:
+                    Home();
+                    break;
+                default:
+                    break;
+            }
         }
+
         public void Home()
         {
             NavigationController.Instance.ScreenTransition<MainScreen>();
