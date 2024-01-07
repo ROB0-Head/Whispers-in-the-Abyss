@@ -19,6 +19,9 @@ MonoBehaviour:
   - {fileID: 1218785235721801173, guid: f4711c928b70dc24b9d09ee3295a6e64, type: 3}
   - {fileID: 6046812971995610640, guid: d5d23cf612f489542b2f2b5f9d5dcdb4, type: 3}
   - {fileID: 3144985478542332276, guid: 32a65cc88deed9e4594bddb3c1ae3cf2, type: 3}
-  <Popups>k__BackingField: []
+  - {fileID: 5789354911338078267, guid: b6f8ba88b8f606842b0faa3c26e76f5e, type: 3}
+  - {fileID: -7236698848765742644, guid: 5cafa3b36fc51e544983c4492db67a6e, type: 3}
+  <Popups>k__BackingField:
+  - {fileID: 4722188701101203870, guid: 22b2905ed0b2a4346ba9ece975325c27, type: 3}
   <Buttons>k__BackingField: []
   <RewardContainer>k__BackingField: {fileID: 0}

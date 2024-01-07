@@ -73,7 +73,7 @@ namespace UI.Screens
             switch (tabType)
             {
                 case CityTabType.Guild:
-                    NavigationController.Instance.ScreenTransition<MapManager>();
+                    NavigationController.Instance.ScreenTransition<GuildScreen>();
                     break;
                 case CityTabType.Forge:
                     NavigationController.Instance.ScreenTransition<DialogManager>();
