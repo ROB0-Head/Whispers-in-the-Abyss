@@ -40,7 +40,8 @@ namespace UI.Screens
             switch (tabType)
             {
                 case GuildTabType.Reception:
-                    
+                    NavigationController.Instance.ScreenTransition<ReceptionScreen>();
+
                     break;
                 
                 case GuildTabType.TaskBoard:

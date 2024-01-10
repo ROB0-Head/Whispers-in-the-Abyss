@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6d72cd337f91242a1526ebf60a4405, type: 3}
   m_Name: PrefabSet
   m_EditorClassIdentifier: 
-  <Panels>k__BackingField: []
+  <Panels>k__BackingField:
+  - {fileID: 3156647828400543964, guid: 96b0b356b155e8c46b9510aba9efb50f, type: 3}
   <Screens>k__BackingField:
   - {fileID: 7415031504927046476, guid: f08ff209a129acf4ab0cc1d61d625d62, type: 3}
   - {fileID: 3717332573393927373, guid: dc3c159fa501dfc4c82036a7ff57e101, type: 3}
@@ -24,4 +25,6 @@ MonoBehaviour:
   <Popups>k__BackingField:
   - {fileID: 4722188701101203870, guid: 22b2905ed0b2a4346ba9ece975325c27, type: 3}
   <Buttons>k__BackingField: []
+  <Prefabs>k__BackingField:
+  - {fileID: 7222087433567111052, guid: 5f50a95eabb48574ca41b1375619f230, type: 3}
   <RewardContainer>k__BackingField: {fileID: 0}
