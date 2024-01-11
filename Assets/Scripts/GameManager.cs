@@ -6,8 +6,10 @@ using BattleSystem;
 using DefaultNamespace;
 using SaveSystem;
 using Settings;
+using TJ;
 using UI.Popups;
 using UnityEngine;
+using Card = BattleSystem.Card;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +30,9 @@ public class GameManager : MonoBehaviour
     public static int SubscribePopupCloseCounter;
     public static bool IsFirstSessionForAnalytics { get; private set; }
 
+    public static SceneFader SceneFader { get; private set; }
+
+
     public static bool IsFirstLaunch
     {
         get { return PlayerPrefs.GetInt("NotFirstLaunch", 0) == 0; }
@@ -41,8 +46,7 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
         DailyRewardSystem.Setup();
         _startDateTime = DateTime.Now;
-
-
+        SceneFader = GetComponent<SceneFader>();
         StartCoroutine(PlayTimer());
     }
 
@@ -102,16 +106,9 @@ public class GameManager : MonoBehaviour
     {
         if (IsFirstLaunch)
         {
-            var userData = SaveManager.LoadUserData();
-            userData.Cards = new List<Card>();
-
-            for (int i = 0; i < 7; i++)
-            {
-                var cards = SettingsProvider.Get<Deck>();
-                userData.Cards.Add(cards.CardDeck[0]);
-            }
-
-            SaveManager.SaveUserData(userData);
+            /*var userData = SaveManager.LoadUserData();
+            userData.CurrentDeck.Deck = new List<Card>();
+            SaveManager.SaveUserData(userData);*/
             IsFirstSessionForAnalytics = true;
             IsFirstLaunch = false;
             DailyRewardSystem.ShowRewardPopup();

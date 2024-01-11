@@ -14,7 +14,7 @@ public class RelicRewardUI : MonoBehaviour
     public void DisplayRelic(Relic r)
     {
         relicImage.sprite = r.relicIcon;
-        relicName.text = r.relicName;
+        relicName.text = r.RelicType.ToString();
         relicDescription.text = r.relicDescription;
     }
     public void DisplayCard(Card r)

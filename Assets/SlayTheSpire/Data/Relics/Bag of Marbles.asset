@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3d499b50214f848bf91c3082c81371, type: 3}
   m_Name: Bag of Marbles
   m_EditorClassIdentifier: 
-  relicName: Marbles
+  RelicType: 3
   relicDescription: 
   relicIcon: {fileID: 21300000, guid: b932771751aafed40970a6222c8efbd0, type: 3}

@@ -34,8 +34,8 @@ public class Fighter : MonoBehaviour
         currentHealth = maxHealth;
         fighterHealthBar.healthSlider.maxValue = maxHealth;
         fighterHealthBar.DisplayHealth(currentHealth);
-        if(isPlayer)
-            gameManager.DisplayHealth(currentHealth, currentHealth);
+        /*if(isPlayer)
+            gameManager.DisplayHealth(currentHealth, currentHealth);*/
 
     }
 	public void TakeDamage(int amount)
@@ -44,12 +44,12 @@ public class Fighter : MonoBehaviour
             amount = BlockDamage(amount);
 
         if(enemy!=null&&enemy.wiggler&&currentHealth== maxHealth)
-            enemy.CurlUP();
+            enemy.CurlUp();
 
         Debug.Log($"dealt {amount} damage");
 
-        DamageIndicator di = Instantiate(damageIndicator, this.transform).GetComponent<DamageIndicator>();
-        di.DisplayDamage(amount);
+        var di = Instantiate(damageIndicator, this.transform);
+        di.GetComponent<DamageIndicator>().DisplayDamage(amount);
         Destroy(di, 2f);
 
         currentHealth-=amount;

@@ -59,7 +59,7 @@ namespace SaveSystem
 
         #region Public Save Method
 
-        public static void SaveUserData(UserData userData)
+        public static void SaveUserData(Character userData)
         {
             string path = Path.Combine(Application.persistentDataPath, USER_DATA_NAME);
 
@@ -72,19 +72,19 @@ namespace SaveSystem
 
         #region Public Load Method
 
-        public static UserData LoadUserData()
+        public static Character LoadUserData()
         {
             string path = Path.Combine(Application.persistentDataPath, USER_DATA_NAME);
 
             if (File.Exists(path))
             {
                 string jsonData = File.ReadAllText(path);
-                UserData loadedUserData = JsonUtility.FromJson<UserData>(jsonData);
+                Character loadedUserData = JsonUtility.FromJson<Character>(jsonData);
                 return loadedUserData;
             }
             else
             {
-                return new UserData();
+                return new Character();
             }
         }
 

@@ -10,10 +10,18 @@ namespace UI.Battle
 
         public TextMeshProUGUI statsText;
         public TextMeshProUGUI energyCostText;
+        Animator animator;
+        public GameObject discardEffect;
 
         private void Awake()
         {
             Instance = this;
+            animator = GetComponent<Animator>();
+        }
+
+        private void OnEnable()
+        {
+            animator.Play("HoverOffCard");
         }
 
         public void DisplayCardInfo(Card card)

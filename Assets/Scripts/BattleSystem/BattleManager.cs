@@ -32,15 +32,14 @@ namespace BattleSystem
         {
             var userData = SaveManager.LoadUserData();
             var zOffSet = 15f;
-            foreach (var card in userData.Cards)
+            foreach (var card in userData.CurrentDeck.Deck)
             {
-                var cards = SettingsProvider.Get<Deck>().CardDeck[0];
-                var cardTransform = Instantiate(cards.cardPrefab , _deck.transform);
+                var cardTransform = Instantiate(card.cardPrefab, _deck.transform);
                 card.Play();
                 cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
-
                 zOffSet -= 5;
             }
+
             InitializeBattle();
         }
 

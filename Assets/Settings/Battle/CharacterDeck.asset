@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33d44798a6157394d907e0344868d7cb, type: 3}
-  m_Name: Deck
-  m_EditorClassIdentifier: 
-  CardDeck:
+  m_Script: {fileID: 0}
+  m_Name: CharacterDeck
+  m_EditorClassIdentifier: Assembly-CSharp:Settings:CharacterDeck
+  Deck:
   - {fileID: 11400000, guid: fc66991c40abacd42836fb33d8d2d0a5, type: 2}
   - {fileID: 11400000, guid: 05e4695de1500004c9edc7c25f2000e7, type: 2}

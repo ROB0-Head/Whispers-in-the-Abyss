@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3d499b50214f848bf91c3082c81371, type: 3}
   m_Name: Vajra
   m_EditorClassIdentifier: 
-  relicName: Varja
+  RelicType: 5
   relicDescription: 
   relicIcon: {fileID: 21300000, guid: 613c22816dcf7844cbf2898fe1fc2f37, type: 3}

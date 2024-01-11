@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3d499b50214f848bf91c3082c81371, type: 3}
   m_Name: Anchor
   m_EditorClassIdentifier: 
-  relicName: Anchor
+  RelicType: 1
   relicDescription: 
   relicIcon: {fileID: 21300000, guid: df5a48a494d137844a5e73942a68b9a9, type: 3}

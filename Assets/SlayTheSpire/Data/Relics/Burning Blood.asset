@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3d499b50214f848bf91c3082c81371, type: 3}
   m_Name: Burning Blood
   m_EditorClassIdentifier: 
-  relicName: BurningBlood
+  RelicType: 6
   relicDescription: 
   relicIcon: {fileID: 21300000, guid: c422673d5d07cfc42a22cff3bd319ef8, type: 3}

@@ -14,6 +14,7 @@ namespace UI.Screens
         */
 
         [SerializeField] private Button _guildButton;
+        [SerializeField] private Button _shopButton;
         [SerializeField] private Button _forgeButton;
         [SerializeField] private Button _backButton;
 
@@ -24,6 +25,7 @@ namespace UI.Screens
         private void Awake()
         {
             _guildButton.onClick.AddListener(() => { SelectTab(CityTabType.Guild); });
+            _shopButton.onClick.AddListener(() => { SelectTab(CityTabType.Shop); });
             _forgeButton.onClick.AddListener(() => { SelectTab(CityTabType.Forge); });
             _backButton.onClick.AddListener(() => { SelectTab(CityTabType.Exit); });
         }
@@ -78,8 +80,8 @@ namespace UI.Screens
                 case CityTabType.Forge:
                     NavigationController.Instance.ScreenTransition<DialogManager>();
                     break;
-                case CityTabType.Backpack:
-
+                case CityTabType.Shop:
+                    NavigationController.Instance.ScreenTransition<MapManager>();
                     break;
                 case CityTabType.Exit:
                     Home();
@@ -102,8 +104,8 @@ namespace UI.Screens
         {
             City = 0,
             Guild = 1,
-            Forge = 2,
-            Backpack = 3,
+            Shop = 2,
+            Forge = 3,
             Exit = 4
         }
 
