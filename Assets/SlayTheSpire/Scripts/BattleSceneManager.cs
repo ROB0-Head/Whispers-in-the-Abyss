@@ -16,7 +16,7 @@ namespace TJ
         public CardUI selectedCard;
         public List<CardUI> cardsInHandGameObjects = new List<CardUI>();
 
-        [Header("Stats")] public Fighter cardTarget;
+        public Fighter cardTarget;
         public Fighter player;
         public int maxEnergy;
         public int energy;
@@ -130,13 +130,13 @@ namespace TJ
                 energy += 1;
 
             if (gameManager.PlayerHasRelic(RelicType.Marbles))
-                enemyFighters[0].AddBuff(Buff.Type.vulnerable, 1);
+                enemyFighters[0].AddBuff(Buff.Type.Vulnerable, 1);
 
             if (gameManager.PlayerHasRelic(RelicType.Bag))
                 DrawCards(2);
 
             if (gameManager.PlayerHasRelic(RelicType.Varja))
-                player.AddBuff(Buff.Type.strength, 1);
+                player.AddBuff(Buff.Type.Strength, 1);
 
             #endregion
 
@@ -179,7 +179,7 @@ namespace TJ
         {
             if (cardUI.card.cardType != Card.CardType.Attack && enemies[0].GetComponent<Fighter>().enrage.buffValue > 0)
                 enemies[0].GetComponent<Fighter>()
-                    .AddBuff(Buff.Type.strength, enemies[0].GetComponent<Fighter>().enrage.buffValue);
+                    .AddBuff(Buff.Type.Strength, enemies[0].GetComponent<Fighter>().enrage.buffValue);
 
             cardActions.PerformAction(cardUI.card, cardTarget);
 

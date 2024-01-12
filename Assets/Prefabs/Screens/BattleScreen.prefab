@@ -1400,6 +1400,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backButton: {fileID: 8401205032163855723}
+  _deck: {fileID: 0}
+  banner: {fileID: 0}
+  turnText: {fileID: 0}
 --- !u!1 &5601937972365907657
 GameObject:
   m_ObjectHideFlags: 0

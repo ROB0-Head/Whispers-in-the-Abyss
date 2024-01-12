@@ -29,14 +29,14 @@ public class CardActions : MonoBehaviour
                 break;
             case "Bash":
                 AttackEnemy();
-                ApplyBuff(Buff.Type.vulnerable);
+                ApplyBuff(Buff.Type.Vulnerable);
                 break;
             case "Inflame":
-                ApplyBuffToSelf(Buff.Type.strength);
+                ApplyBuffToSelf(Buff.Type.Strength);
                 break;
             case "Clothesline":
                 AttackEnemy();
-                ApplyBuff(Buff.Type.weak);
+                ApplyBuff(Buff.Type.Weak);
                 break;
             case "ShrugItOff":
                 PerformBlock();

@@ -10,7 +10,7 @@ namespace SaveSystem
     {
         #region Saves Data Names
 
-        private static readonly string USER_DATA_NAME = "UserData.json";
+        private static readonly string CHARACTER_DATA_NAME = "CharacterData.json";
 
         #endregion
 
@@ -59,9 +59,9 @@ namespace SaveSystem
 
         #region Public Save Method
 
-        public static void SaveUserData(Character userData)
+        public static void SaveCharacterData(Character userData)
         {
-            string path = Path.Combine(Application.persistentDataPath, USER_DATA_NAME);
+            string path = Path.Combine(Application.persistentDataPath, CHARACTER_DATA_NAME);
 
             string jsonData = JsonUtility.ToJson(userData);
 
@@ -72,9 +72,9 @@ namespace SaveSystem
 
         #region Public Load Method
 
-        public static Character LoadUserData()
+        public static Character LoadCharacterData()
         {
-            string path = Path.Combine(Application.persistentDataPath, USER_DATA_NAME);
+            string path = Path.Combine(Application.persistentDataPath, CHARACTER_DATA_NAME);
 
             if (File.Exists(path))
             {

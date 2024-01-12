@@ -103,7 +103,7 @@ public class Fighter : MonoBehaviour
    
     public void AddBuff(Buff.Type type, int amount)
     {
-        if(type==Buff.Type.vulnerable)
+        if(type==Buff.Type.Vulnerable)
         {
             if(vulnerable.buffValue<=0)
             {
@@ -113,7 +113,7 @@ public class Fighter : MonoBehaviour
             vulnerable.buffValue+=amount;
             vulnerable.buffGO.DisplayBuff(vulnerable);
         }
-        else if(type==Buff.Type.weak)
+        else if(type==Buff.Type.Weak)
         {
             if(weak.buffValue<=0)
             {
@@ -123,7 +123,7 @@ public class Fighter : MonoBehaviour
             weak.buffValue+=amount;
             weak.buffGO.DisplayBuff(weak);
         }
-        else if(type==Buff.Type.strength)
+        else if(type==Buff.Type.Strength)
         {
             if(strength.buffValue<=0)
             {
@@ -133,7 +133,7 @@ public class Fighter : MonoBehaviour
             strength.buffValue+=amount;
             strength.buffGO.DisplayBuff(strength);
         }
-        else if(type==Buff.Type.ritual)
+        else if(type==Buff.Type.Ritual)
         {
             if(ritual.buffValue<=0)
             {
@@ -143,7 +143,7 @@ public class Fighter : MonoBehaviour
             ritual.buffValue+=amount;
             ritual.buffGO.DisplayBuff(ritual);
         }
-        else if(type==Buff.Type.enrage)
+        else if(type==Buff.Type.Enrage)
         {
             Debug.Log("adding enrage");
             if(enrage.buffValue<=0)
@@ -175,7 +175,7 @@ public class Fighter : MonoBehaviour
         }
         else if(ritual.buffValue>0)
         {
-            AddBuff(Buff.Type.strength, ritual.buffValue);
+            AddBuff(Buff.Type.Strength, ritual.buffValue);
         }
     }
     public void ResetBuffs()

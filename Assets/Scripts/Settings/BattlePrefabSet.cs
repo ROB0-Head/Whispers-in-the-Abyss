@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Map;
+using TJ;
 using UI.Buttons;
 using UI.Panels;
 using UI.Popups;
@@ -13,36 +14,15 @@ namespace Settings
     [CreateAssetMenu(fileName = "BattlePrefabSet", menuName = "WITA/BattlePrefabSet", order = 0)]
     public class BattlePrefabSet : ScriptableObject
     {
-        [field: SerializeField] public List<BasePanel> Panels { private set; get; }
-        [field: SerializeField] public List<DefaultScreen> Screens { private set; get; }
-        [field: SerializeField] public List<BasePopup> Popups { private set; get; }
-        [field: SerializeField] public List<BaseButton> Buttons { private set; get; }
-        [field: SerializeField] public List<BasePrefabs> Prefabs { private set; get; }
-        [field: SerializeField] public RewardContainer RewardContainer { private set; get; }
-
-        public T GetPanel<T>() where T : BasePanel
+        [field: SerializeField] public CharacterDeck CharacterDeck { private set; get; }
+        [field: SerializeField] public DeckLibrary DeckLibrary { private set; get; }
+        [field: SerializeField] public TarotLibrary TarotLibrary { private set; get; }
+        [field: SerializeField] public List<Enemy> Enemies { private set; get; }
+        
+        public T GetEnemy<T>() where T : Enemy
         {
-            return Panels.First(x => x is T) as T;
-        }
-
-        public T GetScreen<T>() where T : DefaultScreen
-        {
-            return Screens.First(x => x is T) as T;
-        }
-
-        public T GetPopup<T>() where T : BasePopup
-        {
-            return Popups.First(x => x is T) as T;
-        }
-
-        public T GetButton<T>() where T : BaseButton
-        {
-            return Buttons.First(x => x is T) as T;
+            return Enemies.First(x => x is T) as T;
         }
         
-        public T GetPrefab<T>() where T : BasePrefabs
-        {
-            return Prefabs.First(x => x is T) as T;
-        }
     }
 }

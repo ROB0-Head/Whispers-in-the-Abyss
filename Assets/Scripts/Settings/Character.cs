@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using TJ;
 using UnityEngine;
-using Card = BattleSystem.Card;
 
 namespace Settings
 {

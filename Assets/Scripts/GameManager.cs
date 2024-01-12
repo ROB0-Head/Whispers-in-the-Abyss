@@ -9,7 +9,6 @@ using Settings;
 using TJ;
 using UI.Popups;
 using UnityEngine;
-using Card = BattleSystem.Card;
 
 public class GameManager : MonoBehaviour
 {

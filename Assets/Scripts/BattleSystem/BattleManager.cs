@@ -1,110 +1,264 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SaveSystem;
 using Settings;
+using TJ;
+using UI.Screens;
 using UnityEngine;
 
 namespace BattleSystem
 {
     public class BattleManager : MonoBehaviour
     {
-        public BattleManager Instance { get; private set; }
-        [SerializeField] private GameObject _deck;
+        public static BattleManager Instance { get; private set; }
 
-        private enum BattleState
-        {
-            PlayerTurn,
-            EnemyTurn,
-            Victory,
-            Defeat
-        }
+        private BattleState _currentBattleState;
+        private CardActions cardActions;
 
-        private BattleState currentBattleState;
+        private List<Card> _drawPile;
+        private List<Card> _cardsInHand;
+        private List<Card> _discardPile;
+        private int _currentEnergy;
+        private int _maxEnergy;
 
-        private List<Card> playerHand;
+        public Transform topParent;
+        public CardUI selectedCard;
+
+        [SerializeField] private Fighter cardTarget;
+        [SerializeField] private Fighter player;
+
+        [SerializeField] private List<Enemy> enemies = new List<Enemy>();
+
 
         private void Awake()
         {
             Instance = this;
+            _cardsInHand = new List<Card>();
         }
 
-        void Start()
+        public void StartBattle(EnemyType enemyType)
         {
-            var userData = SaveManager.LoadUserData();
-            var zOffSet = 15f;
-            foreach (var card in userData.CurrentDeck.Deck)
+            BattleScreen.ChangeTurn(BattleState.PlayerTurn);
+            _currentBattleState = BattleState.PlayerTurn;
+            var characterData = SaveManager.LoadCharacterData();
+
+            switch (enemyType)
             {
-                var cardTransform = Instantiate(card.cardPrefab, _deck.transform);
-                card.Play();
-                cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
-                zOffSet -= 5;
+                case EnemyType.Default:
+                    int numberOfEnemies = Random.Range(0, 2);
+                    for (int i = 0; i <= numberOfEnemies; i++)
+                    {
+                        enemies.Add(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>());
+                    }
+
+                    break;
+                case EnemyType.Elite:
+                    enemies.Add(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>());
+                    break;
+                case EnemyType.Boss:
+                    enemies.Add(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>());
+                    break;
             }
 
-            InitializeBattle();
-        }
-
-        void InitializeBattle()
-        {
-            currentBattleState = BattleState.PlayerTurn;
-            playerHand = new List<Card>();
-
-            StartCoroutine(StartBattle());
-        }
-
-        IEnumerator StartBattle()
-        {
-            while (currentBattleState != BattleState.Victory && currentBattleState != BattleState.Defeat)
+            switch (characterData.startingRelic.RelicType)
             {
-                yield return null;
+                case RelicType.PreservedInsect:
+                    if (enemyType == EnemyType.Elite)
+                        enemies[0].GetComponent<Fighter>().currentHealth =
+                            (int)(enemies[0].GetComponent<Fighter>().currentHealth * 0.25);
+                    break;
+                case RelicType.Anchor:
+                    player.AddBlock(10);
+                    break;
+                case RelicType.Lantern:
+                    _maxEnergy = characterData.Energy;
+                    _maxEnergy += 1;
+                    break;
+                case RelicType.Marbles:
+                    enemies[0].GetComponent<Fighter>().AddBuff(Buff.Type.Vulnerable, 1);
+                    break;
+                case RelicType.Bag:
+                    DrawCards(2);
+                    break;
+                case RelicType.Varja:
+                    player.AddBuff(Buff.Type.Strength, 1);
+                    break;
+            }
 
-                switch (currentBattleState)
+            _currentEnergy = _maxEnergy;
+        }
+
+        public void DrawCards(int amountToDraw)
+        {
+            int cardsDrawn = 0;
+            while (cardsDrawn < amountToDraw && _cardsInHand.Count < 10)
+            {
+                if (_drawPile.Count < 1)
+                    ShuffleCards();
+
+                if (_drawPile.Count > 0)
                 {
-                    case BattleState.PlayerTurn:
-                        PlayerTurn();
-                        break;
-
-                    case BattleState.EnemyTurn:
-                        EnemyTurn();
-                        break;
+                    AddCardToHand(_drawPile[0]);
+                    _drawPile.Remove(_drawPile[0]);
+                    cardsDrawn++;
+                }
+                else
+                {
+                    Debug.LogWarning("Draw pile is empty!");
+                    break;
                 }
             }
         }
 
-        void PlayerTurn()
+        private void AddCardToHand(Card card)
         {
-            currentBattleState = BattleState.EnemyTurn;
+            if (_cardsInHand.Count < 10)
+            {
+                _cardsInHand.Add(card);
+            }
+            else
+            {
+                Debug.LogWarning("Hand is full, cannot add more cards!");
+            }
         }
 
-        void EnemyTurn()
+        private void ClearHandAndTransferToDiscard()
         {
-            // Логика для хода врагов
-
-            // Реализация стратегии врагов, например, атака случайного игрока
-
-            // Проверка условий поражения
-
-            /*if (playerController.IsDefeated())
-        {
-            currentBattleState = BattleState.Defeat;
-            StartCoroutine(EndBattle());
-            return;
-        }*/
-
-            // Переключение на ход игрока
-            currentBattleState = BattleState.PlayerTurn;
+            if (_cardsInHand.Count > 0)
+            {
+                _discardPile.AddRange(_cardsInHand);
+                _cardsInHand.Clear();
+            }
         }
 
 
-        IEnumerator EndBattle()
+        public void ShuffleCards()
         {
-            // Логика завершения битвы
+            _discardPile.AddRange(_cardsInHand);
+            _cardsInHand.Clear();
 
-            // Отображение результатов (победа или поражение)
-
-            yield return new WaitForSeconds(2f);
-
-            // Возврат на карту или другой экран
-            // Например, вызов функции для выбора следующего пути на карте
+            Utils.Shuffle(_discardPile);
+            _drawPile = _discardPile;
+            _discardPile = new List<Card>();
         }
+
+        public void DiscardCard(Card card)
+        {
+            _discardPile.Add(card);
+            /*
+            discardPileCountText.text = discardPile.Count.ToString();
+        */
+        }
+
+        public void PlayCard(CardUI cardUI)
+        {
+            if (cardUI.card.cardType != Card.CardType.Attack && enemies[0].GetComponent<Fighter>().enrage.buffValue > 0)
+                enemies[0].GetComponent<Fighter>()
+                    .AddBuff(Buff.Type.Strength, enemies[0].GetComponent<Fighter>().enrage.buffValue);
+
+            cardActions.PerformAction(cardUI.card, cardTarget);
+
+            _currentEnergy -= cardUI.card.GetCardCostAmount();
+            /*energyText.text = energy.ToString();*/
+
+            Instantiate(cardUI.discardEffect, cardUI.transform.position, Quaternion.identity, topParent);
+            selectedCard = null;
+            cardUI.gameObject.SetActive(false);
+            _cardsInHand.Remove(cardUI.card);
+            DiscardCard(cardUI.card);
+        }
+
+        public void ChangeTurn()
+        {
+            if (_currentBattleState == BattleState.PlayerTurn)
+            {
+                _currentBattleState = BattleState.EnemyTurn;
+                /*
+                endTurnButton.enabled = false;
+                */
+
+                ClearHandAndTransferToDiscard();
+
+                /*foreach (CardUI cardUI in cardsInHandGameObjects)
+                {
+                    if (cardUI.gameObject.activeSelf)
+                        Instantiate(cardUI.discardEffect, cardUI.transform.position, Quaternion.identity, topParent);
+
+                    cardUI.gameObject.SetActive(false);
+                    cardsInHand.Remove(cardUI.card);
+                }*/
+
+
+                foreach (Enemy e in enemies)
+                {
+                    if (e.thisEnemy == null)
+                        e.thisEnemy = e.GetComponent<Fighter>();
+
+                    e.thisEnemy.currentBlock = 0;
+                    e.thisEnemy.fighterHealthBar.DisplayBlock(0);
+                }
+
+                player.EvaluateBuffsAtTurnEnd();
+                StartCoroutine(HandleEnemyTurn());
+            }
+            else
+            {
+                foreach (Enemy e in enemies)
+                {
+                    e.DisplayIntent();
+                }
+
+                _currentBattleState = BattleState.PlayerTurn;
+                player.currentBlock = 0;
+                player.fighterHealthBar.DisplayBlock(0);
+                _currentEnergy = _maxEnergy;
+                /*energyText.text = energy.ToString();
+                endTurnButton.enabled = true;*/
+                DrawCards(5);
+                BattleScreen.ChangeTurn(BattleState.PlayerTurn);
+            }
+        }
+
+
+        private IEnumerator HandleEnemyTurn()
+        {
+            BattleScreen.ChangeTurn(BattleState.EnemyTurn);
+
+            yield return new WaitForSeconds(1.5f);
+
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.midTurn = true;
+                enemy.TakeTurn();
+                while (enemy.midTurn)
+                    yield return new WaitForEndOfFrame();
+            }
+
+            Debug.Log("Turn Over");
+            ChangeTurn();
+        }
+
+        public void EndFight(bool win)
+        {
+            var characterData = SaveManager.LoadCharacterData();
+            if (characterData.startingRelic.RelicType ==RelicType.BurningBlood)
+            {
+                player.currentHealth += 6;
+                if (player.currentHealth > player.maxHealth)
+                    player.currentHealth = player.maxHealth;
+                player.UpdateHealthUI(player.currentHealth);
+            }
+
+            player.ResetBuffs();
+        }
+    }
+
+    public enum BattleState
+    {
+        PlayerTurn,
+        EnemyTurn,
+        Victory,
+        Defeat
     }
 }
