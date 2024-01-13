@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace TJ
@@ -6,9 +8,10 @@ namespace TJ
     [Serializable]
     public struct Buff
     {
-        public Sprite buffIcon;
-        public int buffValue;
-        public BuffUI buffGO;
+        public Type BuffType;
+        public Sprite BuffIcon;
+        public int BuffValue;
+        public BuffUI BuffGO;
 
         public enum Type
         {

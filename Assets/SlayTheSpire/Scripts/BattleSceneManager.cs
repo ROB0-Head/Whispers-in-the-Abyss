@@ -43,11 +43,11 @@ namespace TJ
         public GameObject[] possibleElites;
         bool eliteFight;
         public GameObject birdIcon;
-        
+
         CardActions cardActions;
         GameManager gameManager;
         PlayerStatsUI playerStatsUI;
-        
+
         public Animator banner;
         public TMP_Text turnText;
         public GameObject gameover;
@@ -74,7 +74,7 @@ namespace TJ
         {
             turnText.text = "Player's Turn";
             banner.Play("bannerOut");
-            
+
             GameObject newEnemy = Instantiate(prefabsArray[Random.Range(0, prefabsArray.Length)], enemyParent);
             if (endScreen != null)
                 endScreen.gameObject.SetActive(false);
@@ -119,7 +119,7 @@ namespace TJ
             energyText.text = energy.ToString();
 
             #region relic checks
-            
+
             if (gameManager.PlayerHasRelic(RelicType.PreservedInsect) && eliteFight)
                 enemyFighters[0].currentHealth = (int)(enemyFighters[0].currentHealth * 0.25);
 
@@ -177,9 +177,13 @@ namespace TJ
 
         public void PlayCard(CardUI cardUI)
         {
-            if (cardUI.card.cardType != Card.CardType.Attack && enemies[0].GetComponent<Fighter>().enrage.buffValue > 0)
-                enemies[0].GetComponent<Fighter>()
-                    .AddBuff(Buff.Type.Strength, enemies[0].GetComponent<Fighter>().enrage.buffValue);
+            foreach (var buffs in enemies[0].GetComponent<Fighter>().BuffList)
+            {
+                if (cardUI.card.cardType != Card.CardType.Attack && buffs.BuffType ==Buff.Type.Enrage && buffs.BuffValue > 0)
+                    enemies[0].GetComponent<Fighter>()
+                        .AddBuff(Buff.Type.Strength, buffs.BuffValue);
+            }
+
 
             cardActions.PerformAction(cardUI.card, cardTarget);
 

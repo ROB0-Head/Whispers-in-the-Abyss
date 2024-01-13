@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Navigation;
 using SaveSystem;
 using Settings;
 using TJ;
@@ -153,9 +154,12 @@ namespace BattleSystem
 
         public void PlayCard(CardUI cardUI)
         {
-            if (cardUI.card.cardType != Card.CardType.Attack && enemies[0].GetComponent<Fighter>().enrage.buffValue > 0)
-                enemies[0].GetComponent<Fighter>()
-                    .AddBuff(Buff.Type.Strength, enemies[0].GetComponent<Fighter>().enrage.buffValue);
+            foreach (var buffs in enemies[0].GetComponent<Fighter>().BuffList)
+            {
+                if (cardUI.card.cardType != Card.CardType.Attack && buffs.BuffType ==Buff.Type.Enrage && buffs.BuffValue > 0)
+                    enemies[0].GetComponent<Fighter>()
+                        .AddBuff(Buff.Type.Strength, buffs.BuffValue);
+            }
 
             cardActions.PerformAction(cardUI.card, cardTarget);
 
@@ -239,18 +243,23 @@ namespace BattleSystem
             ChangeTurn();
         }
 
-        public void EndFight(bool win)
+        public void EndFight(BattleState battleState)
         {
-            var characterData = SaveManager.LoadCharacterData();
-            if (characterData.startingRelic.RelicType ==RelicType.BurningBlood)
+            if (battleState == BattleState.Defeat)
+                NavigationController.Instance.ScreenTransition<MainScreen>();
+            else
             {
-                player.currentHealth += 6;
-                if (player.currentHealth > player.maxHealth)
-                    player.currentHealth = player.maxHealth;
-                player.UpdateHealthUI(player.currentHealth);
-            }
+                var characterData = SaveManager.LoadCharacterData();
+                if (characterData.startingRelic.RelicType == RelicType.BurningBlood)
+                {
+                    player.currentHealth += 6;
+                    if (player.currentHealth > player.maxHealth)
+                        player.currentHealth = player.maxHealth;
+                    player.UpdateHealthUI(player.currentHealth);
+                }
 
-            player.ResetBuffs();
+                player.ResetBuffs();
+            }
         }
     }
 

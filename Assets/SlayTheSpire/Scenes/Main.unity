@@ -21351,35 +21351,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9fd9c1b49ef90d4d9dfafbd69fe6d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buffList:
+  - BuffType: 0
+    BuffIcon: {fileID: 21300000, guid: c976812c798dcf24387145e0a137ca22, type: 3}
+    BuffValue: 0
+    BuffGO: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+  - BuffType: 1
+    BuffIcon: {fileID: 21300000, guid: c57791cc80e8f0a468fd514923819bf4, type: 3}
+    BuffValue: 0
+    BuffGO: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+  - BuffType: 2
+    BuffIcon: {fileID: 21300000, guid: e74497badffcbad4182d2df3a7599b8f, type: 3}
+    BuffValue: 0
+    BuffGO: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
   currentHealth: 0
   maxHealth: 75
   currentBlock: 0
   fighterHealthBar: {fileID: 1453753293296213605}
-  vulnerable:
-    type: 2
-    buffIcon: {fileID: 21300000, guid: c57791cc80e8f0a468fd514923819bf4, type: 3}
-    buffValue: 0
-    buffGO: {fileID: 0}
-  weak:
-    type: 3
-    buffIcon: {fileID: 21300000, guid: e74497badffcbad4182d2df3a7599b8f, type: 3}
-    buffValue: 0
-    buffGO: {fileID: 0}
-  strength:
-    type: 0
-    buffIcon: {fileID: 21300000, guid: c976812c798dcf24387145e0a137ca22, type: 3}
-    buffValue: 0
-    buffGO: {fileID: 0}
-  ritual:
-    type: 0
-    buffIcon: {fileID: 0}
-    buffValue: 0
-    buffGO: {fileID: 0}
-  enrage:
-    type: 0
-    buffIcon: {fileID: 0}
-    buffValue: 0
-    buffGO: {fileID: 0}
   buffPrefab: {fileID: 8088771124364855300, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
   buffParent: {fileID: 4706698407525545274}
   isPlayer: 1

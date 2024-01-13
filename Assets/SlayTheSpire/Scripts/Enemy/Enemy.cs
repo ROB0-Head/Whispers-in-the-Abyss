@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -100,12 +101,22 @@ namespace TJ
             if (bird)
                 battleSceneManager.birdIcon.GetComponent<Animator>().Play("Attack");
 
-            int totalDamage = turns[turnNumber].amount + thisEnemy.strength.buffValue;
-            if (player.vulnerable.buffValue > 0)
+            int totalDamage = 0;
+
+            foreach (var buffs in thisEnemy.BuffList)
             {
-                float a = totalDamage * 1.5f;
-                //Debug.Log("incrased damage from "+totalDamage+" to "+(int)a);
-                totalDamage = (int)a;
+                if (buffs.BuffType == Buff.Type.Strength)
+                {
+                    totalDamage = turns[turnNumber].amount + buffs.BuffValue;
+                }
+            }
+
+            foreach (var buffs in player.BuffList)
+            {
+                if (buffs.BuffType == Buff.Type.Vulnerable && buffs.BuffValue > 0)
+                {
+                    totalDamage = (int)(totalDamage * 1.5f);
+                }
             }
 
             yield return new WaitForSeconds(0.5f);
@@ -163,10 +174,22 @@ namespace TJ
 
             if (turns[turnNumber].intentType == EnemyAction.IntentType.Attack)
             {
-                int totalDamage = turns[turnNumber].amount + thisEnemy.strength.buffValue;
-                if (player.vulnerable.buffValue > 0)
+                int totalDamage = 0;
+
+                foreach (var buffs in thisEnemy.BuffList)
                 {
-                    totalDamage = (int)(totalDamage * 1.5f);
+                    if (buffs.BuffType == Buff.Type.Strength)
+                    {
+                        totalDamage = turns[turnNumber].amount + buffs.BuffValue;
+                    }
+                }
+
+                foreach (var buffs in player.BuffList)
+                {
+                    if (buffs.BuffType == Buff.Type.Vulnerable && buffs.BuffValue > 0)
+                    {
+                        totalDamage = (int)(totalDamage * 1.5f);
+                    }
                 }
 
                 intentAmount.text = totalDamage.ToString();
