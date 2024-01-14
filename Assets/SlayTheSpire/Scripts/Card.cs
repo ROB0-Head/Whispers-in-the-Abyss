@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TJ
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(fileName = "Card", menuName = "WITA/Battle/Card")]
     public class Card : ScriptableObject
     {
         public string cardTitle;
@@ -14,7 +14,7 @@ namespace TJ
         public CardAmount cardCost;
         public CardAmount cardEffect;
         public CardAmount buffAmount;
-        public Sprite cardIcon;
+        public GameObject cardPrefab;
         public CardType cardType;
 
         public enum CardType

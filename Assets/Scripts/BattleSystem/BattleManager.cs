@@ -7,6 +7,7 @@ using Settings;
 using TJ;
 using UI.Screens;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BattleSystem
 {
@@ -15,7 +16,7 @@ namespace BattleSystem
         public static BattleManager Instance { get; private set; }
 
         private BattleState _currentBattleState;
-        private CardActions cardActions;
+        [SerializeField] private CardActions _cardActions;
 
         private List<Card> _drawPile;
         private List<Card> _cardsInHand;
@@ -24,12 +25,13 @@ namespace BattleSystem
         private int _maxEnergy;
 
         public Transform topParent;
-        public CardUI selectedCard;
+        public CardUI SelectedCard;
 
-        [SerializeField] private Fighter cardTarget;
+        [SerializeField] private Fighter _cardTarget;
         [SerializeField] private Fighter player;
 
-        [SerializeField] private List<Enemy> enemies = new List<Enemy>();
+        [SerializeField] private List<Enemy> _enemies = new List<Enemy>();
+        [SerializeField] private Transform _enemyParent;
 
 
         private void Awake()
@@ -48,17 +50,19 @@ namespace BattleSystem
             {
                 case EnemyType.Default:
                     int numberOfEnemies = Random.Range(0, 2);
-                    for (int i = 0; i <= numberOfEnemies; i++)
-                    {
-                        enemies.Add(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>());
-                    }
+                    //Цикл для нескольких противников
+                    _enemies.Add(Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
+                        _enemyParent));
+
 
                     break;
                 case EnemyType.Elite:
-                    enemies.Add(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>());
+                    _enemies.Add(Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
+                        _enemyParent));
                     break;
                 case EnemyType.Boss:
-                    enemies.Add(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>());
+                    _enemies.Add(Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
+                        _enemyParent));
                     break;
             }
 
@@ -66,8 +70,8 @@ namespace BattleSystem
             {
                 case RelicType.PreservedInsect:
                     if (enemyType == EnemyType.Elite)
-                        enemies[0].GetComponent<Fighter>().currentHealth =
-                            (int)(enemies[0].GetComponent<Fighter>().currentHealth * 0.25);
+                        _enemies[0].GetComponent<Fighter>().currentHealth =
+                            (int)(_enemies[0].GetComponent<Fighter>().currentHealth * 0.25);
                     break;
                 case RelicType.Anchor:
                     player.AddBlock(10);
@@ -77,7 +81,7 @@ namespace BattleSystem
                     _maxEnergy += 1;
                     break;
                 case RelicType.Marbles:
-                    enemies[0].GetComponent<Fighter>().AddBuff(Buff.Type.Vulnerable, 1);
+                    _enemies[0].GetComponent<Fighter>().AddBuff(Buff.Type.Vulnerable, 1);
                     break;
                 case RelicType.Bag:
                     DrawCards(2);
@@ -154,20 +158,21 @@ namespace BattleSystem
 
         public void PlayCard(CardUI cardUI)
         {
-            foreach (var buffs in enemies[0].GetComponent<Fighter>().BuffList)
+            foreach (var buffs in _enemies[0].GetComponent<Fighter>().BuffList)
             {
-                if (cardUI.card.cardType != Card.CardType.Attack && buffs.BuffType ==Buff.Type.Enrage && buffs.BuffValue > 0)
-                    enemies[0].GetComponent<Fighter>()
+                if (cardUI.card.cardType != Card.CardType.Attack && buffs.BuffType == Buff.Type.Enrage &&
+                    buffs.BuffValue > 0)
+                    _enemies[0].GetComponent<Fighter>()
                         .AddBuff(Buff.Type.Strength, buffs.BuffValue);
             }
 
-            cardActions.PerformAction(cardUI.card, cardTarget);
+            _cardActions.PerformAction(cardUI.card, _cardTarget);
 
             _currentEnergy -= cardUI.card.GetCardCostAmount();
             /*energyText.text = energy.ToString();*/
 
             Instantiate(cardUI.discardEffect, cardUI.transform.position, Quaternion.identity, topParent);
-            selectedCard = null;
+            SelectedCard = null;
             cardUI.gameObject.SetActive(false);
             _cardsInHand.Remove(cardUI.card);
             DiscardCard(cardUI.card);
@@ -194,7 +199,7 @@ namespace BattleSystem
                 }*/
 
 
-                foreach (Enemy e in enemies)
+                foreach (Enemy e in _enemies)
                 {
                     if (e.thisEnemy == null)
                         e.thisEnemy = e.GetComponent<Fighter>();
@@ -208,7 +213,7 @@ namespace BattleSystem
             }
             else
             {
-                foreach (Enemy e in enemies)
+                foreach (Enemy e in _enemies)
                 {
                     e.DisplayIntent();
                 }
@@ -231,7 +236,7 @@ namespace BattleSystem
 
             yield return new WaitForSeconds(1.5f);
 
-            foreach (Enemy enemy in enemies)
+            foreach (Enemy enemy in _enemies)
             {
                 enemy.midTurn = true;
                 enemy.TakeTurn();

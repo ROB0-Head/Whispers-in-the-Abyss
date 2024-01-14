@@ -13,5 +13,13 @@ MonoBehaviour:
   m_Name: CharacterDeck
   m_EditorClassIdentifier: Assembly-CSharp:Settings:CharacterDeck
   Deck:
-  - {fileID: 11400000, guid: fc66991c40abacd42836fb33d8d2d0a5, type: 2}
-  - {fileID: 11400000, guid: 05e4695de1500004c9edc7c25f2000e7, type: 2}
+  - {fileID: 11400000, guid: a432b34dab22b9c438cdc068b9993d60, type: 2}
+  - {fileID: 11400000, guid: c36583a0d3b691b419d99c465ebad7bb, type: 2}
+  - {fileID: 11400000, guid: cdc1cb0cc0cf8c74db6ef8b7817a66be, type: 2}
+  - {fileID: 11400000, guid: ebd5d1c8547d8f64a8cf72309d85139e, type: 2}
+  - {fileID: 11400000, guid: 483be304816fab14f9c25e94529838fb, type: 2}
+  - {fileID: 11400000, guid: fb675a8f6e83c794a8d9725c60f74ffa, type: 2}
+  - {fileID: 11400000, guid: 34091dd08c096ba4ca000bb465377474, type: 2}
+  - {fileID: 11400000, guid: ebd5d1c8547d8f64a8cf72309d85139e, type: 2}
+  - {fileID: 11400000, guid: 8f780233b74f11649bf47ef5e0e03dab, type: 2}
+  - {fileID: 11400000, guid: cdc1cb0cc0cf8c74db6ef8b7817a66be, type: 2}

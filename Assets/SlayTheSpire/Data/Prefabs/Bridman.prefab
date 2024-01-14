@@ -250,7 +250,7 @@ MonoBehaviour:
   maxHealth: 52
   currentBlock: 0
   fighterHealthBar: {fileID: 5938868779381404939, guid: 2c7fa458abf5ab14ba18ed8aca41983a, type: 3}
-  buffPrefab: {fileID: 8088771124364855300, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+  buffPrefab: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
   buffParent: {fileID: 8028767108936048577, guid: 2c7fa458abf5ab14ba18ed8aca41983a, type: 3}
   isPlayer: 0
   damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
@@ -266,15 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08184a27ab0231446b726d6e0cbab959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buffList: []
-  currentHealth: 0
-  maxHealth: 0
-  currentBlock: 0
-  fighterHealthBar: {fileID: 0}
-  buffPrefab: {fileID: 0}
-  buffParent: {fileID: 0}
-  isPlayer: 0
-  damageIndicator: {fileID: 0}
   enemyActions: []
   turns:
   - intentType: 2
@@ -569,8 +560,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e54d5decce8c6a841aba63d3612d7a74, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: e54d5decce8c6a841aba63d3612d7a74, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -964,8 +955,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 55/75
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 74d4d290e7b884843b6f427508174c8d, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 74d4d290e7b884843b6f427508174c8d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1306,8 +1297,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ab03d3d3bfb24fa45859d08beb539965, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: ab03d3d3bfb24fa45859d08beb539965, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

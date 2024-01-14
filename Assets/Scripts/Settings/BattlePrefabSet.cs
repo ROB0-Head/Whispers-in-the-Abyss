@@ -16,6 +16,7 @@ namespace Settings
     {
         [field: SerializeField] public CharacterDeck CharacterDeck { private set; get; }
         [field: SerializeField] public DeckLibrary DeckLibrary { private set; get; }
+        [field: SerializeField] public RelicLibrary RelicLibrary { private set; get; }
         [field: SerializeField] public TarotLibrary TarotLibrary { private set; get; }
         [field: SerializeField] public List<Enemy> Enemies { private set; get; }
         

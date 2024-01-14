@@ -8,10 +8,10 @@ namespace TJ
     [Serializable]
     public struct Buff
     {
-        public Type BuffType;
-        public Sprite BuffIcon;
-        public int BuffValue;
-        public BuffUI BuffGO;
+        public Type BuffType { get; set; }
+        public Sprite BuffIcon { get; set; }
+        public int BuffValue { get; set; }
+        public BuffUI BuffGo { get; set; }
 
         public enum Type
         {

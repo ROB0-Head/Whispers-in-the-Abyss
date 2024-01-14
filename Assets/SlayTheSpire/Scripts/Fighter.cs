@@ -14,7 +14,7 @@ namespace TJ
         public int currentBlock = 0;
         public FighterHealthBar fighterHealthBar;
 
-        public GameObject buffPrefab;
+        public BuffUI buffPrefab;
         public Transform buffParent;
         public bool isPlayer;
         Enemy enemy;
@@ -109,12 +109,11 @@ namespace TJ
 
             if (currentBuff.BuffValue <= 0)
             {
-                var buffUI = Instantiate(buffPrefab, buffParent);
-                currentBuff.BuffGO = buffUI.GetComponent<BuffUI>();
+                currentBuff.BuffGo = Instantiate(buffPrefab, buffParent);
             }
 
             currentBuff.BuffValue += amount;
-            currentBuff.BuffGO.DisplayBuff(currentBuff);
+            currentBuff.BuffGo.DisplayBuff(currentBuff);
         }
 
         public void EvaluateBuffsAtTurnEnd()
@@ -131,10 +130,10 @@ namespace TJ
                             break;
                         default:
                             buff.BuffValue -= 1;
-                            buff.BuffGO.DisplayBuff(buff);
+                            buff.BuffGo.DisplayBuff(buff);
 
                             if (buff.BuffValue <= 0)
-                                Destroy(buff.BuffGO.gameObject);
+                                Destroy(buff.BuffGo.gameObject);
                             break;
                     }
                 }
@@ -149,7 +148,7 @@ namespace TJ
                 if (buff.BuffValue > 0)
                 {
                     buff.BuffValue = 0;
-                    Destroy(buff.BuffGO.gameObject);
+                    Destroy(buff.BuffGo.gameObject);
                 }
             }
 

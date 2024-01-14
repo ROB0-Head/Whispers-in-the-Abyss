@@ -259,10 +259,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1689344732540434864, guid: 7a29179dc9f72314e9460f4f06fd1aa2, type: 3}
+      propertyPath: thisEnemy
+      value: 
+      objectReference: {fileID: 11838941}
+    - target: {fileID: 1689344732540434865, guid: 7a29179dc9f72314e9460f4f06fd1aa2, type: 3}
+      propertyPath: buffPrefab
+      value: 
+      objectReference: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
     - target: {fileID: 1689344732540434865, guid: 7a29179dc9f72314e9460f4f06fd1aa2, type: 3}
       propertyPath: damageIndicator
       value: 
       objectReference: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
+    - target: {fileID: 1689344732540434865, guid: 7a29179dc9f72314e9460f4f06fd1aa2, type: 3}
+      propertyPath: fighterHealthBar
+      value: 
+      objectReference: {fileID: 875158852}
     - target: {fileID: 3127255298891522307, guid: 7a29179dc9f72314e9460f4f06fd1aa2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -289,6 +301,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1689344732540434863, guid: 7a29179dc9f72314e9460f4f06fd1aa2, type: 3}
   m_PrefabInstance: {fileID: 11838935}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &11838941 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1689344732540434865, guid: 7a29179dc9f72314e9460f4f06fd1aa2, type: 3}
+  m_PrefabInstance: {fileID: 11838935}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9fd9c1b49ef90d4d9dfafbd69fe6d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &13806609
 GameObject:
   m_ObjectHideFlags: 0
@@ -3679,6 +3702,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 863394242125682111, guid: 798d6455bbbbb9e448db1c26e96f41f8, type: 3}
+      propertyPath: buffPrefab
+      value: 
+      objectReference: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+    - target: {fileID: 863394242125682111, guid: 798d6455bbbbb9e448db1c26e96f41f8, type: 3}
       propertyPath: damageIndicator
       value: 
       objectReference: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
@@ -6582,6 +6609,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7553774990861939420, guid: 2c7fa458abf5ab14ba18ed8aca41983a, type: 3}
+      propertyPath: buffPrefab
+      value: 
+      objectReference: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+    - target: {fileID: 7553774990861939420, guid: 2c7fa458abf5ab14ba18ed8aca41983a, type: 3}
       propertyPath: damageIndicator
       value: 
       objectReference: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
@@ -6684,6 +6715,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8205925384311589039, guid: 38a25d8c46a807a4c934b9c682bbdc25, type: 3}
   m_PrefabInstance: {fileID: 675448620011383441}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &875158852 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1689344731920930019, guid: 7a29179dc9f72314e9460f4f06fd1aa2, type: 3}
+  m_PrefabInstance: {fileID: 11838935}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111319f3906ac5642baf10e251944046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &889070969
 GameObject:
   m_ObjectHideFlags: 0
@@ -14044,6 +14086,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 612543447}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1836484030 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1137176563113577820, guid: 678e2ac83b586d44985c3c8f4edbd626, type: 3}
+  m_PrefabInstance: {fileID: 4344333205448066052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111319f3906ac5642baf10e251944046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1848369587
 GameObject:
   m_ObjectHideFlags: 0
@@ -20765,9 +20818,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3852671059105499787, guid: 678e2ac83b586d44985c3c8f4edbd626, type: 3}
+      propertyPath: buffPrefab
+      value: 
+      objectReference: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+    - target: {fileID: 3852671059105499787, guid: 678e2ac83b586d44985c3c8f4edbd626, type: 3}
       propertyPath: damageIndicator
       value: 
       objectReference: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
+    - target: {fileID: 3852671059105499787, guid: 678e2ac83b586d44985c3c8f4edbd626, type: 3}
+      propertyPath: fighterHealthBar
+      value: 
+      objectReference: {fileID: 1836484030}
     - target: {fileID: 3852671059105499799, guid: 678e2ac83b586d44985c3c8f4edbd626, type: 3}
       propertyPath: m_Name
       value: Nob
@@ -21355,20 +21416,20 @@ MonoBehaviour:
   - BuffType: 0
     BuffIcon: {fileID: 21300000, guid: c976812c798dcf24387145e0a137ca22, type: 3}
     BuffValue: 0
-    BuffGO: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+    BuffGO: {fileID: 0}
   - BuffType: 1
     BuffIcon: {fileID: 21300000, guid: c57791cc80e8f0a468fd514923819bf4, type: 3}
     BuffValue: 0
-    BuffGO: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+    BuffGO: {fileID: 0}
   - BuffType: 2
     BuffIcon: {fileID: 21300000, guid: e74497badffcbad4182d2df3a7599b8f, type: 3}
     BuffValue: 0
-    BuffGO: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+    BuffGO: {fileID: 0}
   currentHealth: 0
   maxHealth: 75
   currentBlock: 0
   fighterHealthBar: {fileID: 1453753293296213605}
-  buffPrefab: {fileID: 8088771124364855300, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+  buffPrefab: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
   buffParent: {fileID: 4706698407525545274}
   isPlayer: 1
   damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}

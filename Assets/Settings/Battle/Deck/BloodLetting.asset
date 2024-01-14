@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5adad95ea339a43a847fb2fd71c150, type: 3}
+  m_Name: BloodLetting
+  m_EditorClassIdentifier: 
+  cardTitle: Bloodletting
+  isUpgraded: 0
+  cardDescription:
+    baseAmount: Lose 3 HP. Gain 2 Energy
+    upgradedAmount: Lose 3 HP. Gain 2 Energy
+  cardCost:
+    baseAmount: 0
+    upgradedAmount: 0
+  cardEffect:
+    baseAmount: 8
+    upgradedAmount: 8
+  buffAmount:
+    baseAmount: 5
+    upgradedAmount: 5
+  cardPrefab: {fileID: 8286164728509786245, guid: 77f349403f6e44146b28bb31c721bfe0, type: 3}
+  cardType: 1

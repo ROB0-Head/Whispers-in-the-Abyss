@@ -2,6 +2,7 @@ using BattleSystem;
 using Map;
 using Navigation;
 using SaveSystem;
+using Settings;
 using TJ;
 using TMPro;
 using UnityEngine;
@@ -35,26 +36,11 @@ namespace UI.Screens
 
         public override void Setup(ScreenSettings settings)
         {
-            if (settings is BattleScreenSettings battleScreenSettings)
-            {
-                var userData = SaveManager.LoadCharacterData();
-                var zOffSet = 15f;
-                foreach (var card in userData.CurrentDeck.Deck)
-                {
-                    /*var cardTransform = Instantiate(card.cardPrefab, _deck.transform);
-                    card.Play();
-                    cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
-                    zOffSet -= 5;*/
-                }
-
-                BattleManager.Instance.StartBattle(battleScreenSettings.EnemyType);
-                turnText.text = "Player's Turn";
-                banner.Play("bannerOut");
-            }
-            else
+            if (settings is not BattleScreenSettings battleScreenSettings)
                 return;
 
             SelectTab(battleScreenSettings.TabType);
+            BattleManager.Instance.StartBattle(battleScreenSettings.EnemyType);
         }
 
         public override void UpdateScreen()
@@ -68,45 +54,19 @@ namespace UI.Screens
 
         public void SelectTab(BattleTabType tabType)
         {
-            _currentTab = tabType;
-            /*foreach (var screenBottomIcon in _screenBottomIcons)
-            {
-                if (screenBottomIcon.TabType == tabType)
-                {
-                    screenBottomIcon.Icon.sprite = screenBottomIcon.Selected;
-                    screenBottomIcon.Icon.color = new Color(screenBottomIcon.Icon.color.r,
-                        screenBottomIcon.Icon.color.g, screenBottomIcon.Icon.color.b, 1);
-                }
-                else
-                {
-                    screenBottomIcon.Icon.sprite = screenBottomIcon.Unselected;
-                    screenBottomIcon.Icon.color = new Color(screenBottomIcon.Icon.color.r,
-                        screenBottomIcon.Icon.color.g, screenBottomIcon.Icon.color.b, 0.5f);
-                }
-            }
-
-            var allChildren = new List<GameObject>();
-
-            foreach (Transform child in _contentParent.transform)
-            {
-                allChildren.Add(child.gameObject);
-            }
-
-            foreach (var child in allChildren)
-            {
-                Destroy(child);
-            }*/
-
             switch (tabType)
             {
-                case BattleTabType.Guild:
-                    NavigationController.Instance.ScreenTransition<MapManager>();
-                    break;
-                case BattleTabType.Forge:
-                    NavigationController.Instance.ScreenTransition<DialogManager>();
-                    break;
-                case BattleTabType.Backpack:
+                case BattleTabType.Battle:
+                    var deck = SettingsProvider.Get<BattlePrefabSet>().CharacterDeck.Deck;
+                    var zOffSet = 15f;
+                    foreach (var card in deck)
+                    {
+                        var cardTransform = Instantiate(card.cardPrefab, _deck.transform);
+                        cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
+                        zOffSet -= 5;
+                    }
 
+                    _currentTab = tabType;
                     break;
                 case BattleTabType.Exit:
                     Home();
@@ -118,7 +78,7 @@ namespace UI.Screens
 
         public static void ChangeTurn(BattleState battleState)
         {
-            switch (battleState)
+            /*switch (battleState)
             {
                 case BattleState.EnemyTurn:
                     turnText.text = "Enemy's Turn";
@@ -129,7 +89,7 @@ namespace UI.Screens
                     turnText.text = "Player's Turn";
                     banner.Play("bannerOut");
                     break;
-            }
+            }*/
         }
 
         public void Home()
@@ -139,21 +99,9 @@ namespace UI.Screens
 
         public enum BattleTabType
         {
-            City = 0,
-            Guild = 1,
-            Forge = 2,
-            Backpack = 3,
-            Exit = 4
+            Battle = 0,
+            Exit = 1
         }
-
-        /*[Serializable]
-        public class ScreenBottomIcons
-        {
-            public CityTabType TabType;
-            public Image Icon;
-            public Sprite Unselected;
-            public Sprite Selected;
-        }*/
     }
 
     public class BattleScreenSettings : ScreenSettings

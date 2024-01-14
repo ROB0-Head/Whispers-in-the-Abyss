@@ -35,7 +35,6 @@ namespace TJ
             cardTitleText.text = card.cardTitle;
             cardDescriptionText.text = card.GetCardDescriptionAmount();
             cardCostText.text = card.GetCardCostAmount().ToString();
-            cardImage.sprite = card.cardIcon;
         }
 
         public void SelectCard()

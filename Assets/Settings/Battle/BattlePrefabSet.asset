@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f97b03cb1460a8f2b188362afb9b1, type: 3}
+  m_Name: BattlePrefabSet
+  m_EditorClassIdentifier: 
+  <CharacterDeck>k__BackingField: {fileID: 11400000, guid: fdaacc6a0971ac94e840e7d2ff6fb9fa, type: 2}
+  <DeckLibrary>k__BackingField: {fileID: 11400000, guid: aa721664757db9c43aab75a9370a6beb, type: 2}
+  <RelicLibrary>k__BackingField: {fileID: 11400000, guid: bcc280a690956c44b9dfc1402870ec60, type: 2}
+  <TarotLibrary>k__BackingField: {fileID: 0}
+  <Enemies>k__BackingField:
+  - {fileID: 3852671059105499788, guid: 678e2ac83b586d44985c3c8f4edbd626, type: 3}
+  - {fileID: 7553774990861939419, guid: 2c7fa458abf5ab14ba18ed8aca41983a, type: 3}
+  - {fileID: 1689344732540434864, guid: 7a29179dc9f72314e9460f4f06fd1aa2, type: 3}
+  - {fileID: 863394242125682104, guid: 798d6455bbbbb9e448db1c26e96f41f8, type: 3}

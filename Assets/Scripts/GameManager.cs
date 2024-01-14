@@ -12,8 +12,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static bool NeedShowGiftTutor;
-    public static bool NeedShowDateTutor;
     private static DateTime _startDateTime;
 
     private static bool _timeAfterStart5Send;
@@ -105,18 +103,21 @@ public class GameManager : MonoBehaviour
     {
         if (IsFirstLaunch)
         {
-            /*var userData = SaveManager.LoadUserData();
-            userData.CurrentDeck.Deck = new List<Card>();
-            SaveManager.SaveUserData(userData);*/
+            var characterData = SaveManager.LoadCharacterData();
+            characterData.CurrentDeck.Deck = new List<Card>();
+            for (int i = 0; i < 10; i++)
+            {
+                Card randomCard = SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.GetRandomCard();
+                var characterDeck = SettingsProvider.Get<BattlePrefabSet>().CharacterDeck;
+                characterDeck.Deck.Add(randomCard);
+                characterData.CurrentDeck.Deck = characterDeck.Deck;
+            }
+            characterData.startingRelic = SettingsProvider.Get<BattlePrefabSet>().RelicLibrary.GetRandomRelic();
             IsFirstSessionForAnalytics = true;
             IsFirstLaunch = false;
             DailyRewardSystem.ShowRewardPopup();
-            NeedShowGiftTutor = true;
-            NeedShowDateTutor = true;
-            /*var userData = SaveDataManager.LoadUserData();
-            userData.TotalHearts = SettingsProvider.Get<ServerDataSettingsFromServer>().StartingInternalCurrency;
-            userData.FirstLaunchDateTime = DateTime.UtcNow;
-            SaveDataManager.SaveUserData(userData);*/
+            characterData.FirstLaunchDateTime = DateTime.UtcNow;
+            SaveManager.SaveCharacterData(characterData);
         }
         else
         {
@@ -124,19 +125,7 @@ public class GameManager : MonoBehaviour
             {
                 DailyRewardSystem.ShowRewardPopup();
             }
-
-            /*var blurType = SettingsProvider.Get<ServerDataSettingsFromServer>().BlurType;
-            if (blurType == BlurType.Limit)
-            {
-                foreach (var chatInfo in TestSystem.Instance.TestChats)
-                {
-                    var userData = SaveDataManager.LoadUserData();
-                    var characterInfo = userData.GetActionLimits(chatInfo.ChatId);
-
-                    characterInfo.SendedPhotos = 0;
-                    SaveDataManager.SaveUserData(userData);
-                }
-            }*/
+            
         }
     }
 }

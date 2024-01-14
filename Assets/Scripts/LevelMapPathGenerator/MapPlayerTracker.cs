@@ -2,6 +2,7 @@
 using System.Linq;
 using DG.Tweening;
 using Navigation;
+using TJ;
 using UI.Screens;
 using UnityEngine;
 
@@ -58,7 +59,7 @@ namespace Map
             view.SetLineColors();
             mapNode.ShowSwirlAnimation();
 
-            DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(() => EnterNode(mapNode));
+           EnterNode(mapNode);
         }
 
         private static void EnterNode(MapNode mapNode)
@@ -71,9 +72,17 @@ namespace Map
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.MinorEnemy:
-                    NavigationController.Instance.ScreenTransition<BattleScreen>();
+                    NavigationController.Instance.ScreenTransition<BattleScreen>(new BattleScreenSettings()
+                    {
+                        TabType = BattleScreen.BattleTabType.Battle,
+                        EnemyType = EnemyType.Default
+                    });
                     break;
                 case NodeType.EliteEnemy:
+                    NavigationController.Instance.ScreenTransition<BattleScreen>(new BattleScreenSettings()
+                    {
+                        EnemyType = EnemyType.Elite
+                    });
                     break;
                 case NodeType.RestSite:
                     break;
@@ -82,6 +91,10 @@ namespace Map
                 case NodeType.Store:
                     break;
                 case NodeType.Boss:
+                    NavigationController.Instance.ScreenTransition<BattleScreen>(new BattleScreenSettings()
+                    {
+                        EnemyType = EnemyType.Boss
+                    });
                     break;
                 case NodeType.Mystery:
                     break;
