@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Map
 {
     [CustomEditor(typeof(MapManager))]
-    public class MapManagerInspector : Editor
+    public class MapManagerInspector : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

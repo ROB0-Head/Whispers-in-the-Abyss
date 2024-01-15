@@ -8,7 +8,7 @@ namespace Map
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Example))]
-    public class ExampleEditor : Editor
+    public class ExampleEditor : UnityEditor.Editor
     {
 
         private ReorderableList list1;

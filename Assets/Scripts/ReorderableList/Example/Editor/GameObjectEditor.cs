@@ -6,7 +6,7 @@ using UnityEditor;
 namespace Map
 {
     [CustomEditor(typeof(GameObjectExample))]
-    public class GameObjectEditor : Editor
+    public class GameObjectEditor : UnityEditor.Editor
     {
 
     }

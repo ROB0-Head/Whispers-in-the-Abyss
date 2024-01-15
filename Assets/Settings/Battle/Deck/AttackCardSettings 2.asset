@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: AttackCardSettings 2
+  m_EditorClassIdentifier: Assembly-CSharp:TJ:AttackCardSettings
+  IsUpgraded: 0
+  CardDescription:
+    baseAmount: Deal 12 damage. Apply 2 Weak.
+    upgradedAmount: Deal 14 damage. Apply 3 Weak.
+  CardCost:
+    baseAmount: 2
+    upgradedAmount: 2
+  CardEffect:
+    baseAmount: 12
+    upgradedAmount: 14
+  BuffAmount:
+    baseAmount: 2
+    upgradedAmount: 3
+  CardType: 0
+  AttackType: 3

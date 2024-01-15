@@ -59,10 +59,10 @@ namespace TJ
             restScene.SetActive(false);
             playerIcon.SetActive(true);
 
-            if (e == "enemy")
+            /*if (e == "enemy")
                 battleSceneManager.StartHallwayFight();
             else if (e == "elite")
-                battleSceneManager.StartEliteFight();
+                battleSceneManager.StartEliteFight();*/
 
             //fade from black
             yield return new WaitForSeconds(1);

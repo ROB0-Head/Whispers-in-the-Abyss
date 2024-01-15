@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BattleSystem;
 using Map;
 using Navigation;
@@ -5,6 +6,7 @@ using SaveSystem;
 using Settings;
 using TJ;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,25 +14,23 @@ namespace UI.Screens
 {
     public class BattleScreen : DefaultScreen
     {
-        private BattleTabType _currentTab;
+        public static BattleScreen Instance { get; private set; }
+        
         [SerializeField] private Button _backButton;
-
         [SerializeField] private Button endTurnButton;
-        public TMP_Text drawPileCountText;
-        public TMP_Text discardPileCountText;
-        public TMP_Text energyText;
-
-        public Transform enemyParent;
-        public EndScreen endScreen;
-
-        public static Animator banner;
-        public static TMP_Text turnText;
-
+        [SerializeField] private Animator banner;
+        [SerializeField] private TMP_Text turnText;
+        [SerializeField] private TMP_Text drawPileCountText;
+        [SerializeField] private TMP_Text discardPileCountText;
+        [SerializeField] private TMP_Text energyText;
+        [SerializeField] private Transform enemyParent;
         [SerializeField] private GameObject _deck;
 
+        private BattleTabType _currentTab;
 
         private void Awake()
         {
+            Instance = this;
             _backButton.onClick.AddListener(() => { SelectTab(BattleTabType.Exit); });
         }
 
@@ -43,6 +43,22 @@ namespace UI.Screens
             BattleManager.Instance.StartBattle(battleScreenSettings.EnemyType);
         }
 
+        public List<Card> DrawCards()
+        {
+            var deck = SettingsProvider.Get<BattlePrefabSet>().CharacterDeck.Deck;
+            var zOffSet = 15f;
+            foreach (var card in deck)
+            {
+                var cardTransform = Instantiate(card, _deck.transform);
+                cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
+                zOffSet -= 5;
+                cardTransform.gameObject.SetActive(false);
+            }
+
+            return deck;
+        }
+        
+        
         public override void UpdateScreen()
         {
             SelectTab(_currentTab);
@@ -57,15 +73,6 @@ namespace UI.Screens
             switch (tabType)
             {
                 case BattleTabType.Battle:
-                    var deck = SettingsProvider.Get<BattlePrefabSet>().CharacterDeck.Deck;
-                    var zOffSet = 15f;
-                    foreach (var card in deck)
-                    {
-                        var cardTransform = Instantiate(card.cardPrefab, _deck.transform);
-                        cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
-                        zOffSet -= 5;
-                    }
-
                     _currentTab = tabType;
                     break;
                 case BattleTabType.Exit:
@@ -76,9 +83,9 @@ namespace UI.Screens
             }
         }
 
-        public static void ChangeTurn(BattleState battleState)
+        public void ChangeTurn(BattleState battleState)
         {
-            /*switch (battleState)
+            switch (battleState)
             {
                 case BattleState.EnemyTurn:
                     turnText.text = "Enemy's Turn";
@@ -89,7 +96,7 @@ namespace UI.Screens
                     turnText.text = "Player's Turn";
                     banner.Play("bannerOut");
                     break;
-            }*/
+            }
         }
 
         public void Home()

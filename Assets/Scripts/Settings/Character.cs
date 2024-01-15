@@ -10,7 +10,6 @@ namespace Settings
     {
         public int Health;
         public int Energy;
-        public CharacterDeck CurrentDeck;
         public Relic startingRelic;
         public int CurrentTowerFloor;
         public int CurrentGold;
@@ -21,7 +20,6 @@ namespace Settings
         {
             Health = 100;  
             Energy = 3;   
-            CurrentDeck = new CharacterDeck();  
             startingRelic = null; 
             CurrentTowerFloor = 1;  
             CurrentGold = 0;

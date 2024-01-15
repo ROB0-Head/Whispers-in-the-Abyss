@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using BattleSystem;
 using UnityEngine;
 
 namespace TJ
@@ -21,48 +22,69 @@ namespace TJ
             card = _card;
             target = _fighter;
 
-            switch (card.cardTitle)
+            if (_card.CardType == CardType.Attack && _card is AttackCard attackCard)
             {
-                case "Strike":
-                    AttackEnemy();
-                    break;
-                case "Defend":
-                    PerformBlock();
-                    break;
-                case "Bash":
-                    AttackEnemy();
-                    ApplyBuff(Buff.Type.Vulnerable);
-                    break;
-                case "Inflame":
-                    ApplyBuffToSelf(Buff.Type.Strength);
-                    break;
-                case "Clothesline":
-                    AttackEnemy();
-                    ApplyBuff(Buff.Type.Weak);
-                    break;
-                case "ShrugItOff":
-                    PerformBlock();
-                    battleSceneManager.DrawCards(1);
-                    break;
-                case "IronWave":
-                    AttackEnemy();
-                    PerformBlock();
-                    break;
-                case "Bloodletting":
-                    AttackSelf();
-                    battleSceneManager.energy += 2;
-                    break;
-                case "Bodyslam":
-                    BodySlam();
-                    break;
-                case "Entrench":
-                    Entrench();
-                    break;
-                default:
-                    Debug.Log("theres an issue");
-                    break;
+                switch (attackCard.AttackType)
+                {
+                    case AttackCardType.Strike:
+                        AttackEnemy();
+                        break;
+                    case AttackCardType.Bash:
+                        AttackEnemy();
+                        ApplyBuff(Buff.Type.Vulnerable);
+                        break;
+                    
+                    case AttackCardType.Clothesline:
+                        AttackEnemy();
+                        ApplyBuff(Buff.Type.Weak);
+                        break;
+                    
+                    case AttackCardType.Bodyslam:
+                        BodySlam();
+                        break;
+                    default:
+                        Debug.Log("Invalid Attack Type");
+                        break;
+                }
+            }
+
+            if (_card.CardType == CardType.Defence && _card is DefenseCard defenceCard)
+            {
+                switch (defenceCard.DefenceType)
+                {
+                    case DefenceCardType.Defence:
+                        PerformBlock();
+                        break;
+                    case DefenceCardType.Entrench:
+                        Entrench();
+                        break;
+                    case DefenceCardType.ShrugItOff:
+                        Entrench();
+                        break;
+                    case DefenceCardType.IronWave:
+                        AttackEnemy();
+                        PerformBlock();
+                        break;
+                }
+            }
+
+            if (_card.CardType == CardType.Skill && _card is SkillCard skillCard)
+            {
+                switch (skillCard.SkillType)
+                {
+                    case SkillCardType.Bloodletting:
+                        AttackSelf();
+                        /*
+                        BattleManager.Instance.Energy += 2;
+                        */
+                        break;
+                    case SkillCardType.Inflame:
+                        ApplyBuffToSelf(Buff.Type.Strength);
+                        break;
+                }
             }
         }
+
 
         private void AttackEnemy()
         {
@@ -73,6 +95,7 @@ namespace TJ
                 {
                     totalDamage = card.GetCardEffectAmount() + buffs.BuffValue;
                 }
+
                 foreach (var currentBuff in target.BuffList)
                 {
                     if (currentBuff.BuffType == Buff.Type.Vulnerable && currentBuff.BuffValue > 0)
@@ -83,6 +106,7 @@ namespace TJ
                     }
                 }
             }
+
             target.TakeDamage(totalDamage);
         }
 
@@ -95,6 +119,7 @@ namespace TJ
                 {
                     totalDamage = card.GetCardEffectAmount() + (buffs.BuffValue * 3);
                 }
+
                 foreach (var currentBuff in target.BuffList)
                 {
                     if (currentBuff.BuffType == Buff.Type.Vulnerable && currentBuff.BuffValue > 0)
@@ -105,6 +130,7 @@ namespace TJ
                     }
                 }
             }
+
             target.TakeDamage(totalDamage);
         }
 

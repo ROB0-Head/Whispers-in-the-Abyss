@@ -52,7 +52,7 @@ namespace TJ
         public TMP_Text turnText;
         public GameObject gameover;
 
-        private void Awake()
+        /*private void Awake()
         {
             gameManager = FindObjectOfType<GameManager>();
             cardActions = GetComponent<CardActions>();
@@ -217,14 +217,14 @@ namespace TJ
                     DiscardCard(card);
                 }
 
-                foreach (CardUI cardUI in cardsInHandGameObjects)
+                /*foreach (CardUI cardUI in cardsInHandGameObjects)
                 {
                     if (cardUI.gameObject.activeSelf)
                         Instantiate(cardUI.discardEffect, cardUI.transform.position, Quaternion.identity, topParent);
 
                     cardUI.gameObject.SetActive(false);
                     cardsInHand.Remove(cardUI.card);
-                }
+                }#1#
 
                 #endregion
 
@@ -327,6 +327,6 @@ namespace TJ
             {
                 endScreen.relicReward.gameObject.SetActive(false);
             }
-        }
+        }*/
     }
 }

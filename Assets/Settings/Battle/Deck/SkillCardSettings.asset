@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: SkillCardSettings
+  m_EditorClassIdentifier: Assembly-CSharp:TJ:SkillCardSettings
+  IsUpgraded: 0
+  CardDescription:
+    baseAmount: Lose 3 HP. Gain 2 Energy
+    upgradedAmount: Lose 3 HP. Gain 2 Energy
+  CardCost:
+    baseAmount: 0
+    upgradedAmount: 0
+  CardEffect:
+    baseAmount: 3
+    upgradedAmount: 3
+  BuffAmount:
+    baseAmount: 3
+    upgradedAmount: 3
+  CardType: 2
+  SkillType: 0

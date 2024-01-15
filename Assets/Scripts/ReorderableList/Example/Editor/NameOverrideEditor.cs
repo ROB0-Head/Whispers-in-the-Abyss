@@ -6,7 +6,7 @@ namespace Map
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NameOverride))]
-    public class NameOverrideEditor : Editor
+    public class NameOverrideEditor : UnityEditor.Editor
     {
 
         private SerializedProperty autoList;

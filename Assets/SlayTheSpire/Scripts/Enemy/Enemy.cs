@@ -33,7 +33,9 @@ namespace TJ
         private void Start()
         {
             battleSceneManager = FindObjectOfType<BattleSceneManager>();
+            /*
             player = battleSceneManager.player;
+            */
             thisEnemy = GetComponent<Fighter>();
             animator = GetComponent<Animator>();
 

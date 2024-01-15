@@ -5,24 +5,30 @@ using UnityEngine;
 
 namespace TJ
 {
-    [CreateAssetMenu(fileName = "Card", menuName = "WITA/Battle/Card")]
-    public class Card : ScriptableObject
+    public class SkillCard : Card
     {
-        public string cardTitle;
-        public bool isUpgraded;
-        public CardDescription cardDescription;
-        public CardAmount cardCost;
-        public CardAmount cardEffect;
-        public CardAmount buffAmount;
-        public GameObject cardPrefab;
-        public CardType cardType;
+        public SkillCardType SkillType;
+    }
 
-        public enum CardType
-        {
-            Attack,
-            Skill,
-            Power
-        }
+    public class AttackCard : Card
+    {
+        public AttackCardType AttackType;
+    }
+
+    public class DefenseCard : Card
+    {
+        public DefenceCardType DefenceType;
+    }
+
+    public class Card : MonoBehaviour
+    {
+        protected bool isUpgraded;
+        protected CardDescription cardDescription;
+        protected CardAmount cardCost;
+        protected CardAmount cardEffect;
+        protected CardAmount buffAmount;
+
+        public CardType CardType;
 
         public int GetCardCostAmount()
         {
@@ -52,9 +58,43 @@ namespace TJ
         {
             if (!isUpgraded)
                 return buffAmount.baseAmount;
-            
+
             return buffAmount.upgradedAmount;
         }
+    }
+
+    public enum CardType
+    {
+        Attack,
+        Defence,
+        Skill,
+        Power
+    }
+
+    public enum AttackCardType
+    {
+        Strike,
+        Bash,
+        Inflame,
+        Clothesline,
+        IronWave,
+        Bloodletting,
+        Bodyslam,
+        Entrench,
+    }
+
+    public enum DefenceCardType
+    {
+        Defence,
+        Entrench,
+        ShrugItOff,
+        IronWave
+    }
+
+    public enum SkillCardType
+    {
+        Bloodletting,
+        Inflame
     }
 
     [Serializable]

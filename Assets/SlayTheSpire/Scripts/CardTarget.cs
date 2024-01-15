@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TJ
@@ -11,13 +9,13 @@ namespace TJ
 
         private void Awake()
         {
-            battleSceneManager = FindObjectOfType<BattleSceneManager>();
-            enemyFighter = GetComponent<Fighter>();
+            /*battleSceneManager = FindObjectOfType<BattleSceneManager>();
+            enemyFighter = GetComponent<Fighter>();*/
         }
 
         public void PointerEnter()
         {
-            if (enemyFighter == null)
+            /*if (enemyFighter == null)
             {
                 Debug.Log("fighta is null");
                 battleSceneManager = FindObjectOfType<BattleSceneManager>();
@@ -30,13 +28,13 @@ namespace TJ
                 //target == enemy
                 battleSceneManager.cardTarget = enemyFighter;
                 //Debug.Log("set target");
-            }
+            }*/
         }
 
         public void PointerExit()
         {
-            battleSceneManager.cardTarget = null;
-            //Debug.Log("drop target");
+            /*battleSceneManager.cardTarget = null;
+            //Debug.Log("drop target");*/
         }
     }
 }

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DefenceCardSettings 3
+  m_EditorClassIdentifier: Assembly-CSharp:TJ:DefenceCardSettings
+  IsUpgraded: 0
+  CardDescription:
+    baseAmount: Gain 8 Block, Draw 1 card
+    upgradedAmount: Gain 8 Block, Draw 2 card
+  CardCost:
+    baseAmount: 2
+    upgradedAmount: 1
+  CardEffect:
+    baseAmount: 8
+    upgradedAmount: 8
+  BuffAmount:
+    baseAmount: 1
+    upgradedAmount: 2
+  CardType: 1
+  DefenceType: 2

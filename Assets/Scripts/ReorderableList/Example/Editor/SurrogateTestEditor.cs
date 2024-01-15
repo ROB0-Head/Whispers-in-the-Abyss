@@ -7,7 +7,7 @@ using Malee.Editor;
 namespace Map
 {
     [CustomEditor(typeof(SurrogateTest))]
-    public class SurrogateTestEditor : Editor
+    public class SurrogateTestEditor : UnityEditor.Editor
     {
 
         private ReorderableList list;

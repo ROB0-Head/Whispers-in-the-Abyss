@@ -104,13 +104,11 @@ public class GameManager : MonoBehaviour
         if (IsFirstLaunch)
         {
             var characterData = SaveManager.LoadCharacterData();
-            characterData.CurrentDeck.Deck = new List<Card>();
             for (int i = 0; i < 10; i++)
             {
                 Card randomCard = SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.GetRandomCard();
                 var characterDeck = SettingsProvider.Get<BattlePrefabSet>().CharacterDeck;
                 characterDeck.Deck.Add(randomCard);
-                characterData.CurrentDeck.Deck = characterDeck.Deck;
             }
             characterData.startingRelic = SettingsProvider.Get<BattlePrefabSet>().RelicLibrary.GetRandomRelic();
             IsFirstSessionForAnalytics = true;

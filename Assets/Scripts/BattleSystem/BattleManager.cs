@@ -6,6 +6,7 @@ using SaveSystem;
 using Settings;
 using TJ;
 using UI.Screens;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -33,19 +34,24 @@ namespace BattleSystem
         [SerializeField] private List<Enemy> _enemies = new List<Enemy>();
         [SerializeField] private Transform _enemyParent;
 
-
+        public int Energy => _currentEnergy;
         private void Awake()
         {
             Instance = this;
             _cardsInHand = new List<Card>();
+            _drawPile = new List<Card>();
         }
 
         public void StartBattle(EnemyType enemyType)
         {
-            BattleScreen.ChangeTurn(BattleState.PlayerTurn);
+            BattleScreen.Instance.ChangeTurn(BattleState.PlayerTurn);
             _currentBattleState = BattleState.PlayerTurn;
             var characterData = SaveManager.LoadCharacterData();
-
+            _maxEnergy = characterData.Energy;
+            foreach (var card in BattleScreen.Instance.DrawCards())
+            {
+                _drawPile.Add(card);
+            }
             switch (enemyType)
             {
                 case EnemyType.Default:
@@ -53,8 +59,6 @@ namespace BattleSystem
                     //Цикл для нескольких противников
                     _enemies.Add(Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
                         _enemyParent));
-
-
                     break;
                 case EnemyType.Elite:
                     _enemies.Add(Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
@@ -77,7 +81,6 @@ namespace BattleSystem
                     player.AddBlock(10);
                     break;
                 case RelicType.Lantern:
-                    _maxEnergy = characterData.Energy;
                     _maxEnergy += 1;
                     break;
                 case RelicType.Marbles:
@@ -90,8 +93,8 @@ namespace BattleSystem
                     player.AddBuff(Buff.Type.Strength, 1);
                     break;
             }
-
             _currentEnergy = _maxEnergy;
+            DrawCards(5);
         }
 
         public void DrawCards(int amountToDraw)
@@ -105,6 +108,7 @@ namespace BattleSystem
                 if (_drawPile.Count > 0)
                 {
                     AddCardToHand(_drawPile[0]);
+                    DisplayCardInHand(_drawPile[0]);
                     _drawPile.Remove(_drawPile[0]);
                     cardsDrawn++;
                 }
@@ -115,7 +119,13 @@ namespace BattleSystem
                 }
             }
         }
-
+        
+        public void DisplayCardInHand(Card card)
+        {
+            var cardUI = card.GetComponentInParent<CardUI>();
+            cardUI.LoadCard(card);
+            cardUI.gameObject.SetActive(true);
+        }
         private void AddCardToHand(Card card)
         {
             if (_cardsInHand.Count < 10)
@@ -158,7 +168,7 @@ namespace BattleSystem
 
         public void PlayCard(CardUI cardUI)
         {
-            foreach (var buffs in _enemies[0].GetComponent<Fighter>().BuffList)
+            /*foreach (var buffs in _enemies[0].GetComponent<Fighter>().BuffList)
             {
                 if (cardUI.card.cardType != Card.CardType.Attack && buffs.BuffType == Buff.Type.Enrage &&
                     buffs.BuffValue > 0)
@@ -169,13 +179,13 @@ namespace BattleSystem
             _cardActions.PerformAction(cardUI.card, _cardTarget);
 
             _currentEnergy -= cardUI.card.GetCardCostAmount();
-            /*energyText.text = energy.ToString();*/
+            /*energyText.text = energy.ToString();#1#
 
             Instantiate(cardUI.discardEffect, cardUI.transform.position, Quaternion.identity, topParent);
             SelectedCard = null;
             cardUI.gameObject.SetActive(false);
             _cardsInHand.Remove(cardUI.card);
-            DiscardCard(cardUI.card);
+            DiscardCard(cardUI.card);*/
         }
 
         public void ChangeTurn()
@@ -189,14 +199,15 @@ namespace BattleSystem
 
                 ClearHandAndTransferToDiscard();
 
-                /*foreach (CardUI cardUI in cardsInHandGameObjects)
+                foreach (var card in _cardsInHand)
                 {
+                    var cardUI = card.GetComponent<CardUI>();
                     if (cardUI.gameObject.activeSelf)
-                        Instantiate(cardUI.discardEffect, cardUI.transform.position, Quaternion.identity, topParent);
+                        Instantiate(cardUI.DiscardEffect, cardUI.transform.position, Quaternion.identity, topParent);
 
                     cardUI.gameObject.SetActive(false);
-                    cardsInHand.Remove(cardUI.card);
-                }*/
+                    _cardsInHand.Remove(card);
+                }
 
 
                 foreach (Enemy e in _enemies)
@@ -225,14 +236,14 @@ namespace BattleSystem
                 /*energyText.text = energy.ToString();
                 endTurnButton.enabled = true;*/
                 DrawCards(5);
-                BattleScreen.ChangeTurn(BattleState.PlayerTurn);
+                BattleScreen.Instance.ChangeTurn(BattleState.PlayerTurn);
             }
         }
 
 
         private IEnumerator HandleEnemyTurn()
         {
-            BattleScreen.ChangeTurn(BattleState.EnemyTurn);
+            BattleScreen.Instance.ChangeTurn(BattleState.EnemyTurn);
 
             yield return new WaitForSeconds(1.5f);
 

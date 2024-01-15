@@ -57,10 +57,10 @@ namespace TJ
 
             if (currentHealth <= 0)
             {
-                if (enemy != null)
+                /*if (enemy != null)
                     battleSceneManager.EndFight(true);
                 else
-                    battleSceneManager.EndFight(false);
+                    battleSceneManager.EndFight(false);*/
 
                 Destroy(gameObject);
             }
