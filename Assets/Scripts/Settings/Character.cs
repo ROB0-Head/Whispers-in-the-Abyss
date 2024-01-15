@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Settings.BattleManager.Cards;
 using TJ;
 using UnityEngine;
 
 namespace Settings
 {
-    [Serializable]
     public class Character
     {
         public int Health;
@@ -15,12 +15,11 @@ namespace Settings
         public int CurrentGold;
         public DateTime FirstLaunchDateTime;
 
-        // Default Constructor
         public Character()
         {
             Health = 100;  
             Energy = 3;   
-            startingRelic = null; 
+            startingRelic = null;
             CurrentTowerFloor = 1;  
             CurrentGold = 0;
         }
@@ -31,13 +30,19 @@ namespace Settings
     public class CharacterDeck : ScriptableObject
     {
         public List<Card> Deck;
+        public CharacterDeck()
+        {
+            Deck = new List<Card>();
+        }
     }
     [CreateAssetMenu(fileName = "DeckLibrary", menuName = "WITA/Battle/DeckLibrary")]
     public class DeckLibrary : ScriptableObject
     {
-        public List<Card> Deck;
-        
-        public Card GetRandomCard()
+        public List<CardSettings> Deck;
+        public GameObject AttackCardPrefab;
+        public GameObject DefenseCardPrefab;
+        public GameObject SkillCardPrefab;
+        public CardSettings GetRandomCard()
         {
             if (Deck.Count > 0)
             {

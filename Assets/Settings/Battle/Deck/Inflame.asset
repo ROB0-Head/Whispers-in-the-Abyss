@@ -9,21 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: AttackCardSettings
-  m_EditorClassIdentifier: Assembly-CSharp:TJ:AttackCardSettings
+  m_Script: {fileID: 11500000, guid: 69748aafb2c84b8dbffd3601a63b5d2a, type: 3}
+  m_Name: Inflame
+  m_EditorClassIdentifier: Assembly-CSharp:TJ:SkillCardSettings
   IsUpgraded: 0
   CardDescription:
-    baseAmount: Deal 8 damage. Apply 2 Vulnerable.
-    upgradedAmount: Deal 10 damage. Apply 3 Vulnerable.
+    baseAmount: Gain 2 Strength
+    upgradedAmount: Gain 3 Strength
   CardCost:
-    baseAmount: 2
+    baseAmount: 1
     upgradedAmount: 1
   CardEffect:
-    baseAmount: 8
-    upgradedAmount: 10
+    baseAmount: 0
+    upgradedAmount: 0
   BuffAmount:
     baseAmount: 2
-    upgradedAmount: 2
-  CardType: 0
-  AttackType: 1
+    upgradedAmount: 3
+  CardType: 2
+  SkillType: 1

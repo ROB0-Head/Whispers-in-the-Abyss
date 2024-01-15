@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Newtonsoft.Json;
 using Settings;
+using Settings.BattleManager.Cards;
 using UnityEngine;
 
 namespace SaveSystem
@@ -11,6 +14,7 @@ namespace SaveSystem
         #region Saves Data Names
 
         private static readonly string CHARACTER_DATA_NAME = "CharacterData.json";
+        private static readonly string DECK_DATA_NAME = "DeckData.json";
 
         #endregion
 
@@ -59,19 +63,44 @@ namespace SaveSystem
 
         #region Public Save Method
 
+        public static void SaveDeck(List<Card> deck)
+        {
+            string path = Path.Combine(Application.persistentDataPath, DECK_DATA_NAME);
+
+            string jsonData = JsonConvert.SerializeObject(deck);
+            string encryptedData = Encrypt(jsonData);
+            File.WriteAllText(path, encryptedData);
+        }
+
         public static void SaveCharacterData(Character userData)
         {
-            string path = Path.Combine(Application.persistentDataPath, CHARACTER_DATA_NAME);
-
             string jsonData = JsonUtility.ToJson(userData);
 
-            File.WriteAllText(path, jsonData);
+            string path = Path.Combine(Application.persistentDataPath, CHARACTER_DATA_NAME);
+            string encryptedData = Encrypt(jsonData);
+
+            File.WriteAllText(path, encryptedData);
         }
 
         #endregion
 
         #region Public Load Method
 
+        public static List<Card> LoadDeck()
+        {
+            string path = Path.Combine(Application.persistentDataPath, DECK_DATA_NAME);
+            if (File.Exists(path))
+            {
+                string encryptedData = File.ReadAllText(path);
+                string decryptedData = Decrypt(encryptedData);
+                return JsonConvert.DeserializeObject<List<Card>>(decryptedData);
+            }
+            else
+            {
+                return new List<Card>(); 
+            }
+        }
+        
         public static Character LoadCharacterData()
         {
             string path = Path.Combine(Application.persistentDataPath, CHARACTER_DATA_NAME);
@@ -79,8 +108,8 @@ namespace SaveSystem
             if (File.Exists(path))
             {
                 string jsonData = File.ReadAllText(path);
-                Character loadedUserData = JsonUtility.FromJson<Character>(jsonData);
-                return loadedUserData;
+                string decryptedData = Decrypt(jsonData);
+                return JsonUtility.FromJson<Character>(decryptedData);
             }
             else
             {
@@ -90,7 +119,23 @@ namespace SaveSystem
 
         #endregion
 
-        #region Public Delete Method
+        #region Utils
+
+        private static string Encrypt(string data)
+        {
+            StringBuilder encryptedData = new StringBuilder();
+            foreach (char c in data)
+            {
+                encryptedData.Append((char)(c ^ 42));
+            }
+
+            return encryptedData.ToString();
+        }
+
+        private static string Decrypt(string data)
+        {
+            return Encrypt(data);
+        }
 
         public static void DeleteChatSave(string name)
         {

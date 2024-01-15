@@ -4,6 +4,8 @@ using System.Linq;
 using Navigation;
 using SaveSystem;
 using Settings;
+using Settings.BattleManager;
+using Settings.BattleManager.Cards;
 using TJ;
 using UI.Screens;
 using Unity.VisualScripting;
@@ -122,9 +124,9 @@ namespace BattleSystem
         
         public void DisplayCardInHand(Card card)
         {
-            var cardUI = card.GetComponentInParent<CardUI>();
+            /*var cardUI = card.GetComponentInParent<CardUI>();
             cardUI.LoadCard(card);
-            cardUI.gameObject.SetActive(true);
+            cardUI.gameObject.SetActive(true);*/
         }
         private void AddCardToHand(Card card)
         {
@@ -201,12 +203,12 @@ namespace BattleSystem
 
                 foreach (var card in _cardsInHand)
                 {
-                    var cardUI = card.GetComponent<CardUI>();
+                    /*var cardUI = card.GetComponent<CardUI>();
                     if (cardUI.gameObject.activeSelf)
                         Instantiate(cardUI.DiscardEffect, cardUI.transform.position, Quaternion.identity, topParent);
 
                     cardUI.gameObject.SetActive(false);
-                    _cardsInHand.Remove(card);
+                    _cardsInHand.Remove(card);*/
                 }
 
 

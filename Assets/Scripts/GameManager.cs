@@ -6,6 +6,7 @@ using BattleSystem;
 using DefaultNamespace;
 using SaveSystem;
 using Settings;
+using Settings.BattleManager.Cards;
 using TJ;
 using UI.Popups;
 using UnityEngine;
@@ -103,19 +104,49 @@ public class GameManager : MonoBehaviour
     {
         if (IsFirstLaunch)
         {
-            var characterData = SaveManager.LoadCharacterData();
+            var deck = SaveManager.LoadDeck();
             for (int i = 0; i < 10; i++)
             {
-                Card randomCard = SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.GetRandomCard();
-                var characterDeck = SettingsProvider.Get<BattlePrefabSet>().CharacterDeck;
-                characterDeck.Deck.Add(randomCard);
+                var randomCard = SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.GetRandomCard();
+                bool isUpgraded = UnityEngine.Random.value <= 0.2f;
+                switch (randomCard.CardType)
+                {
+                    case CardType.Defense:
+                    case CardType.Attack:
+                        if (randomCard is DefenseCardSettings defenceCard)
+                        {
+                            deck.Add(new DefenseCard(isUpgraded, defenceCard.CardDescription,
+                                defenceCard.CardCost, defenceCard.CardEffect, defenceCard.BuffAmount,
+                                defenceCard.CardType));
+                        }
+
+                        if (randomCard is AttackCardSettings attackCard)
+                        {
+                            deck.Add(new DefenseCard(isUpgraded, attackCard.CardDescription,
+                                attackCard.CardCost, attackCard.CardEffect, attackCard.BuffAmount,
+                                attackCard.CardType));
+                        }
+
+                        break;
+                    case CardType.Skill:
+                        if (randomCard is SkillCardSettings skillCard)
+                        {
+                            deck.Add(new SkillCard(isUpgraded, skillCard.CardDescription,
+                                skillCard.CardCost, skillCard.CardEffect, skillCard.BuffAmount, skillCard.CardType));
+                        }
+
+                        break;
+                }
             }
+
+            var characterData = SaveManager.LoadCharacterData();
             characterData.startingRelic = SettingsProvider.Get<BattlePrefabSet>().RelicLibrary.GetRandomRelic();
             IsFirstSessionForAnalytics = true;
             IsFirstLaunch = false;
             DailyRewardSystem.ShowRewardPopup();
             characterData.FirstLaunchDateTime = DateTime.UtcNow;
             SaveManager.SaveCharacterData(characterData);
+            SaveManager.SaveDeck(deck);
         }
         else
         {
@@ -123,7 +154,6 @@ public class GameManager : MonoBehaviour
             {
                 DailyRewardSystem.ShowRewardPopup();
             }
-            
         }
     }
 }

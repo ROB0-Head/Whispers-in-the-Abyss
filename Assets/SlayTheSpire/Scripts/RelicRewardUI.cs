@@ -1,3 +1,4 @@
+using Settings.BattleManager.Cards;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DeckLibrary
+  m_EditorClassIdentifier: Assembly-CSharp:Settings:DeckLibrary
+  Deck:
+  - {fileID: 11400000, guid: 01394535bce1b744383efe12a8b65608, type: 2}
+  - {fileID: 11400000, guid: b7c64b4e8097526449cfcc4094431ddd, type: 2}
+  - {fileID: 11400000, guid: 99104c280cc244e46a491dfcd761d715, type: 2}
+  - {fileID: 11400000, guid: b2953afa0495556459d0fd34e9fb4921, type: 2}
+  - {fileID: 11400000, guid: cfca3b1e4ebf6a4478c85a2907c47983, type: 2}
+  - {fileID: 11400000, guid: 95b98224b836d444a8a0d0bffc69edc1, type: 2}
+  - {fileID: 11400000, guid: d4bfed625eed37a42851a069f200aa92, type: 2}
+  - {fileID: 11400000, guid: 3a94ca80a77d3f04ca9311fdc962f13f, type: 2}
+  - {fileID: 11400000, guid: 24b99298c3be4bf4b8878ebd3b2b1dd3, type: 2}
+  AttackCardPrefab: {fileID: 8286164728509786245, guid: 77f349403f6e44146b28bb31c721bfe0, type: 3}
+  DefenseCardPrefab: {fileID: 4351733458511343716, guid: 5a9d835614ea54c4ca10cfee78ae9817, type: 3}
+  SkillCardPrefab: {fileID: 0}

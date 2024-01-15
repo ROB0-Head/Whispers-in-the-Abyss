@@ -4,6 +4,7 @@ using Map;
 using Navigation;
 using SaveSystem;
 using Settings;
+using Settings.BattleManager.Cards;
 using TJ;
 using TMPro;
 using Unity.VisualScripting;
@@ -45,11 +46,11 @@ namespace UI.Screens
 
         public List<Card> DrawCards()
         {
-            var deck = SettingsProvider.Get<BattlePrefabSet>().CharacterDeck.Deck;
+            var deck = SaveManager.LoadDeck();
             var zOffSet = 15f;
             foreach (var card in deck)
             {
-                var cardTransform = Instantiate(card, _deck.transform);
+                var cardTransform = Instantiate(SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.AttackCardPrefab, _deck.transform);
                 cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
                 zOffSet -= 5;
                 cardTransform.gameObject.SetActive(false);

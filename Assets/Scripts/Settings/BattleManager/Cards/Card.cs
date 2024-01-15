@@ -1,35 +1,56 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace TJ
+namespace Settings.BattleManager.Cards
 {
     public class SkillCard : Card
     {
         public SkillCardType SkillType;
+
+        public SkillCard(bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
+        {
+        }
     }
 
     public class AttackCard : Card
     {
         public AttackCardType AttackType;
+
+        public AttackCard(bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
+        {
+        }
     }
 
     public class DefenseCard : Card
     {
-        public DefenceCardType DefenceType;
+        public DefenceCardType DefenseType;
+
+        public DefenseCard(bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
+        {
+        }
     }
 
-    public class Card : MonoBehaviour
+    public class Card : ScriptableObject
     {
-        protected bool isUpgraded;
-        protected CardDescription cardDescription;
-        protected CardAmount cardCost;
-        protected CardAmount cardEffect;
-        protected CardAmount buffAmount;
+        public bool isUpgraded;
+        public CardDescription cardDescription;
+        public CardAmount cardCost;
+        public CardAmount cardEffect;
+        public CardAmount buffAmount;
 
         public CardType CardType;
 
+        public Card(bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType)
+        {
+            this.isUpgraded = isUpgraded;
+            this.cardDescription = cardDescription;
+            this.cardCost = cardCost;
+            this.cardEffect = cardEffect;
+            this.buffAmount = buffAmount;
+            this.CardType = cardType;
+        }
+        
         public int GetCardCostAmount()
         {
             if (!isUpgraded)
@@ -66,7 +87,7 @@ namespace TJ
     public enum CardType
     {
         Attack,
-        Defence,
+        Defense,
         Skill,
         Power
     }
@@ -85,7 +106,7 @@ namespace TJ
 
     public enum DefenceCardType
     {
-        Defence,
+        Defense,
         Entrench,
         ShrugItOff,
         IronWave

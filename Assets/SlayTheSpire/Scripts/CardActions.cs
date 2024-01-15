@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using BattleSystem;
+using Settings.BattleManager;
+using Settings.BattleManager.Cards;
 using UnityEngine;
 
 namespace TJ
@@ -48,11 +50,11 @@ namespace TJ
                 }
             }
 
-            if (_card.CardType == CardType.Defence && _card is DefenseCard defenceCard)
+            if (_card.CardType == CardType.Defense && _card is DefenseCard defenceCard)
             {
-                switch (defenceCard.DefenceType)
+                switch (defenceCard.DefenseType)
                 {
-                    case DefenceCardType.Defence:
+                    case DefenceCardType.Defense:
                         PerformBlock();
                         break;
                     case DefenceCardType.Entrench:

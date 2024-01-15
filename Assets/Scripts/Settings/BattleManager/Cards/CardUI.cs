@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BattleSystem;
+using Settings.BattleManager.Cards;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Serialization;

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88f97b03cb1460a8f2b188362afb9b1, type: 3}
   m_Name: BattlePrefabSet
   m_EditorClassIdentifier: 
+  <DeckLibrary>k__BackingField: {fileID: 11400000, guid: 671232e95fc6b3942b5e063ecffdb4e6, type: 2}
   <CharacterDeck>k__BackingField: {fileID: 11400000, guid: fdaacc6a0971ac94e840e7d2ff6fb9fa, type: 2}
-  <DeckLibrary>k__BackingField: {fileID: 11400000, guid: aa721664757db9c43aab75a9370a6beb, type: 2}
   <RelicLibrary>k__BackingField: {fileID: 11400000, guid: bcc280a690956c44b9dfc1402870ec60, type: 2}
   <TarotLibrary>k__BackingField: {fileID: 0}
   <Enemies>k__BackingField:
