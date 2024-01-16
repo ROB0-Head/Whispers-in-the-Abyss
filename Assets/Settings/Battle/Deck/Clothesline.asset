@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aeaa79f7fc024e72acf99fdbd89052cc, type: 3}
-  m_Name: Clothesliine
+  m_Name: Clothesline
   m_EditorClassIdentifier: Assembly-CSharp:TJ:AttackCardSettings
+  CardTitle: Clothesline
   IsUpgraded: 0
   CardDescription:
     baseAmount: Deal 12 damage. Apply 2 Weak.
@@ -26,4 +27,4 @@ MonoBehaviour:
     baseAmount: 2
     upgradedAmount: 3
   CardType: 0
-  AttackType: 3
+  AttackType: 2

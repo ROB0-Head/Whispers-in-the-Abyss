@@ -12,12 +12,6 @@ namespace TJ
         Card card;
         public Fighter target;
         public Fighter player;
-        BattleSceneManager battleSceneManager;
-
-        private void Awake()
-        {
-            battleSceneManager = FindObjectOfType<BattleSceneManager>();
-        }
 
         public void PerformAction(Card _card, Fighter _fighter)
         {

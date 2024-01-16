@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac406ebe051484cb233d508caf4b4b5, type: 3}
   m_Name: ShrugItOff
   m_EditorClassIdentifier: Assembly-CSharp:TJ:DefenceCardSettings
+  CardTitle: Shrug It Off
   IsUpgraded: 0
   CardDescription:
     baseAmount: Gain 8 Block, Draw 1 card
@@ -26,4 +27,4 @@ MonoBehaviour:
     baseAmount: 1
     upgradedAmount: 2
   CardType: 1
-  DefenceType: 2
+  DefenseType: 2

@@ -8,7 +8,7 @@ namespace Settings.BattleManager.Cards
     {
         public SkillCardType SkillType;
 
-        public SkillCard(bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
+        public SkillCard(string cardTitle,bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(cardTitle,isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
         {
         }
     }
@@ -17,7 +17,7 @@ namespace Settings.BattleManager.Cards
     {
         public AttackCardType AttackType;
 
-        public AttackCard(bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
+        public AttackCard(string cardTitle,bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(cardTitle,isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
         {
         }
     }
@@ -26,61 +26,63 @@ namespace Settings.BattleManager.Cards
     {
         public DefenceCardType DefenseType;
 
-        public DefenseCard(bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
+        public DefenseCard(string cardTitle,bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(cardTitle,isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
         {
         }
     }
 
     public class Card : ScriptableObject
     {
-        public bool isUpgraded;
-        public CardDescription cardDescription;
-        public CardAmount cardCost;
-        public CardAmount cardEffect;
-        public CardAmount buffAmount;
+        public string CardTitle;
+        public bool IsUpgraded;
+        public CardDescription CardDescription;
+        public CardAmount CardCost;
+        public CardAmount CardEffect;
+        public CardAmount BuffAmount;
 
         public CardType CardType;
 
-        public Card(bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType)
+        public Card(string cardTitle,bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType)
         {
-            this.isUpgraded = isUpgraded;
-            this.cardDescription = cardDescription;
-            this.cardCost = cardCost;
-            this.cardEffect = cardEffect;
-            this.buffAmount = buffAmount;
-            this.CardType = cardType;
+            CardTitle = cardTitle;
+            IsUpgraded = isUpgraded;
+            CardDescription = cardDescription;
+            CardCost = cardCost;
+            CardEffect = cardEffect;
+            BuffAmount = buffAmount;
+            CardType = cardType;
         }
         
         public int GetCardCostAmount()
         {
-            if (!isUpgraded)
-                return cardCost.baseAmount;
+            if (!IsUpgraded)
+                return CardCost.baseAmount;
 
-            return cardCost.upgradedAmount;
+            return CardCost.upgradedAmount;
         }
 
         public int GetCardEffectAmount()
         {
-            if (!isUpgraded)
-                return cardEffect.baseAmount;
+            if (!IsUpgraded)
+                return CardEffect.baseAmount;
 
-            return cardEffect.upgradedAmount;
+            return CardEffect.upgradedAmount;
         }
 
         public string GetCardDescriptionAmount()
         {
-            if (!isUpgraded)
-                return cardDescription.baseAmount;
+            if (!IsUpgraded)
+                return CardDescription.baseAmount;
 
-            return cardDescription.upgradedAmount;
+            return CardDescription.upgradedAmount;
         }
 
         public int GetBuffAmount()
         {
-            if (!isUpgraded)
-                return buffAmount.baseAmount;
+            if (!IsUpgraded)
+                return BuffAmount.baseAmount;
 
-            return buffAmount.upgradedAmount;
+            return BuffAmount.upgradedAmount;
         }
     }
 
@@ -96,12 +98,8 @@ namespace Settings.BattleManager.Cards
     {
         Strike,
         Bash,
-        Inflame,
         Clothesline,
-        IronWave,
-        Bloodletting,
         Bodyslam,
-        Entrench,
     }
 
     public enum DefenceCardType

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeaa79f7fc024e72acf99fdbd89052cc, type: 3}
   m_Name: Bodyslam
   m_EditorClassIdentifier: Assembly-CSharp:TJ:AttackCardSettings
+  CardTitle: Bodyslam
   IsUpgraded: 0
   CardDescription:
     baseAmount: Deal Damage equal to block
@@ -26,4 +27,4 @@ MonoBehaviour:
     baseAmount: 0
     upgradedAmount: 0
   CardType: 0
-  AttackType: 6
+  AttackType: 3

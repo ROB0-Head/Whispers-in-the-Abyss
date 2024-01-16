@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,7 +62,7 @@ namespace TJ
             /*if (e == "enemy")
                 battleSceneManager.StartHallwayFight();
             else if (e == "elite")
-                battleSceneManager.StartEliteFight();*/
+                battleSceneManager.StartEliteFight();#1#
 
             //fade from black
             yield return new WaitForSeconds(1);
@@ -110,4 +110,4 @@ namespace TJ
             //Cursor.lockState=CursorLockMode.None;
         }
     }
-}
+}*/

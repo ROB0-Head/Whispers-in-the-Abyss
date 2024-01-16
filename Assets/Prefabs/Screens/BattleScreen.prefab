@@ -1307,7 +1307,7 @@ MonoBehaviour:
   discardPileCountText: {fileID: 2154635770015193869}
   energyText: {fileID: 524233784752163729}
   enemyParent: {fileID: 6042876738902732447}
-  _deck: {fileID: 1039319745001447988}
+  _deck: {fileID: 6857621546228315211}
 --- !u!114 &5112657006949653253
 MonoBehaviour:
   m_ObjectHideFlags: 0

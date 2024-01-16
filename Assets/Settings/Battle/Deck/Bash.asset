@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeaa79f7fc024e72acf99fdbd89052cc, type: 3}
   m_Name: Bash
   m_EditorClassIdentifier: Assembly-CSharp:TJ:AttackCardSettings
+  CardTitle: Bash
   IsUpgraded: 0
   CardDescription:
     baseAmount: Deal 8 damage. Apply 2 Vulnerable.

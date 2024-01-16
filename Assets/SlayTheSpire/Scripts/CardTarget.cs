@@ -4,7 +4,6 @@ namespace TJ
 {
     public class CardTarget : MonoBehaviour
     {
-        BattleSceneManager battleSceneManager;
         Fighter enemyFighter;
 
         private void Awake()

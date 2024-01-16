@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69748aafb2c84b8dbffd3601a63b5d2a, type: 3}
   m_Name: Bloodletting
   m_EditorClassIdentifier: Assembly-CSharp:TJ:SkillCardSettings
+  CardTitle: Bloodletting
   IsUpgraded: 0
   CardDescription:
     baseAmount: Lose 3 HP. Gain 2 Energy

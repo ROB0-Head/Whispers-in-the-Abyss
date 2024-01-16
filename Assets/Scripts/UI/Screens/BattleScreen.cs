@@ -16,7 +16,7 @@ namespace UI.Screens
     public class BattleScreen : DefaultScreen
     {
         public static BattleScreen Instance { get; private set; }
-        
+
         [SerializeField] private Button _backButton;
         [SerializeField] private Button endTurnButton;
         [SerializeField] private Animator banner;
@@ -25,7 +25,7 @@ namespace UI.Screens
         [SerializeField] private TMP_Text discardPileCountText;
         [SerializeField] private TMP_Text energyText;
         [SerializeField] private Transform enemyParent;
-        [SerializeField] private GameObject _deck;
+        [SerializeField] private Transform _deck;
 
         private BattleTabType _currentTab;
 
@@ -50,16 +50,29 @@ namespace UI.Screens
             var zOffSet = 15f;
             foreach (var card in deck)
             {
-                var cardTransform = Instantiate(SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.AttackCardPrefab, _deck.transform);
+                var cardTransform = Instantiate(SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.AttackCardPrefab,
+                    _deck);
                 cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
                 zOffSet -= 5;
+                var cardUI = cardTransform.GetComponent<CardUI>();
+                cardUI.LoadCard(card);
                 cardTransform.gameObject.SetActive(false);
             }
 
             return deck;
         }
-        
-        
+
+        public void DisplayCardInHand(Card card)
+        {
+            foreach (Transform cardUI in _deck)
+            {
+                if (card.CardTitle == cardUI.GetComponent<CardUI>().CardTitle)
+                {
+                    cardUI.gameObject.SetActive(true);
+                }
+            }
+        }
+
         public override void UpdateScreen()
         {
             SelectTab(_currentTab);

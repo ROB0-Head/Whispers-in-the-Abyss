@@ -115,14 +115,14 @@ public class GameManager : MonoBehaviour
                     case CardType.Attack:
                         if (randomCard is DefenseCardSettings defenceCard)
                         {
-                            deck.Add(new DefenseCard(isUpgraded, defenceCard.CardDescription,
+                            deck.Add(new DefenseCard(defenceCard.CardTitle, isUpgraded, defenceCard.CardDescription,
                                 defenceCard.CardCost, defenceCard.CardEffect, defenceCard.BuffAmount,
                                 defenceCard.CardType));
                         }
 
                         if (randomCard is AttackCardSettings attackCard)
                         {
-                            deck.Add(new DefenseCard(isUpgraded, attackCard.CardDescription,
+                            deck.Add(new DefenseCard(attackCard.CardTitle, isUpgraded, attackCard.CardDescription,
                                 attackCard.CardCost, attackCard.CardEffect, attackCard.BuffAmount,
                                 attackCard.CardType));
                         }
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
                     case CardType.Skill:
                         if (randomCard is SkillCardSettings skillCard)
                         {
-                            deck.Add(new SkillCard(isUpgraded, skillCard.CardDescription,
+                            deck.Add(new SkillCard(skillCard.CardTitle, isUpgraded, skillCard.CardDescription,
                                 skillCard.CardCost, skillCard.CardEffect, skillCard.BuffAmount, skillCard.CardType));
                         }
 

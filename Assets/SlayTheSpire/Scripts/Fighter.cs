@@ -19,8 +19,6 @@ namespace TJ
         public Transform buffParent;
         public bool isPlayer;
         Enemy enemy;
-        BattleSceneManager battleSceneManager;
-        GameManager gameManager;
         public GameObject damageIndicator;
 
         public List<Buff> BuffList { get; private set; }
@@ -29,8 +27,6 @@ namespace TJ
         {
             BuffList = _buffList;
             enemy = GetComponent<Enemy>();
-            battleSceneManager = FindObjectOfType<BattleSceneManager>();
-            gameManager = FindObjectOfType<GameManager>();
 
             currentHealth = maxHealth;
             fighterHealthBar.healthSlider.maxValue = maxHealth;
@@ -72,8 +68,8 @@ namespace TJ
             currentHealth = newAmount;
             fighterHealthBar.DisplayHealth(newAmount);
 
-            if (isPlayer)
-                gameManager.DisplayHealth(newAmount, maxHealth);
+            /*if (isPlayer)
+                gameManager.DisplayHealth(newAmount, maxHealth);*/
         }
 
         public void AddBlock(int amount)
@@ -110,7 +106,9 @@ namespace TJ
 
             if (currentBuff.BuffValue <= 0)
             {
+                /*
                 currentBuff.BuffGo = Instantiate(buffPrefab, buffParent);
+            */
             }
 
             currentBuff.BuffValue += amount;

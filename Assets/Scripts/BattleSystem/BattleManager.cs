@@ -110,7 +110,7 @@ namespace BattleSystem
                 if (_drawPile.Count > 0)
                 {
                     AddCardToHand(_drawPile[0]);
-                    DisplayCardInHand(_drawPile[0]);
+                    BattleScreen.Instance.DisplayCardInHand(_drawPile[0]);
                     _drawPile.Remove(_drawPile[0]);
                     cardsDrawn++;
                 }
@@ -122,12 +122,7 @@ namespace BattleSystem
             }
         }
         
-        public void DisplayCardInHand(Card card)
-        {
-            /*var cardUI = card.GetComponentInParent<CardUI>();
-            cardUI.LoadCard(card);
-            cardUI.gameObject.SetActive(true);*/
-        }
+        
         private void AddCardToHand(Card card)
         {
             if (_cardsInHand.Count < 10)
@@ -203,12 +198,12 @@ namespace BattleSystem
 
                 foreach (var card in _cardsInHand)
                 {
-                    /*var cardUI = card.GetComponent<CardUI>();
+                    var cardUI = card.GetComponent<CardUI>();
                     if (cardUI.gameObject.activeSelf)
                         Instantiate(cardUI.DiscardEffect, cardUI.transform.position, Quaternion.identity, topParent);
 
                     cardUI.gameObject.SetActive(false);
-                    _cardsInHand.Remove(card);*/
+                    _cardsInHand.Remove(card);
                 }
 
 

@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eac406ebe051484cb233d508caf4b4b5, type: 3}
-  m_Name: Defence
+  m_Name: Defense
   m_EditorClassIdentifier: Assembly-CSharp:TJ:DefenceCardSettings
+  CardTitle: Defense
   IsUpgraded: 0
   CardDescription:
     baseAmount: Gain 5 Block
@@ -26,4 +27,4 @@ MonoBehaviour:
     baseAmount: 0
     upgradedAmount: 0
   CardType: 1
-  DefenceType: 0
+  DefenseType: 0

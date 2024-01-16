@@ -26,14 +26,12 @@ namespace TJ
         public bool wiggler;
         public GameObject wigglerBuff;
         public GameObject nobBuff;
-        BattleSceneManager battleSceneManager;
         Fighter player;
         Animator animator;
         public bool midTurn;
 
         private void Start()
         {
-            battleSceneManager = FindObjectOfType<BattleSceneManager>();
             /*
             player = battleSceneManager.player;
             */
@@ -46,8 +44,9 @@ namespace TJ
 
         private void LoadEnemy()
         {
-            battleSceneManager = FindObjectOfType<BattleSceneManager>();
+            /*
             player = battleSceneManager.player;
+            */
             thisEnemy = GetComponent<Fighter>();
 
             if (shuffleActions)
@@ -101,8 +100,8 @@ namespace TJ
         private IEnumerator AttackPlayer()
         {
             animator.Play("Attack");
-            if (bird)
-                battleSceneManager.birdIcon.GetComponent<Animator>().Play("Attack");
+            /*if (bird)
+                battleSceneManager.birdIcon.GetComponent<Animator>().Play("Attack");*/
 
             int totalDamage = 0;
 

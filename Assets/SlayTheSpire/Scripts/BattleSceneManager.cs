@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using Settings;
 using Settings.BattleManager.Cards;
@@ -225,7 +225,7 @@ namespace TJ
 
                     cardUI.gameObject.SetActive(false);
                     cardsInHand.Remove(cardUI.card);
-                }#1#
+                }#2#
 
                 #endregion
 
@@ -328,6 +328,6 @@ namespace TJ
             {
                 endScreen.relicReward.gameObject.SetActive(false);
             }
-        }*/
+        }#1#
     }
-}
+}*/
