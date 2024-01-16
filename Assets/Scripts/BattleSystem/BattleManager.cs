@@ -37,6 +37,8 @@ namespace BattleSystem
 
         public CardUI SelectedCard;
         public int Energy => _currentEnergy;
+        public List<Enemy> Enemies => _enemies;
+        public Fighter Player => _player;
         public event Action<int> DrawPileCountUpdated;
         public event Action<int> DiscardPileCountUpdated;
         public event Action<int> CurrentEnergyUpdated;
@@ -91,6 +93,7 @@ namespace BattleSystem
                     break;
                 }
             }
+
             UpdateTextValueCount();
         }
 
@@ -187,11 +190,11 @@ namespace BattleSystem
 
             switch (characterData.startingRelic.RelicType)
             {
-                case RelicType.PreservedInsect:
+                /*case RelicType.PreservedInsect:
                     if (enemyType == EnemyType.Elite)
-                        _enemies[0].GetComponent<Fighter>().currentHealth =
-                            (int)(_enemies[0].GetComponent<Fighter>().currentHealth * 0.25);
-                    break;
+                        _enemies[0]._currentHealth =
+                            (int)(_enemies[0]._currentHealth * 0.25);
+                    break;*/
                 case RelicType.Anchor:
                     _player.AddBlock(10);
                     break;
@@ -223,11 +226,11 @@ namespace BattleSystem
                 BattleScreen.Instance.DiscardCardInHand();
                 foreach (Enemy e in _enemies)
                 {
-                    if (e.thisEnemy == null)
+                    /*if (e.thisEnemy == null)
                         e.thisEnemy = e.GetComponent<Fighter>();
 
-                    e.thisEnemy.currentBlock = 0;
-                    e.thisEnemy.fighterHealthBar.DisplayBlock(0);
+                    e.thisEnemy.AddBlock(-e.thisEnemy.CurrentBlock);
+                    e.thisEnemy.FighterHealthBar.DisplayBlock(0);*/
                 }
 
                 _player.EvaluateBuffsAtTurnEnd();
@@ -242,8 +245,8 @@ namespace BattleSystem
                 }
 
                 _currentBattleState = BattleState.PlayerTurn;
-                _player.currentBlock = 0;
-                _player.fighterHealthBar.DisplayBlock(0);
+                _player.AddBlock(-_player.CurrentBlock);
+                _player.FighterHealthBar.DisplayBlock(0);
                 _currentEnergy = _maxEnergy;
                 DrawCards(5);
                 UpdateTextValueCount();
@@ -281,10 +284,10 @@ namespace BattleSystem
                 var characterData = SaveManager.LoadCharacterData();
                 if (characterData.startingRelic.RelicType == RelicType.BurningBlood)
                 {
-                    _player.currentHealth += 6;
-                    if (_player.currentHealth > _player.maxHealth)
-                        _player.currentHealth = _player.maxHealth;
-                    _player.UpdateHealthUI(_player.currentHealth);
+                    characterData.CurrentHealth += 6;
+                    if (characterData.CurrentHealth > characterData.MaxHealth)
+                        characterData.CurrentHealth = characterData.MaxHealth;
+                    _player.UpdateHealthUI(characterData.CurrentHealth);
                 }
 
                 _player.ResetBuffs();

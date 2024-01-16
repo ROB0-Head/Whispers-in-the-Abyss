@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BattleSystem.Cards;
+using BattleSystem.Characters.Reward;
 using Settings;
 using Settings.BattleManager.Cards;
 using UnityEngine;

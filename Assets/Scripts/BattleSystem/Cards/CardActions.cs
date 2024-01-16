@@ -126,7 +126,7 @@ namespace BattleSystem.Cards
 
         private void BodySlam()
         {
-            int totalDamage = _player.currentBlock;
+            int totalDamage = _player.CurrentBlock;
 
             foreach (var currentBuff in _target.BuffList)
             {
@@ -143,7 +143,7 @@ namespace BattleSystem.Cards
 
         private void Entrench()
         {
-            _player.AddBlock(_player.currentBlock);
+            _player.AddBlock(_player.CurrentBlock);
         }
 
         private void ApplyBuff(Buff.Type t,Card card)

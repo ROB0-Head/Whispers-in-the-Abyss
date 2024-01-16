@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using Settings;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace TJ
+namespace BattleSystem.Characters.Reward
 {
     [CreateAssetMenu(fileName = "RelicLibrary", menuName = "WITA/Battle/RelicLibrary")]
     public class RelicLibrary : ScriptableObject

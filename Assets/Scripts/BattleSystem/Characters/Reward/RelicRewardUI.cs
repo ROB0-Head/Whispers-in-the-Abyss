@@ -1,10 +1,10 @@
 using BattleSystem.Cards;
-using Settings.BattleManager.Cards;
-using UnityEngine;
+using TJ;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace TJ
+namespace BattleSystem.Characters.Reward
 {
     public class RelicRewardUI : MonoBehaviour
     {

@@ -1,16 +1,15 @@
 using System;
-using BattleSystem;
 using UnityEngine;
 
-namespace Settings.BattleManager
+namespace BattleSystem
 {
     [Serializable]
     public struct Buff
     {
-        public Type BuffType { get; set; }
-        public Sprite BuffIcon { get; set; }
-        public int BuffValue { get; set; }
-        public BuffUI BuffGo { get; set; }
+        public Type BuffType;
+        public Sprite BuffIcon;
+        public int BuffValue;
+        public BuffUI BuffGo;
 
         public enum Type
         {
@@ -21,4 +20,6 @@ namespace Settings.BattleManager
             Enrage
         }
     }
+    
+    
 }

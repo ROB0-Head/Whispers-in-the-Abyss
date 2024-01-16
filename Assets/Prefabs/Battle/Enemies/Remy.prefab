@@ -275,7 +275,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2659296076576368496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3a74d285c5e9a84494833bb1ad8738e, type: 3}
+  m_Script: {fileID: 11500000, guid: c87d985f0cba424f9acfb9fbace9f6f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buffImage: {fileID: 6424823219037961089}
@@ -900,8 +900,7 @@ GameObject:
   - component: {fileID: 7553774990861939423}
   - component: {fileID: 7553774990861939421}
   - component: {fileID: 7553774990861939422}
-  - component: {fileID: 7553774990861939420}
-  - component: {fileID: 7553774990861939419}
+  - component: {fileID: 4344677424976684165}
   - component: {fileID: 686323848}
   - component: {fileID: 686323847}
   - component: {fileID: 1144329777561900966}
@@ -991,48 +990,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &7553774990861939420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7553774990861939392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9fd9c1b49ef90d4d9dfafbd69fe6d5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _buffList:
-  - BuffType: 0
-    BuffIcon: {fileID: 21300000, guid: c976812c798dcf24387145e0a137ca22, type: 3}
-    BuffValue: 0
-    BuffGO: {fileID: 0}
-  - BuffType: 1
-    BuffIcon: {fileID: 21300000, guid: c57791cc80e8f0a468fd514923819bf4, type: 3}
-    BuffValue: 0
-    BuffGO: {fileID: 0}
-  - BuffType: 2
-    BuffIcon: {fileID: 21300000, guid: e74497badffcbad4182d2df3a7599b8f, type: 3}
-    BuffValue: 0
-    BuffGO: {fileID: 0}
-  - BuffType: 3
-    BuffIcon: {fileID: 21300000, guid: f643a45e495a7794f92701f5c157e2ca, type: 3}
-    BuffValue: 0
-    BuffGO: {fileID: 0}
-  - BuffType: 4
-    BuffIcon: {fileID: 21300000, guid: 8c21967d4596006489d7169fc845d3d7, type: 3}
-    BuffValue: 0
-    BuffGO: {fileID: 0}
-  currentHealth: 0
-  maxHealth: 25
-  currentBlock: 0
-  fighterHealthBar: {fileID: 5938868779381404939}
-  buffPrefab: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
-  buffParent: {fileID: 8028767108936048577}
-  isPlayer: 0
-  damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
---- !u!114 &7553774990861939419
+--- !u!114 &4344677424976684165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1044,32 +1002,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08184a27ab0231446b726d6e0cbab959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyActions:
-  - intentType: 0
-    amount: 6
-    debuffAmount: 0
-    buffType: 0
-    chance: 6
-    icon: {fileID: 21300000, guid: c058a37556b675c4aba73550727d39e2, type: 3}
-  - intentType: 2
-    amount: 3
-    debuffAmount: 0
-    buffType: 0
-    chance: 4
-    icon: {fileID: 21300000, guid: 0bb448c3a2153cd4cb3940cf5e64ed6b, type: 3}
+  _buffList: []
+  _currentHealth: 0
+  _currentBlock: 0
+  _fighterHealthBar: {fileID: 0}
+  buffParent: {fileID: 0}
+  damageIndicator: {fileID: 0}
+  enemyActions: []
   turns: []
   turnNumber: 0
-  shuffleActions: 1
-  thisEnemy: {fileID: 0}
-  intentIcon: {fileID: 6424823219037961089}
-  intentAmount: {fileID: 1500890483887862536}
-  intentUI: {fileID: 4000217259501677407}
-  goldDrop: 36
-  bird: 0
-  nob: 0
-  wiggler: 0
-  wigglerBuff: {fileID: 0}
-  nobBuff: {fileID: 0}
+  shuffleActions: 0
+  intentIcon: {fileID: 0}
+  intentAmount: {fileID: 0}
+  intentUI: {fileID: 0}
   midTurn: 0
 --- !u!222 &686323848
 CanvasRenderer:

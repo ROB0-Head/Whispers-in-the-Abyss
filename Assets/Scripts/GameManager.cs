@@ -105,40 +105,55 @@ public class GameManager : MonoBehaviour
     {
         if (IsFirstLaunch)
         {
-            var deck = SaveManager.LoadDeck();
-            for (int i = 0; i < 10; i++)
+            var deck = new List<Card>();
+
+            int attackCardCount = 0;
+            int defenseCardCount = 0;
+            int skillCardCount = 0;
+
+            while (attackCardCount < 4 || defenseCardCount < 4 || skillCardCount < 2)
             {
                 var randomCard = SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.GetRandomCard();
                 bool isUpgraded = UnityEngine.Random.value <= 0.2f;
+
                 switch (randomCard.CardType)
                 {
                     case CardType.Defense:
                     case CardType.Attack:
-                        if (randomCard is DefenseCardSettings defenceCard)
+                        if (randomCard is DefenseCardSettings defenseCard && defenseCardCount < 4)
                         {
-                            deck.Add(new DefenseCard(defenceCard.CardTitle, isUpgraded, defenceCard.CardDescription,
-                                defenceCard.CardCost, defenceCard.CardEffect, defenceCard.BuffAmount,
-                                defenceCard.CardType, defenceCard.DefenseType));
+                            deck.Add(new DefenseCard(defenseCard.CardTitle, isUpgraded, defenseCard.CardDescription,
+                                defenseCard.CardCost, defenseCard.CardEffect, defenseCard.BuffAmount,
+                                defenseCard.CardType, defenseCard.DefenseType));
+
+                            defenseCardCount++;
                         }
 
-                        if (randomCard is AttackCardSettings attackCard)
+                        if (randomCard is AttackCardSettings attackCard&& attackCardCount < 4)
                         {
                             deck.Add(new AttackCard(attackCard.CardTitle, isUpgraded, attackCard.CardDescription,
                                 attackCard.CardCost, attackCard.CardEffect, attackCard.BuffAmount,
-                                attackCard.CardType,attackCard.AttackType));
+                                attackCard.CardType, attackCard.AttackType));
+
+                            attackCardCount++;
                         }
 
                         break;
+
                     case CardType.Skill:
-                        if (randomCard is SkillCardSettings skillCard)
+                        if (randomCard is SkillCardSettings skillCard&& skillCardCount < 2)
                         {
                             deck.Add(new SkillCard(skillCard.CardTitle, isUpgraded, skillCard.CardDescription,
-                                skillCard.CardCost, skillCard.CardEffect, skillCard.BuffAmount, skillCard.CardType,skillCard.SkillType));
+                                skillCard.CardCost, skillCard.CardEffect, skillCard.BuffAmount, skillCard.CardType,
+                                skillCard.SkillType));
+
+                            skillCardCount++;
                         }
 
                         break;
                 }
             }
+
 
             var characterData = SaveManager.LoadCharacterData();
             characterData.startingRelic = SettingsProvider.Get<BattlePrefabSet>().RelicLibrary.GetRandomRelic();
@@ -150,6 +165,7 @@ public class GameManager : MonoBehaviour
             SaveManager.SaveDeck(deck);
         }
         else
+
         {
             if (DailyRewardSystem.CheckRewardAccess())
             {

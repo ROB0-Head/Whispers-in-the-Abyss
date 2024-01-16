@@ -738,14 +738,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buffList: []
-  currentHealth: 0
-  maxHealth: 75
-  currentBlock: 0
-  fighterHealthBar: {fileID: 370572911677944387}
-  buffPrefab: {fileID: 8088771124364855300, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
-  buffParent: {fileID: 4045493108226693257}
-  isPlayer: 1
-  damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
+  _currentHealth: 0
+  _currentBlock: 0
+  _fighterHealthBar: {fileID: 0}
+  buffParent: {fileID: 0}
+  damageIndicator: {fileID: 0}
 --- !u!1 &3253994055168088358
 GameObject:
   m_ObjectHideFlags: 0
@@ -2442,22 +2439,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acce5e6ba824f6b42b79539aae457976, type: 3}
---- !u!114 &370572911677944387 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4233242798224949665, guid: acce5e6ba824f6b42b79539aae457976, type: 3}
-  m_PrefabInstance: {fileID: 4583527512753042402}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 111319f3906ac5642baf10e251944046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &4045493108226693257 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 558322593086270315, guid: acce5e6ba824f6b42b79539aae457976, type: 3}
-  m_PrefabInstance: {fileID: 4583527512753042402}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6156356820817196395 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7706837732722689673, guid: acce5e6ba824f6b42b79539aae457976, type: 3}

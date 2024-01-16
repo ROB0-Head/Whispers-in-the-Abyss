@@ -1,11 +1,13 @@
 using System;
+using BattleSystem.Characters.Reward;
 using TJ;
 
 namespace Settings
 {
     public class Character
     {
-        public int Health;
+        public int MaxHealth;
+        public int CurrentHealth;
         public int Energy;
         public Relic startingRelic;
         public int CurrentTowerFloor;
@@ -14,7 +16,8 @@ namespace Settings
 
         public Character()
         {
-            Health = 100;
+            MaxHealth = 100;
+            CurrentHealth = 100;
             Energy = 3;
             startingRelic = null;
             CurrentTowerFloor = 1;

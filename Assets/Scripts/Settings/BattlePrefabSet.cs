@@ -1,14 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using BattleSystem;
 using BattleSystem.Characters.Enemy;
-using Map;
+using BattleSystem.Characters.Reward;
 using Settings.BattleManager.Cards;
-using TJ;
-using UI.Buttons;
-using UI.Panels;
-using UI.Popups;
-using UI.Prefabs;
-using UI.Screens;
 using UnityEngine;
 
 namespace Settings
@@ -20,6 +15,7 @@ namespace Settings
         [field: SerializeField] public RelicLibrary RelicLibrary { private set; get; }
         [field: SerializeField] public TarotLibrary TarotLibrary { private set; get; }
         [field: SerializeField] public List<Enemy> Enemies { private set; get; }
+        [field: SerializeField] public BuffUI BuffUIPrefab { private set; get; }
 
         public T GetEnemy<T>() where T : Enemy
         {

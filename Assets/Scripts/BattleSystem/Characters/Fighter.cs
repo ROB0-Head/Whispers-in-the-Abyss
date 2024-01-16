@@ -1,63 +1,55 @@
 using System.Collections.Generic;
 using System.Linq;
+using BattleSystem.Characters.BattleScreen;
+using SaveSystem;
+using Settings;
 using Settings.BattleManager;
-using TJ;
 using UnityEngine;
 
 namespace BattleSystem.Characters
 {
     public class Fighter : MonoBehaviour
     {
-        [SerializeField] private List<Buff> _buffList;
+        [SerializeField] private List<Buff> _buffList = new List<Buff>();
+        [SerializeField] private int _currentHealth;
+        [SerializeField] private int _currentBlock = 0;
+        [SerializeField] private FighterHealthBar _fighterHealthBar;
+        [SerializeField] private Transform buffParent;
+        [SerializeField] private GameObject damageIndicator;
 
-        public int currentHealth;
-        public int maxHealth;
-        public int currentBlock = 0;
-        public FighterHealthBar fighterHealthBar;
+        private int _maxHealth;
 
-        public BuffUI buffPrefab;
-        public Transform buffParent;
-        public bool isPlayer;
-        Enemy.Enemy enemy;
-        public GameObject damageIndicator;
-
-        public List<Buff> BuffList { get; private set; }
+        public int CurrentBlock => _currentBlock;
+        public FighterHealthBar FighterHealthBar => _fighterHealthBar;
+        public List<Buff> BuffList => _buffList;
 
         private void Awake()
         {
-            BuffList = _buffList;
-            enemy = GetComponent<Enemy.Enemy>();
-
-            currentHealth = maxHealth;
-            fighterHealthBar.healthSlider.maxValue = maxHealth;
-            fighterHealthBar.DisplayHealth(currentHealth);
-            /*if(isPlayer)
-                gameManager.DisplayHealth(currentHealth, currentHealth);*/
+            var characterData = SaveManager.LoadCharacterData();
+            _maxHealth = characterData.MaxHealth;
+            _currentHealth = characterData.CurrentHealth;
+            _fighterHealthBar.healthSlider.maxValue = _maxHealth;
+            _fighterHealthBar.DisplayHealth(_currentHealth);
         }
 
         public void TakeDamage(int amount)
         {
-            if (currentBlock > 0)
+            if (_currentBlock > 0)
                 amount = BlockDamage(amount);
-
-            if (enemy != null && enemy.wiggler && currentHealth == maxHealth)
-                enemy.CurlUp();
-
-            Debug.Log($"dealt {amount} damage");
 
             var di = Instantiate(damageIndicator, transform);
             di.GetComponent<DamageIndicator>().DisplayDamage(amount);
             Destroy(di, 2f);
 
-            currentHealth -= amount;
-            UpdateHealthUI(currentHealth);
+            _currentHealth -= amount;
+            UpdateHealthUI(_currentHealth);
 
-            if (currentHealth <= 0)
+            if (_currentHealth <= 0)
             {
-                /*if (enemy != null)
-                    battleSceneManager.EndFight(true);
+                if (BattleManager.Instance.Enemies != null)
+                    BattleManager.Instance.EndFight(BattleState.Defeat);
                 else
-                    battleSceneManager.EndFight(false);*/
+                    BattleManager.Instance.EndFight(BattleState.Victory);
 
                 Destroy(gameObject);
             }
@@ -65,38 +57,30 @@ namespace BattleSystem.Characters
 
         public void UpdateHealthUI(int newAmount)
         {
-            currentHealth = newAmount;
-            fighterHealthBar.DisplayHealth(newAmount);
-
-            /*if (isPlayer)
-                gameManager.DisplayHealth(newAmount, maxHealth);*/
+            _currentHealth = newAmount;
+            _fighterHealthBar.DisplayHealth(newAmount);
         }
 
         public void AddBlock(int amount)
         {
-            currentBlock += amount;
-            fighterHealthBar.DisplayBlock(currentBlock);
-        }
-
-        private void Die()
-        {
-            gameObject.SetActive(false);
+            _currentBlock += amount;
+            _fighterHealthBar.DisplayBlock(_currentBlock);
         }
 
         private int BlockDamage(int amount)
         {
-            if (currentBlock >= amount)
+            if (_currentBlock >= amount)
             {
-                currentBlock -= amount;
+                _currentBlock -= amount;
                 amount = 0;
             }
             else
             {
-                amount -= currentBlock;
-                currentBlock = 0;
+                amount -= _currentBlock;
+                _currentBlock = 0;
             }
 
-            fighterHealthBar.DisplayBlock(currentBlock);
+            _fighterHealthBar.DisplayBlock(_currentBlock);
             return amount;
         }
 
@@ -106,7 +90,7 @@ namespace BattleSystem.Characters
 
             if (currentBuff.BuffValue <= 0)
             {
-                currentBuff.BuffGo = Instantiate(buffPrefab, buffParent);
+                currentBuff.BuffGo = Instantiate(SettingsProvider.Get<BattlePrefabSet>().BuffUIPrefab, buffParent);
             }
 
             currentBuff.BuffValue += amount;
@@ -148,9 +132,8 @@ namespace BattleSystem.Characters
                     Destroy(buff.BuffGo.gameObject);
                 }
             }
-
-            currentBlock = 0;
-            fighterHealthBar.DisplayBlock(0);
+            _currentBlock = 0;
+            _fighterHealthBar.DisplayBlock(0);
         }
     }
 }

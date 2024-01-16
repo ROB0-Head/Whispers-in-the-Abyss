@@ -8,47 +8,29 @@ using UnityEngine.UI;
 
 namespace BattleSystem.Characters.Enemy
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : Fighter
     {
         public List<EnemyAction> enemyActions;
         public List<EnemyAction> turns = new List<EnemyAction>();
         public int turnNumber;
         public bool shuffleActions;
-        public Fighter thisEnemy;
 
-        [Header("UI")] public Image intentIcon;
+        public Image intentIcon;
         public TMP_Text intentAmount;
         public BuffUI intentUI;
 
-        [Header("Specifics")] public int goldDrop;
-        public bool bird;
-        public bool nob;
-        public bool wiggler;
-        public GameObject wigglerBuff;
-        public GameObject nobBuff;
-        Fighter player;
-        Animator animator;
+        private Animator animator;
         public bool midTurn;
 
         private void Start()
         {
-            /*
-            player = battleSceneManager.player;
-            */
-            thisEnemy = GetComponent<Fighter>();
             animator = GetComponent<Animator>();
-
             if (shuffleActions)
                 GenerateTurns();
         }
 
         private void LoadEnemy()
         {
-            /*
-            player = battleSceneManager.player;
-            */
-            thisEnemy = GetComponent<Fighter>();
-
             if (shuffleActions)
                 GenerateTurns();
         }
@@ -100,12 +82,10 @@ namespace BattleSystem.Characters.Enemy
         private IEnumerator AttackPlayer()
         {
             animator.Play("Attack");
-            /*if (bird)
-                battleSceneManager.birdIcon.GetComponent<Animator>().Play("Attack");*/
 
             int totalDamage = 0;
 
-            foreach (var buffs in thisEnemy.BuffList)
+            foreach (var buffs in BuffList)
             {
                 if (buffs.BuffType == Buff.Type.Strength)
                 {
@@ -113,7 +93,7 @@ namespace BattleSystem.Characters.Enemy
                 }
             }
 
-            foreach (var buffs in player.BuffList)
+            foreach (var buffs in BattleManager.Instance.Player.BuffList)
             {
                 if (buffs.BuffType == Buff.Type.Vulnerable && buffs.BuffValue > 0)
                 {
@@ -122,7 +102,7 @@ namespace BattleSystem.Characters.Enemy
             }
 
             yield return new WaitForSeconds(0.5f);
-            player.TakeDamage(totalDamage);
+            BattleManager.Instance.Player.TakeDamage(totalDamage);
             yield return new WaitForSeconds(0.5f);
             WrapUpTurn();
         }
@@ -139,32 +119,26 @@ namespace BattleSystem.Characters.Enemy
             if (turnNumber == turns.Count)
                 turnNumber = 0;
 
-            if (bird)
-                turnNumber = 1;
-
-            if (nob && turnNumber == 0)
-                turnNumber = 1;
-
-            thisEnemy.EvaluateBuffsAtTurnEnd();
+            EvaluateBuffsAtTurnEnd();
             midTurn = false;
         }
 
         private void ApplyBuffToSelf(Buff.Type t)
         {
-            thisEnemy.AddBuff(t, turns[turnNumber].amount);
+            AddBuff(t, turns[turnNumber].amount);
         }
 
         private void ApplyDebuffToPlayer(Buff.Type t)
         {
-            if (player == null)
+            if (BattleManager.Instance.Player == null)
                 LoadEnemy();
 
-            player.AddBuff(t, turns[turnNumber].debuffAmount);
+            BattleManager.Instance.Player.AddBuff(t, turns[turnNumber].debuffAmount);
         }
 
         private void PerformBlock()
         {
-            thisEnemy.AddBlock(turns[turnNumber].amount);
+            AddBlock(turns[turnNumber].amount);
         }
 
         public void DisplayIntent()
@@ -178,7 +152,7 @@ namespace BattleSystem.Characters.Enemy
             {
                 int totalDamage = 0;
 
-                foreach (var buffs in thisEnemy.BuffList)
+                foreach (var buffs in BuffList)
                 {
                     if (buffs.BuffType == Buff.Type.Strength)
                     {
@@ -186,7 +160,7 @@ namespace BattleSystem.Characters.Enemy
                     }
                 }
 
-                foreach (var buffs in player.BuffList)
+                foreach (var buffs in BattleManager.Instance.Player.BuffList)
                 {
                     if (buffs.BuffType == Buff.Type.Vulnerable && buffs.BuffValue > 0)
                     {
@@ -202,11 +176,11 @@ namespace BattleSystem.Characters.Enemy
             intentUI.animator.Play("IntentSpawn");
         }
 
-        public void CurlUp()
+        /*public void CurlUp()
         {
             wigglerBuff.SetActive(false);
             thisEnemy.AddBlock(5);
-        }
+        }*/
     }
 
     public enum EnemyType

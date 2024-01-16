@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-namespace TJ
+namespace BattleSystem.Characters.BattleScreen
 {
-public class DamageIndicator : MonoBehaviour
-{
-    public Animator animator;
-    public TMP_Text text;
-	public void DisplayDamage(int amount)
+    public class DamageIndicator : MonoBehaviour
     {
-        text.text = amount.ToString();
-        animator.Play("DisplayDamage");
+        public Animator animator;
+        public TMP_Text text;
+
+        public void DisplayDamage(int amount)
+        {
+            text.text = amount.ToString();
+            animator.Play("DisplayDamage");
+        }
     }
-}
 }
