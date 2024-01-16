@@ -8,7 +8,9 @@ namespace Settings.BattleManager.Cards
     {
         public SkillCardType SkillType;
 
-        public SkillCard(string cardTitle,bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(cardTitle,isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
+        public SkillCard(string cardTitle, bool isUpgraded, CardDescription cardDescription, CardAmount cardCost,
+            CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(cardTitle, isUpgraded,
+            cardDescription, cardCost, cardEffect, buffAmount, cardType)
         {
         }
     }
@@ -17,7 +19,9 @@ namespace Settings.BattleManager.Cards
     {
         public AttackCardType AttackType;
 
-        public AttackCard(string cardTitle,bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(cardTitle,isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
+        public AttackCard(string cardTitle, bool isUpgraded, CardDescription cardDescription, CardAmount cardCost,
+            CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(cardTitle, isUpgraded,
+            cardDescription, cardCost, cardEffect, buffAmount, cardType)
         {
         }
     }
@@ -26,47 +30,49 @@ namespace Settings.BattleManager.Cards
     {
         public DefenceCardType DefenseType;
 
-        public DefenseCard(string cardTitle,bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(cardTitle,isUpgraded, cardDescription, cardCost, cardEffect, buffAmount, cardType)
+        public DefenseCard(string cardTitle, bool isUpgraded, CardDescription cardDescription, CardAmount cardCost,
+            CardAmount cardEffect, CardAmount buffAmount, CardType cardType) : base(cardTitle, isUpgraded,
+            cardDescription, cardCost, cardEffect, buffAmount, cardType)
         {
         }
     }
 
-    public class Card : ScriptableObject
+    public class Card
     {
         public string CardTitle;
         public bool IsUpgraded;
         public CardDescription CardDescription;
-        public CardAmount CardCost;
-        public CardAmount CardEffect;
+        public CardAmount CardEnergy;
+        public CardAmount CardStat;
         public CardAmount BuffAmount;
-
         public CardType CardType;
-
-        public Card(string cardTitle,bool isUpgraded, CardDescription cardDescription, CardAmount cardCost, CardAmount cardEffect, CardAmount buffAmount, CardType cardType)
+        
+        public Card(string cardTitle, bool isUpgraded, CardDescription cardDescription, CardAmount cardCost,
+            CardAmount cardEffect, CardAmount buffAmount, CardType cardType)
         {
             CardTitle = cardTitle;
             IsUpgraded = isUpgraded;
             CardDescription = cardDescription;
-            CardCost = cardCost;
-            CardEffect = cardEffect;
+            CardEnergy = cardCost;
+            CardStat = cardEffect;
             BuffAmount = buffAmount;
             CardType = cardType;
         }
-        
-        public int GetCardCostAmount()
+
+        public int GetCardEnergyAmount()
         {
             if (!IsUpgraded)
-                return CardCost.baseAmount;
+                return CardEnergy.baseAmount;
 
-            return CardCost.upgradedAmount;
+            return CardEnergy.upgradedAmount;
         }
 
-        public int GetCardEffectAmount()
+        public int GetCardStatAmount()
         {
             if (!IsUpgraded)
-                return CardEffect.baseAmount;
+                return CardStat.baseAmount;
 
-            return CardEffect.upgradedAmount;
+            return CardStat.upgradedAmount;
         }
 
         public string GetCardDescriptionAmount()

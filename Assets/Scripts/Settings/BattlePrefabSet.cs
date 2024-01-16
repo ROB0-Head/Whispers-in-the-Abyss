@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Map;
+using Settings.BattleManager.Cards;
 using TJ;
 using UI.Buttons;
 using UI.Panels;

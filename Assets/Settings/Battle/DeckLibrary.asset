@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 6d353dceb8e04f54988e408565a57fb5, type: 3}
   m_Name: DeckLibrary
   m_EditorClassIdentifier: Assembly-CSharp:Settings:DeckLibrary
   Deck:
@@ -22,6 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4bfed625eed37a42851a069f200aa92, type: 2}
   - {fileID: 11400000, guid: 3a94ca80a77d3f04ca9311fdc962f13f, type: 2}
   - {fileID: 11400000, guid: 24b99298c3be4bf4b8878ebd3b2b1dd3, type: 2}
-  AttackCardPrefab: {fileID: 8286164728509786245, guid: 77f349403f6e44146b28bb31c721bfe0, type: 3}
-  DefenseCardPrefab: {fileID: 4351733458511343716, guid: 5a9d835614ea54c4ca10cfee78ae9817, type: 3}
+  CardPrefab: {fileID: 8286164728509786245, guid: 77f349403f6e44146b28bb31c721bfe0, type: 3}
   SkillCardPrefab: {fileID: 0}

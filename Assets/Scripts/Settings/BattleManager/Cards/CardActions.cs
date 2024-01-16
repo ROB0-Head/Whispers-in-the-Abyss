@@ -1,38 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
-using BattleSystem;
-using Settings.BattleManager;
-using Settings.BattleManager.Cards;
+using TJ;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace TJ
+namespace Settings.BattleManager.Cards
 {
     public class CardActions : MonoBehaviour
     {
-        Card card;
-        public Fighter target;
-        public Fighter player;
-
-        public void PerformAction(Card _card, Fighter _fighter)
+        [SerializeField] private Fighter _player;
+        
+        private Fighter _target;
+        
+        public void PerformAction(Card card, Fighter _fighter)
         {
-            card = _card;
-            target = _fighter;
+            _target = _fighter;
 
-            if (_card.CardType == CardType.Attack && _card is AttackCard attackCard)
+            if (card.CardType == CardType.Attack && card is AttackCard attackCard)
             {
                 switch (attackCard.AttackType)
                 {
                     case AttackCardType.Strike:
-                        AttackEnemy();
+                        AttackEnemy(card);
                         break;
                     case AttackCardType.Bash:
-                        AttackEnemy();
-                        ApplyBuff(Buff.Type.Vulnerable);
+                        AttackEnemy(card);
+                        ApplyBuff(Buff.Type.Vulnerable,card);
                         break;
                     
                     case AttackCardType.Clothesline:
-                        AttackEnemy();
-                        ApplyBuff(Buff.Type.Weak);
+                        AttackEnemy(card);
+                        ApplyBuff(Buff.Type.Weak,card);
                         break;
                     
                     case AttackCardType.Bodyslam:
@@ -44,12 +40,12 @@ namespace TJ
                 }
             }
 
-            if (_card.CardType == CardType.Defense && _card is DefenseCard defenceCard)
+            if (card.CardType == CardType.Defense && card is DefenseCard defenceCard)
             {
                 switch (defenceCard.DefenseType)
                 {
                     case DefenceCardType.Defense:
-                        PerformBlock();
+                        PerformBlock(card);
                         break;
                     case DefenceCardType.Entrench:
                         Entrench();
@@ -58,41 +54,39 @@ namespace TJ
                         Entrench();
                         break;
                     case DefenceCardType.IronWave:
-                        AttackEnemy();
-                        PerformBlock();
+                        AttackEnemy(card);
+                        PerformBlock(card);
                         break;
                 }
             }
 
-            if (_card.CardType == CardType.Skill && _card is SkillCard skillCard)
+            if (card.CardType == CardType.Skill && card is SkillCard skillCard)
             {
                 switch (skillCard.SkillType)
                 {
                     case SkillCardType.Bloodletting:
-                        AttackSelf();
-                        /*
-                        BattleManager.Instance.Energy += 2;
-                        */
+                        AttackSelf(card);
+                        BattleSystem.BattleManager.Instance.UpdateEnergy(2); 
                         break;
                     case SkillCardType.Inflame:
-                        ApplyBuffToSelf(Buff.Type.Strength);
+                        ApplyBuffToSelf(Buff.Type.Strength,card);
                         break;
                 }
             }
         }
 
 
-        private void AttackEnemy()
+        private void AttackEnemy(Card card)
         {
             int totalDamage = 0;
-            foreach (var buffs in player.BuffList)
+            foreach (var buffs in _player.BuffList)
             {
                 if (buffs.BuffType == Buff.Type.Strength)
                 {
-                    totalDamage = card.GetCardEffectAmount() + buffs.BuffValue;
+                    totalDamage = card.GetCardStatAmount() + buffs.BuffValue;
                 }
 
-                foreach (var currentBuff in target.BuffList)
+                foreach (var currentBuff in _target.BuffList)
                 {
                     if (currentBuff.BuffType == Buff.Type.Vulnerable && currentBuff.BuffValue > 0)
                     {
@@ -103,20 +97,20 @@ namespace TJ
                 }
             }
 
-            target.TakeDamage(totalDamage);
+            _target.TakeDamage(totalDamage);
         }
 
-        private void AttackStrength()
+        private void AttackStrength(Card card)
         {
             int totalDamage = 0;
-            foreach (var buffs in player.BuffList)
+            foreach (var buffs in _player.BuffList)
             {
                 if (buffs.BuffType == Buff.Type.Strength && buffs.BuffValue > 0)
                 {
-                    totalDamage = card.GetCardEffectAmount() + (buffs.BuffValue * 3);
+                    totalDamage = card.GetCardStatAmount() + (buffs.BuffValue * 3);
                 }
 
-                foreach (var currentBuff in target.BuffList)
+                foreach (var currentBuff in _target.BuffList)
                 {
                     if (currentBuff.BuffType == Buff.Type.Vulnerable && currentBuff.BuffValue > 0)
                     {
@@ -127,14 +121,14 @@ namespace TJ
                 }
             }
 
-            target.TakeDamage(totalDamage);
+            _target.TakeDamage(totalDamage);
         }
 
         private void BodySlam()
         {
-            int totalDamage = player.currentBlock;
+            int totalDamage = _player.currentBlock;
 
-            foreach (var currentBuff in target.BuffList)
+            foreach (var currentBuff in _target.BuffList)
             {
                 if (currentBuff.BuffType == Buff.Type.Vulnerable && currentBuff.BuffValue > 0)
                 {
@@ -144,32 +138,32 @@ namespace TJ
                 }
             }
 
-            target.TakeDamage(totalDamage);
+            _target.TakeDamage(totalDamage);
         }
 
         private void Entrench()
         {
-            player.AddBlock(player.currentBlock);
+            _player.AddBlock(_player.currentBlock);
         }
 
-        private void ApplyBuff(Buff.Type t)
+        private void ApplyBuff(Buff.Type t,Card card)
         {
-            target.AddBuff(t, card.GetBuffAmount());
+            _target.AddBuff(t, card.GetBuffAmount());
         }
 
-        private void ApplyBuffToSelf(Buff.Type t)
+        private void ApplyBuffToSelf(Buff.Type t,Card card)
         {
-            player.AddBuff(t, card.GetBuffAmount());
+            _player.AddBuff(t, card.GetBuffAmount());
         }
 
-        private void AttackSelf()
+        private void AttackSelf(Card card)
         {
-            player.TakeDamage(2);
+            _player.TakeDamage(card.GetCardStatAmount());
         }
 
-        private void PerformBlock()
+        private void PerformBlock(Card card)
         {
-            player.AddBlock(card.GetCardEffectAmount());
+            _player.AddBlock(card.GetCardStatAmount());
         }
     }
 }

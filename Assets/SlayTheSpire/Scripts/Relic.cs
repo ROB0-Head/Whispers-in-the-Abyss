@@ -6,18 +6,11 @@ using UnityEngine.Serialization;
 
 namespace TJ
 {
-    [CreateAssetMenu(fileName = "Relic", menuName = "WITA/Battle/Relic")]
-    public class Relic : ScriptableObject
-    {
-        public RelicType RelicType;
-        public string relicDescription;
-        public Sprite relicIcon;
-    }
-
     [CreateAssetMenu(fileName = "RelicLibrary", menuName = "WITA/Battle/RelicLibrary")]
     public class RelicLibrary : ScriptableObject
     {
         public List<Relic> Relics;
+
         public Relic GetRandomRelic()
         {
             if (Relics.Count > 0)
@@ -28,5 +21,13 @@ namespace TJ
 
             return null;
         }
+    }
+
+    [CreateAssetMenu(fileName = "Relic", menuName = "WITA/Battle/Relic")]
+    public class Relic : ScriptableObject
+    {
+        public RelicType RelicType;
+        public string relicDescription;
+        public Sprite relicIcon;
     }
 }

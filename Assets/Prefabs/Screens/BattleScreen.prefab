@@ -1250,6 +1250,7 @@ GameObject:
   - component: {fileID: 2919877586527896296}
   - component: {fileID: -4780720522626653233}
   - component: {fileID: 5112657006949653253}
+  - component: {fileID: 4874082671209133391}
   m_Layer: 5
   m_Name: BattleScreen
   m_TagString: Untagged
@@ -1300,14 +1301,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backButton: {fileID: 8401205032163855723}
-  endTurnButton: {fileID: 7223257772288453471}
-  banner: {fileID: 2493446474833448406}
-  turnText: {fileID: 5198413114037100402}
-  drawPileCountText: {fileID: 4939915121981692557}
-  discardPileCountText: {fileID: 2154635770015193869}
-  energyText: {fileID: 524233784752163729}
-  enemyParent: {fileID: 6042876738902732447}
+  _endTurnButton: {fileID: 7223257772288453471}
+  _banner: {fileID: 2493446474833448406}
+  _turnText: {fileID: 5198413114037100402}
+  _drawPileCountText: {fileID: 4939915121981692557}
+  _discardPileCountText: {fileID: 2154635770015193869}
+  _energyText: {fileID: 524233784752163729}
   _deck: {fileID: 6857621546228315211}
+  _topParent: {fileID: 8744766788360065627}
 --- !u!114 &5112657006949653253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,13 +1321,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67aac2d9c55d5504c9569bb8f8579f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardActions: {fileID: 0}
-  topParent: {fileID: 8744766788360065627}
-  SelectedCard: {fileID: 0}
+  _cardActions: {fileID: 4874082671209133391}
   _cardTarget: {fileID: 0}
-  player: {fileID: 7944656831278066516}
+  _player: {fileID: 7944656831278066516}
   _enemies: []
   _enemyParent: {fileID: 6042876738902732447}
+  _topParent: {fileID: 0}
+  SelectedCard: {fileID: 0}
+--- !u!114 &4874082671209133391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5028371647356187737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1793383ed5e4ba44d8b27e86cd5b0143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
 --- !u!1 &5601937972365907657
 GameObject:
   m_ObjectHideFlags: 0

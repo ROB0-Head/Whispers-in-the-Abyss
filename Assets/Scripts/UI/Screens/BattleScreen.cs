@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleSystem;
 using Map;
 using Navigation;
@@ -9,6 +11,7 @@ using TJ;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI.Screens
@@ -18,16 +21,19 @@ namespace UI.Screens
         public static BattleScreen Instance { get; private set; }
 
         [SerializeField] private Button _backButton;
-        [SerializeField] private Button endTurnButton;
-        [SerializeField] private Animator banner;
-        [SerializeField] private TMP_Text turnText;
-        [SerializeField] private TMP_Text drawPileCountText;
-        [SerializeField] private TMP_Text discardPileCountText;
-        [SerializeField] private TMP_Text energyText;
-        [SerializeField] private Transform enemyParent;
+        [SerializeField] private Button _endTurnButton;
+        [SerializeField] private Animator _banner;
+        [SerializeField] private TMP_Text _turnText;
+        [SerializeField] private TMP_Text _drawPileCountText;
+        [SerializeField] private TMP_Text _discardPileCountText;
+        [SerializeField] private TMP_Text _energyText;
         [SerializeField] private Transform _deck;
+        [SerializeField] private Transform _topParent;
 
         private BattleTabType _currentTab;
+        private List<CardUI> _cardList = new List<CardUI>();
+
+        public Transform DiscardPileCount => _discardPileCountText.transform;
 
         private void Awake()
         {
@@ -35,8 +41,33 @@ namespace UI.Screens
             _backButton.onClick.AddListener(() => { SelectTab(BattleTabType.Exit); });
         }
 
+        private void OnDisable()
+        {
+            BattleManager.Instance.DrawPileCountUpdated -= UpdateDrawPileCountText;
+            BattleManager.Instance.DiscardPileCountUpdated -= UpdateDiscardPileCountText;
+            BattleManager.Instance.CurrentEnergyUpdated -= UpdateEnergyText;
+        }
+
+        public void UpdateDrawPileCountText(int newDrawPileCount)
+        {
+            _drawPileCountText.text = newDrawPileCount.ToString();
+        }
+
+        public void UpdateDiscardPileCountText(int newDiscardPileCount)
+        {
+            _discardPileCountText.text = newDiscardPileCount.ToString();
+        }
+
+        public void UpdateEnergyText(int newEnergy)
+        {
+            _energyText.text = newEnergy.ToString();
+        }
+
         public override void Setup(ScreenSettings settings)
         {
+            BattleManager.Instance.DrawPileCountUpdated += UpdateDrawPileCountText;
+            BattleManager.Instance.DiscardPileCountUpdated += UpdateDiscardPileCountText;
+            BattleManager.Instance.CurrentEnergyUpdated += UpdateEnergyText;
             if (settings is not BattleScreenSettings battleScreenSettings)
                 return;
 
@@ -46,16 +77,18 @@ namespace UI.Screens
 
         public List<Card> DrawCards()
         {
-            var deck = SaveManager.LoadDeck();
+            var deck = new List<Card>();
             var zOffSet = 15f;
-            foreach (var card in deck)
+            foreach (var card in SaveManager.LoadDeck())
             {
-                var cardTransform = Instantiate(SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.AttackCardPrefab,
+                var cardTransform = Instantiate(SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.CardPrefab,
                     _deck);
                 cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
                 zOffSet -= 5;
                 var cardUI = cardTransform.GetComponent<CardUI>();
                 cardUI.LoadCard(card);
+                deck.Add(cardUI.Card);
+                _cardList.Add(cardUI);
                 cardTransform.gameObject.SetActive(false);
             }
 
@@ -64,11 +97,22 @@ namespace UI.Screens
 
         public void DisplayCardInHand(Card card)
         {
-            foreach (Transform cardUI in _deck)
+            var existingCardUI = _cardList.FirstOrDefault(x =>
+                x.CardTitle == card.CardTitle && x.CardEnergy == card.CardEnergy.baseAmount.ToString() &&
+                x.CardStat == card.CardStat.baseAmount.ToString() && !x.gameObject.activeSelf);
+
+            if (existingCardUI != null)
             {
-                if (card.CardTitle == cardUI.GetComponent<CardUI>().CardTitle)
+                existingCardUI.gameObject.SetActive(true);
+            }
+            else
+            {
+                var inactiveCardUI = _cardList.FirstOrDefault(x => !x.gameObject.activeSelf);
+
+                if (inactiveCardUI != null)
                 {
-                    cardUI.gameObject.SetActive(true);
+                    inactiveCardUI.LoadCard(card);
+                    inactiveCardUI.gameObject.SetActive(true);
                 }
             }
         }
@@ -97,19 +141,32 @@ namespace UI.Screens
             }
         }
 
-        public void ChangeTurn(BattleState battleState)
+        public void ChangeTurn(BattleState battleState, bool endTurn)
         {
+            _endTurnButton.enabled = endTurn;
             switch (battleState)
             {
                 case BattleState.EnemyTurn:
-                    turnText.text = "Enemy's Turn";
-                    banner.Play("bannerIn");
+                    _turnText.text = "Enemy's Turn";
+                    _banner.Play("bannerIn");
                     break;
 
                 case BattleState.PlayerTurn:
-                    turnText.text = "Player's Turn";
-                    banner.Play("bannerOut");
+                    _turnText.text = "Player's Turn";
+                    _banner.Play("bannerOut");
                     break;
+            }
+        }
+
+        public void DiscardCardInHand()
+        {
+            foreach (Transform card in _deck)
+            {
+                var cardUI = card.GetComponent<CardUI>();
+                if (cardUI.gameObject.activeSelf)
+                    Instantiate(cardUI.DiscardEffect, cardUI.transform.position, Quaternion.identity, _topParent);
+
+                cardUI.gameObject.SetActive(false);
             }
         }
 

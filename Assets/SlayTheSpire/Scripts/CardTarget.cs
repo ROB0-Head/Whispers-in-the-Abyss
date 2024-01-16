@@ -1,39 +1,36 @@
+using BattleSystem;
+using Settings.BattleManager.Cards;
 using UnityEngine;
 
 namespace TJ
 {
     public class CardTarget : MonoBehaviour
     {
-        Fighter enemyFighter;
+        private Fighter _enemyFighter;
 
         private void Awake()
         {
-            /*battleSceneManager = FindObjectOfType<BattleSceneManager>();
-            enemyFighter = GetComponent<Fighter>();*/
+            _enemyFighter = GetComponent<Fighter>();
         }
 
         public void PointerEnter()
         {
-            /*if (enemyFighter == null)
+            if (_enemyFighter == null)
             {
                 Debug.Log("fighta is null");
-                battleSceneManager = FindObjectOfType<BattleSceneManager>();
-                enemyFighter = GetComponent<Fighter>();
+                _enemyFighter = GetComponent<Fighter>();
             }
 
-            if (battleSceneManager.selectedCard != null &&
-                battleSceneManager.selectedCard.card.cardType == Card.CardType.Attack)
+            if (BattleManager.Instance.SelectedCard != null &&
+                BattleManager.Instance.SelectedCard.Card.CardType == CardType.Attack)
             {
-                //target == enemy
-                battleSceneManager.cardTarget = enemyFighter;
-                //Debug.Log("set target");
-            }*/
+                BattleManager.Instance.SetTarget(_enemyFighter);
+            }
         }
 
         public void PointerExit()
         {
-            /*battleSceneManager.cardTarget = null;
-            //Debug.Log("drop target");*/
+            BattleManager.Instance.SetTarget(null);
         }
     }
 }

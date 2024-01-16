@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Settings.BattleManager.Cards
 {
@@ -11,54 +10,60 @@ namespace Settings.BattleManager.Cards
         [SerializeField] private TMP_Text _cardStat;
         [SerializeField] private TMP_Text _cardEnergy;
         [SerializeField] private GameObject _discardEffect;
-        [SerializeField] private Animator animator;
 
+
+        private Animator _animator;
+        private Card _card;
+
+        public Card Card => _card;
         public GameObject DiscardEffect => _discardEffect;
-        public string CardTitle => _cardTitleText.ToString();
+        public string CardTitle => _cardTitleText.text;
+        public string CardStat => _cardStat.text;
+        public string CardEnergy => _cardEnergy.text;
+
         private void Awake()
         {
-            animator = GetComponent<Animator>();
+            _animator = GetComponent<Animator>();
         }
 
         private void OnEnable()
         {
-            /*
-            animator.Play("HoverOffCard");
-        */
+            _animator.Play("HoverOffCard");
         }
 
-        public void LoadCard(Card _card)
+        public void LoadCard(Card card)
         {
+            _card = card;
             gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-            _cardTitleText.text = _card.CardTitle;
+            _cardTitleText.text = card.CardTitle;
             /*cardDescriptionText.text = _card.GetCardDescriptionAmount();*/
-            _cardEnergy.text = _card.GetCardCostAmount().ToString();
-            _cardStat.text = _card.GetCardEffectAmount().ToString();
+            _cardEnergy.text = card.GetCardEnergyAmount().ToString();
+            _cardStat.text = card.GetCardStatAmount().ToString();
         }
 
         public void SelectCard()
         {
-            //Debug.Log("card is selected");
+            Debug.Log("card is selected");
             BattleSystem.BattleManager.Instance.SelectedCard = this;
         }
 
         public void DeselectCard()
         {
-            //Debug.Log("card is deselected");
+            Debug.Log("card is deselected");
             BattleSystem.BattleManager.Instance.SelectedCard = null;
-            animator.Play("HoverOffCard");
+            _animator.Play("HoverOffCard");
         }
 
         public void HoverCard()
         {
             if (BattleSystem.BattleManager.Instance.SelectedCard == null)
-                animator.Play("HoverOnCard");
+                _animator.Play("HoverOnCard");
         }
 
         public void DropCard()
         {
             if (BattleSystem.BattleManager.Instance.SelectedCard == null)
-                animator.Play("HoverOffCard");
+                _animator.Play("HoverOffCard");
         }
 
         public void HandleDrag()
@@ -67,19 +72,19 @@ namespace Settings.BattleManager.Cards
 
         public void HandleEndDrag()
         {
-            /*if ( BattleManager.Instance.Energy < card.GetCardCostAmount())
+            if (BattleSystem.BattleManager.Instance.Energy < _card.GetCardEnergyAmount())
                 return;
 
-            if (card.cardType == Card.CardType.Attack)
+            if (_card.CardType == CardType.Attack)
             {
-                BattleManager.Instance.PlayCard(this);
-                animator.Play("HoverOffCard");
+                BattleSystem.BattleManager.Instance.PlayCard(this);
+                _animator.Play("HoverOffCard");
             }
-            else if (card.cardType != Card.CardType.Attack)
+            else if (_card.CardType != CardType.Attack)
             {
-                animator.Play("HoverOffCard");
-                BattleManager.Instance.PlayCard(this);
-            }*/
+                _animator.Play("HoverOffCard");
+                BattleSystem.BattleManager.Instance.PlayCard(this);
+            }
         }
     }
 }
