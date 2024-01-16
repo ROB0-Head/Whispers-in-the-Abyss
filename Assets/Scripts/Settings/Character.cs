@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Settings.BattleManager.Cards;
 using TJ;
-using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Settings
 {

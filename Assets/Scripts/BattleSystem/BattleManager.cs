@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BattleSystem.Cards;
+using BattleSystem.Characters;
+using BattleSystem.Characters.Enemy;
 using Navigation;
 using SaveSystem;
 using Settings;
@@ -68,10 +71,87 @@ namespace BattleSystem
             CurrentEnergyUpdated?.Invoke(_currentEnergy);
         }
 
+        private void DrawCards(int amountToDraw)
+        {
+            int cardsDrawn = 0;
+            while (cardsDrawn < amountToDraw && _cardsInHand.Count < 10)
+            {
+                if (_drawPile.Count < 1)
+                    ShuffleCards();
+                if (_drawPile.Count > 0)
+                {
+                    AddCardToHand(_drawPile[0]);
+                    BattleScreen.Instance.DisplayCardInHand(_drawPile[0]);
+                    _drawPile.Remove(_drawPile[0]);
+                    cardsDrawn++;
+                }
+                else
+                {
+                    Debug.LogWarning("Draw pile is empty!");
+                    break;
+                }
+            }
+            UpdateTextValueCount();
+        }
+
+
+        private void AddCardToHand(Card card)
+        {
+            if (_cardsInHand.Count < 10)
+            {
+                _cardsInHand.Add(card);
+            }
+            else
+            {
+                Debug.LogWarning("Hand is full, cannot add more cards!");
+            }
+        }
+
+        private void ClearHandAndTransferToDiscard()
+        {
+            if (_cardsInHand.Count > 0)
+            {
+                _discardPile.AddRange(_cardsInHand);
+                _cardsInHand.Clear();
+            }
+        }
+
+
+        private void ShuffleCards()
+        {
+            Utils.Shuffle(_discardPile);
+            _drawPile.AddRange(_discardPile);
+            _discardPile = new List<Card>();
+        }
+
+        private void DiscardCard(Card card)
+        {
+            _discardPile.Add(card);
+            UpdateTextValueCount();
+        }
+
+        private IEnumerator HandleEnemyTurn()
+        {
+            BattleScreen.Instance.ChangeTurn(BattleState.EnemyTurn, false);
+
+            yield return new WaitForSeconds(1.5f);
+
+            foreach (Enemy enemy in _enemies)
+            {
+                enemy.midTurn = true;
+                enemy.TakeTurn();
+                while (enemy.midTurn)
+                    yield return new WaitForEndOfFrame();
+            }
+
+            Debug.Log("Turn Over");
+            ChangeTurn();
+        }
+
         public void UpdateEnergy(int count)
         {
             _currentEnergy += count;
-            CurrentEnergyUpdated?.Invoke(_currentEnergy);
+            UpdateTextValueCount();
         }
 
         public void SetTarget(Fighter fighter)
@@ -81,7 +161,7 @@ namespace BattleSystem
 
         public void StartBattle(EnemyType enemyType)
         {
-            BattleScreen.Instance.ChangeTurn(BattleState.PlayerTurn,true);
+            BattleScreen.Instance.ChangeTurn(BattleState.PlayerTurn, true);
             _currentBattleState = BattleState.PlayerTurn;
             var characterData = SaveManager.LoadCharacterData();
             _maxEnergy = characterData.Energy;
@@ -134,91 +214,6 @@ namespace BattleSystem
             UpdateTextValueCount();
         }
 
-        public void DrawCards(int amountToDraw)
-        {
-            int cardsDrawn = 0;
-            while (cardsDrawn < amountToDraw && _cardsInHand.Count < 10)
-            {
-                if (_drawPile.Count < 1)
-                    ShuffleCards();
-
-                if (_drawPile.Count > 0)
-                {
-                    AddCardToHand(_drawPile[0]);
-                    BattleScreen.Instance.DisplayCardInHand(_drawPile[0]);
-                    _drawPile.Remove(_drawPile[0]);
-                    cardsDrawn++;
-                }
-                else
-                {
-                    Debug.LogWarning("Draw pile is empty!");
-                    break;
-                }
-            }
-        }
-
-
-        private void AddCardToHand(Card card)
-        {
-            if (_cardsInHand.Count < 10)
-            {
-                _cardsInHand.Add(card);
-            }
-            else
-            {
-                Debug.LogWarning("Hand is full, cannot add more cards!");
-            }
-        }
-
-        private void ClearHandAndTransferToDiscard()
-        {
-            if (_cardsInHand.Count > 0)
-            {
-                _discardPile.AddRange(_cardsInHand);
-                _cardsInHand.Clear();
-            }
-        }
-
-
-        public void ShuffleCards()
-        {
-            _discardPile.AddRange(_cardsInHand);
-            _cardsInHand.Clear();
-
-            Utils.Shuffle(_discardPile);
-            _drawPile = _discardPile;
-            _discardPile = new List<Card>();
-        }
-
-
-        public void PlayCard(CardUI cardUI)
-        {
-            foreach (var buffs in _enemies[0].GetComponent<Fighter>().BuffList)
-            {
-                if (cardUI.Card.CardType != CardType.Attack && buffs.BuffType == Buff.Type.Enrage &&
-                    buffs.BuffValue > 0)
-                    _enemies[0].GetComponent<Fighter>()
-                        .AddBuff(Buff.Type.Strength, buffs.BuffValue);
-            }
-
-            _cardActions.PerformAction(cardUI.Card, _cardTarget);
-
-            _currentEnergy -= cardUI.Card.GetCardEnergyAmount();
-            CurrentEnergyUpdated?.Invoke(_currentEnergy);
-
-            Instantiate(cardUI.DiscardEffect, cardUI.transform.position, Quaternion.identity, _topParent);
-            SelectedCard = null;
-            cardUI.gameObject.SetActive(false);
-            _cardsInHand.Remove(cardUI.Card);
-            DiscardCard(cardUI.Card);
-        }
-
-        public void DiscardCard(Card card)
-        {
-            _discardPile.Add(card);
-            DiscardPileCountUpdated?.Invoke(_discardPile.Count);
-        }
-
         public void ChangeTurn()
         {
             if (_currentBattleState == BattleState.PlayerTurn)
@@ -236,6 +231,7 @@ namespace BattleSystem
                 }
 
                 _player.EvaluateBuffsAtTurnEnd();
+                UpdateTextValueCount();
                 StartCoroutine(HandleEnemyTurn());
             }
             else
@@ -249,29 +245,31 @@ namespace BattleSystem
                 _player.currentBlock = 0;
                 _player.fighterHealthBar.DisplayBlock(0);
                 _currentEnergy = _maxEnergy;
-                CurrentEnergyUpdated?.Invoke(_currentEnergy);
                 DrawCards(5);
+                UpdateTextValueCount();
                 BattleScreen.Instance.ChangeTurn(BattleState.PlayerTurn, true);
             }
         }
 
-
-        private IEnumerator HandleEnemyTurn()
+        public void PlayCard(CardUI cardUI)
         {
-            BattleScreen.Instance.ChangeTurn(BattleState.EnemyTurn, false);
-
-            yield return new WaitForSeconds(1.5f);
-
-            foreach (Enemy enemy in _enemies)
+            foreach (var buffs in _enemies[0].GetComponent<Fighter>().BuffList)
             {
-                enemy.midTurn = true;
-                enemy.TakeTurn();
-                while (enemy.midTurn)
-                    yield return new WaitForEndOfFrame();
+                if (cardUI.Card.CardType != CardType.Attack && buffs.BuffType == Buff.Type.Enrage &&
+                    buffs.BuffValue > 0)
+                    _enemies[0].GetComponent<Fighter>()
+                        .AddBuff(Buff.Type.Strength, buffs.BuffValue);
             }
 
-            Debug.Log("Turn Over");
-            ChangeTurn();
+            _cardActions.PerformAction(cardUI.Card, _cardTarget);
+
+            _currentEnergy -= cardUI.Card.GetCardEnergyAmount();
+            Instantiate(cardUI.DiscardEffect, cardUI.transform);
+            SelectedCard = null;
+            cardUI.gameObject.SetActive(false);
+            DiscardCard(cardUI.Card);
+            UpdateTextValueCount();
+            _cardsInHand.Remove(cardUI.Card);
         }
 
         public void EndFight(BattleState battleState)

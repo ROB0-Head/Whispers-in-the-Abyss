@@ -51,31 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9fd9c1b49ef90d4d9dfafbd69fe6d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buffList: []
   currentHealth: 0
   maxHealth: 75
   currentBlock: 0
   fighterHealthBar: {fileID: 7755862977716390214}
-  vulnerable:
-    buffIcon: {fileID: 21300000, guid: c57791cc80e8f0a468fd514923819bf4, type: 3}
-    buffValue: 0
-    buffGO: {fileID: 0}
-  weak:
-    buffIcon: {fileID: 21300000, guid: e74497badffcbad4182d2df3a7599b8f, type: 3}
-    buffValue: 0
-    buffGO: {fileID: 0}
-  strength:
-    buffIcon: {fileID: 21300000, guid: c976812c798dcf24387145e0a137ca22, type: 3}
-    buffValue: 0
-    buffGO: {fileID: 0}
-  ritual:
-    buffIcon: {fileID: 0}
-    buffValue: 0
-    buffGO: {fileID: 0}
-  enrage:
-    buffIcon: {fileID: 0}
-    buffValue: 0
-    buffGO: {fileID: 0}
-  buffPrefab: {fileID: 8088771124364855300, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
+  buffPrefab: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}
   buffParent: {fileID: 6242742098470445964}
   isPlayer: 1
   damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
@@ -96,7 +77,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6893733485112785211
 RectTransform:
   m_ObjectHideFlags: 0
@@ -113,7 +94,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 17.2, y: -9.8272}
+  m_AnchoredPosition: {x: -394, y: -70}
   m_SizeDelta: {x: 562.5671, y: 363.7456}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5618373046948424230

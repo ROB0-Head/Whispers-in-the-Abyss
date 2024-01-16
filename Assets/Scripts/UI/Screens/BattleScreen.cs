@@ -1,17 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleSystem;
-using Map;
+using BattleSystem.Cards;
+using BattleSystem.Characters.Enemy;
 using Navigation;
 using SaveSystem;
 using Settings;
 using Settings.BattleManager.Cards;
-using TJ;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI.Screens
@@ -79,7 +76,8 @@ namespace UI.Screens
         {
             var deck = new List<Card>();
             var zOffSet = 15f;
-            foreach (var card in SaveManager.LoadDeck())
+            var cardDeck = SaveManager.LoadDeck();
+            foreach (var card in cardDeck)
             {
                 var cardTransform = Instantiate(SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.CardPrefab,
                     _deck);

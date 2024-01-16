@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
 using BattleSystem;
+using BattleSystem.Cards;
 using DefaultNamespace;
 using SaveSystem;
 using Settings;
@@ -117,14 +118,14 @@ public class GameManager : MonoBehaviour
                         {
                             deck.Add(new DefenseCard(defenceCard.CardTitle, isUpgraded, defenceCard.CardDescription,
                                 defenceCard.CardCost, defenceCard.CardEffect, defenceCard.BuffAmount,
-                                defenceCard.CardType));
+                                defenceCard.CardType, defenceCard.DefenseType));
                         }
 
                         if (randomCard is AttackCardSettings attackCard)
                         {
-                            deck.Add(new DefenseCard(attackCard.CardTitle, isUpgraded, attackCard.CardDescription,
+                            deck.Add(new AttackCard(attackCard.CardTitle, isUpgraded, attackCard.CardDescription,
                                 attackCard.CardCost, attackCard.CardEffect, attackCard.BuffAmount,
-                                attackCard.CardType));
+                                attackCard.CardType,attackCard.AttackType));
                         }
 
                         break;
@@ -132,7 +133,7 @@ public class GameManager : MonoBehaviour
                         if (randomCard is SkillCardSettings skillCard)
                         {
                             deck.Add(new SkillCard(skillCard.CardTitle, isUpgraded, skillCard.CardDescription,
-                                skillCard.CardCost, skillCard.CardEffect, skillCard.BuffAmount, skillCard.CardType));
+                                skillCard.CardCost, skillCard.CardEffect, skillCard.BuffAmount, skillCard.CardType,skillCard.SkillType));
                         }
 
                         break;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using BattleSystem.Cards;
 using Newtonsoft.Json;
 using Settings;
 using Settings.BattleManager.Cards;
@@ -66,11 +67,42 @@ namespace SaveSystem
         public static void SaveDeck(List<Card> deck)
         {
             string path = Path.Combine(Application.persistentDataPath, DECK_DATA_NAME);
+            RootObject saveDeck = new RootObject();
+            saveDeck.CardsList = new List<CardData>();
+            foreach (var card in deck)
+            {
+                CardData cardData = new CardData()
+                {
+                    CardTitle = card.CardTitle,
+                    IsUpgraded = card.IsUpgraded,
+                    CardDescription = card.CardDescription,
+                    CardEnergy = card.CardEnergy,
+                    CardStat = card.CardStat,
+                    BuffAmount = card.BuffAmount,
+                    CardType = card.CardType
+                };
 
-            string jsonData = JsonConvert.SerializeObject(deck);
+                if (card is AttackCard attackCard)
+                {
+                    cardData.AttackType = attackCard.AttackType;
+                }
+                else if (card is DefenseCard defenseCard)
+                {
+                    cardData.DefenseType = defenseCard.DefenseType;
+                }
+                else if (card is SkillCard skillCard)
+                {
+                    cardData.SkillType = skillCard.SkillType;
+                }
+
+                saveDeck.CardsList.Add(cardData);
+            }
+
+            string jsonData = JsonConvert.SerializeObject(saveDeck);
             string encryptedData = Encrypt(jsonData);
             File.WriteAllText(path, encryptedData);
         }
+
 
         public static void SaveCharacterData(Character userData)
         {
@@ -91,16 +123,113 @@ namespace SaveSystem
             string path = Path.Combine(Application.persistentDataPath, DECK_DATA_NAME);
             if (File.Exists(path))
             {
+                List<Card> deck = new List<Card>();
                 string encryptedData = File.ReadAllText(path);
                 string decryptedData = Decrypt(encryptedData);
-                return JsonConvert.DeserializeObject<List<Card>>(decryptedData);
+                RootObject root = JsonConvert.DeserializeObject<RootObject>(decryptedData);
+
+                foreach (var card in root.CardsList)
+                {
+                    if (card.CardType == CardType.Attack)
+                    {
+                        AttackCard attackCard = new AttackCard(
+                            card.CardTitle,
+                            card.IsUpgraded,
+                            new CardDescription
+                            {
+                                baseAmount = card.CardDescription.baseAmount,
+                                upgradedAmount = card.CardDescription.upgradedAmount
+                            },
+                            new CardAmount
+                            {
+                                baseAmount = card.CardEnergy.baseAmount,
+                                upgradedAmount = card.CardEnergy.upgradedAmount
+                            },
+                            new CardAmount
+                            {
+                                baseAmount = card.CardStat.baseAmount,
+                                upgradedAmount = card.CardStat.upgradedAmount
+                            },
+                            new CardAmount
+                            {
+                                baseAmount = card.BuffAmount.baseAmount,
+                                upgradedAmount = card.BuffAmount.upgradedAmount
+                            },
+                            card.CardType,
+                            card.AttackType
+                        );
+                        deck.Add(attackCard);
+                    }
+                    else if (card.CardType == CardType.Defense)
+                    {
+                        DefenseCard defenseCard = new DefenseCard(
+                            card.CardTitle,
+                            card.IsUpgraded,
+                            new CardDescription
+                            {
+                                baseAmount = card.CardDescription.baseAmount,
+                                upgradedAmount = card.CardDescription.upgradedAmount
+                            },
+                            new CardAmount
+                            {
+                                baseAmount = card.CardEnergy.baseAmount,
+                                upgradedAmount = card.CardEnergy.upgradedAmount
+                            },
+                            new CardAmount
+                            {
+                                baseAmount = card.CardStat.baseAmount,
+                                upgradedAmount = card.CardStat.upgradedAmount
+                            },
+                            new CardAmount
+                            {
+                                baseAmount = card.BuffAmount.baseAmount,
+                                upgradedAmount = card.BuffAmount.upgradedAmount
+                            },
+                            card.CardType,
+                            card.DefenseType
+                        );
+                        deck.Add(defenseCard);
+                    }
+                    else if (card.CardType == CardType.Skill)
+                    {
+                        SkillCard skillCard = new SkillCard(
+                            card.CardTitle,
+                            card.IsUpgraded,
+                            new CardDescription
+                            {
+                                baseAmount = card.CardDescription.baseAmount,
+                                upgradedAmount = card.CardDescription.upgradedAmount
+                            },
+                            new CardAmount
+                            {
+                                baseAmount = card.CardEnergy.baseAmount,
+                                upgradedAmount = card.CardEnergy.upgradedAmount
+                            },
+                            new CardAmount
+                            {
+                                baseAmount = card.CardStat.baseAmount,
+                                upgradedAmount = card.CardStat.upgradedAmount
+                            },
+                            new CardAmount
+                            {
+                                baseAmount = card.BuffAmount.baseAmount,
+                                upgradedAmount = card.BuffAmount.upgradedAmount
+                            },
+                            card.CardType,
+                            card.SkillType
+                        );
+                        deck.Add(skillCard);
+                    }
+                }
+
+                return deck;
             }
             else
             {
-                return new List<Card>(); 
+                return new List<Card>();
             }
         }
-        
+
         public static Character LoadCharacterData()
         {
             string path = Path.Combine(Application.persistentDataPath, CHARACTER_DATA_NAME);

@@ -27,4 +27,4 @@ MonoBehaviour:
     baseAmount: 0
     upgradedAmount: 0
   CardType: 1
-  DefenseType: 0
+  DefenseType: 1

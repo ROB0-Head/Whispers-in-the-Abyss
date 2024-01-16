@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using BattleSystem.Characters.Enemy;
 using Map;
 using Settings.BattleManager.Cards;
 using TJ;

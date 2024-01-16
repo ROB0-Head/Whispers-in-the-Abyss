@@ -27,4 +27,4 @@ MonoBehaviour:
     baseAmount: 0
     upgradedAmount: 0
   CardType: 0
-  AttackType: 3
+  AttackType: 4

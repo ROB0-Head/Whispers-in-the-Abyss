@@ -27,4 +27,4 @@ MonoBehaviour:
     baseAmount: 3
     upgradedAmount: 3
   CardType: 2
-  SkillType: 0
+  SkillType: 1
