@@ -11,14 +11,14 @@ namespace BattleSystem.Characters
     public class Fighter : MonoBehaviour
     {
         [SerializeField] private List<Buff> _buffList = new List<Buff>();
-        [SerializeField] private int _currentHealth;
-        [SerializeField] private int _currentBlock = 0;
+
         [SerializeField] private FighterHealthBar _fighterHealthBar;
         [SerializeField] private Transform buffParent;
         [SerializeField] private GameObject damageIndicator;
 
         private int _maxHealth;
-
+        private int _currentHealth;
+        private int _currentBlock = 0;
         public int CurrentBlock => _currentBlock;
         public FighterHealthBar FighterHealthBar => _fighterHealthBar;
         public List<Buff> BuffList => _buffList;
@@ -132,6 +132,7 @@ namespace BattleSystem.Characters
                     Destroy(buff.BuffGo.gameObject);
                 }
             }
+
             _currentBlock = 0;
             _fighterHealthBar.DisplayBlock(0);
         }

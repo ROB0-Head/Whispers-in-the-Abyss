@@ -1002,19 +1002,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08184a27ab0231446b726d6e0cbab959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buffList: []
-  _currentHealth: 0
-  _currentBlock: 0
-  _fighterHealthBar: {fileID: 0}
-  buffParent: {fileID: 0}
-  damageIndicator: {fileID: 0}
-  enemyActions: []
+  _buffList:
+  - BuffType: 0
+    BuffIcon: {fileID: 21300000, guid: c976812c798dcf24387145e0a137ca22, type: 3}
+    BuffValue: 0
+    BuffGo: {fileID: 0}
+  - BuffType: 1
+    BuffIcon: {fileID: 21300000, guid: c57791cc80e8f0a468fd514923819bf4, type: 3}
+    BuffValue: 0
+    BuffGo: {fileID: 0}
+  - BuffType: 2
+    BuffIcon: {fileID: 21300000, guid: e74497badffcbad4182d2df3a7599b8f, type: 3}
+    BuffValue: 0
+    BuffGo: {fileID: 0}
+  - BuffType: 3
+    BuffIcon: {fileID: 21300000, guid: f643a45e495a7794f92701f5c157e2ca, type: 3}
+    BuffValue: 0
+    BuffGo: {fileID: 0}
+  - BuffType: 4
+    BuffIcon: {fileID: 21300000, guid: 8c21967d4596006489d7169fc845d3d7, type: 3}
+    BuffValue: 0
+    BuffGo: {fileID: 0}
+  _fighterHealthBar: {fileID: 5938868779381404939}
+  buffParent: {fileID: 8028767108936048577}
+  damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
+  enemyActions:
+  - intentType: 0
+    amount: 5
+    debuffAmount: 2
+    buffType: 0
+    chance: 2
+    icon: {fileID: 21300000, guid: c976812c798dcf24387145e0a137ca22, type: 3}
+  - intentType: 0
+    amount: 5
+    debuffAmount: 2
+    buffType: 3
+    chance: 2
+    icon: {fileID: 21300000, guid: f643a45e495a7794f92701f5c157e2ca, type: 3}
   turns: []
   turnNumber: 0
-  shuffleActions: 0
-  intentIcon: {fileID: 0}
-  intentAmount: {fileID: 0}
-  intentUI: {fileID: 0}
+  shuffleActions: 1
+  intentIcon: {fileID: 6424823219037961089}
+  intentAmount: {fileID: 1500890483887862536}
+  intentUI: {fileID: 4000217259501677407}
   midTurn: 0
 --- !u!222 &686323848
 CanvasRenderer:

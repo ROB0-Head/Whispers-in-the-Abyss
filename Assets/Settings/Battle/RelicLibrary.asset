@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
   m_Name: RelicLibrary
-  m_EditorClassIdentifier: Assembly-CSharp:TJ:RelicLibrary
+  m_EditorClassIdentifier: Assembly-CSharp:BattleSystem.Characters.Reward:RelicLibrary
   Relics:
   - {fileID: 11400000, guid: 8bfeb377efd06a44e9ca9d2c4f3ac3b0, type: 2}
   - {fileID: 11400000, guid: 068d49c0957234249a7cd682eef42794, type: 2}
