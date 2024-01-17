@@ -1,5 +1,4 @@
 using BattleSystem.Cards;
-using TJ;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

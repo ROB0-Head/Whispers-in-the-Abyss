@@ -1,10 +1,7 @@
-using BattleSystem;
 using BattleSystem.Cards;
-using BattleSystem.Characters;
-using Settings.BattleManager.Cards;
 using UnityEngine;
 
-namespace TJ
+namespace BattleSystem.Characters.BattleScreen
 {
     public class CardTarget : MonoBehaviour
     {

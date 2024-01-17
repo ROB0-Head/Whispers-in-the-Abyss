@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Settings.BattleManager;
-using TJ;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,54 +8,58 @@ namespace BattleSystem.Characters.Enemy
 {
     public class Enemy : Fighter
     {
-        public List<EnemyAction> enemyActions;
-        public List<EnemyAction> turns = new List<EnemyAction>();
-        public int turnNumber;
-        public bool shuffleActions;
+        [SerializeField] private List<EnemyAction> enemyActions;
+        [SerializeField] private Image intentIcon;
+        [SerializeField] private TMP_Text intentAmount;
+        [SerializeField] private BuffUI intentUI;
 
-        public Image intentIcon;
-        public TMP_Text intentAmount;
-        public BuffUI intentUI;
-
-        private Animator animator;
-        public bool midTurn;
+        private List<EnemyAction> _turns = new List<EnemyAction>();
+        private Animator _animator;
+        private int _turnNumber;
+        
+        public bool MidTurn { get; set; }
 
         private void Start()
         {
-            animator = GetComponent<Animator>();
-            if (shuffleActions)
-                GenerateTurns();
+            _animator = GetComponent<Animator>();
         }
-
-        private void LoadEnemy()
+        public override void Init()
         {
-            if (shuffleActions)
-                GenerateTurns();
+            BuffList = new List<Buff>();
+            MaxHealth = 75;
+            SetupCurrentHealth(1);
+            HealthBar.healthSlider.maxValue = MaxHealth;
+            HealthBar.DisplayHealth(CurrentHealth);
         }
 
+        public void SetupCurrentHealth(int value)
+        {
+            CurrentHealth = value;
+        }
+        
         public void TakeTurn()
         {
             intentUI.animator.Play("IntentFade");
 
-            switch (turns[turnNumber].intentType)
+            switch (_turns[_turnNumber].IntentType)
             {
-                case EnemyAction.IntentType.Attack:
+                case IntentType.Attack:
                     StartCoroutine(AttackPlayer());
                     break;
-                case EnemyAction.IntentType.Block:
+                case IntentType.Block:
                     PerformBlock();
                     StartCoroutine(ApplyBuff());
                     break;
-                case EnemyAction.IntentType.StrategicBuff:
-                    ApplyBuffToSelf(turns[turnNumber].buffType);
+                case IntentType.StrategicBuff:
+                    ApplyBuffToSelf(_turns[_turnNumber].BuffType);
                     StartCoroutine(ApplyBuff());
                     break;
-                case EnemyAction.IntentType.StrategicDebuff:
-                    ApplyDebuffToPlayer(turns[turnNumber].buffType);
+                case IntentType.StrategicDebuff:
+                    ApplyDebuffToPlayer(_turns[_turnNumber].BuffType);
                     StartCoroutine(ApplyBuff());
                     break;
-                case EnemyAction.IntentType.AttackDebuff:
-                    ApplyDebuffToPlayer(turns[turnNumber].buffType);
+                case IntentType.AttackDebuff:
+                    ApplyDebuffToPlayer(_turns[_turnNumber].BuffType);
                     StartCoroutine(AttackPlayer());
                     break;
                 default:
@@ -68,34 +70,34 @@ namespace BattleSystem.Characters.Enemy
 
         public void GenerateTurns()
         {
-            foreach (EnemyAction eA in enemyActions)
+            foreach (EnemyAction enemyAction in enemyActions)
             {
-                for (int i = 0; i < eA.chance; i++)
+                for (int i = 0; i < enemyAction.Chance; i++)
                 {
-                    turns.Add(eA);
+                    _turns.Add(enemyAction);
                 }
             }
 
-            ListExtensions.Shuffle(turns);
+            _turns.Shuffle();
         }
 
         private IEnumerator AttackPlayer()
         {
-            animator.Play("Attack");
+            _animator.Play("Attack");
 
-            int totalDamage = 0;
+            int totalDamage = _turns[_turnNumber].IntentAmount;
 
             foreach (var buffs in BuffList)
             {
-                if (buffs.BuffType == Buff.Type.Strength)
+                if (buffs.BuffsType == BuffType.Strength)
                 {
-                    totalDamage = turns[turnNumber].amount + buffs.BuffValue;
+                    totalDamage += buffs.BuffValue;
                 }
             }
 
             foreach (var buffs in BattleManager.Instance.Player.BuffList)
             {
-                if (buffs.BuffType == Buff.Type.Vulnerable && buffs.BuffValue > 0)
+                if (buffs.BuffsType == BuffType.Vulnerable && buffs.BuffValue > 0)
                 {
                     totalDamage = (int)(totalDamage * 1.5f);
                 }
@@ -115,54 +117,54 @@ namespace BattleSystem.Characters.Enemy
 
         private void WrapUpTurn()
         {
-            turnNumber++;
-            if (turnNumber == turns.Count)
-                turnNumber = 0;
+            _turnNumber++;
+            if (_turnNumber == _turns.Count)
+                _turnNumber = 0;
 
             EvaluateBuffsAtTurnEnd();
-            midTurn = false;
+            MidTurn = false;
         }
 
-        private void ApplyBuffToSelf(Buff.Type t)
+        private void ApplyBuffToSelf(BuffType type)
         {
-            AddBuff(t, turns[turnNumber].amount);
+            AddBuff(type, _turns[_turnNumber].IntentAmount);
         }
 
-        private void ApplyDebuffToPlayer(Buff.Type t)
+        private void ApplyDebuffToPlayer(BuffType type)
         {
             if (BattleManager.Instance.Player == null)
-                LoadEnemy();
+                GenerateTurns();
 
-            BattleManager.Instance.Player.AddBuff(t, turns[turnNumber].debuffAmount);
+            BattleManager.Instance.Player.AddBuff(type, _turns[_turnNumber].DebuffAmount);
         }
 
         private void PerformBlock()
         {
-            AddBlock(turns[turnNumber].amount);
+            AddBlock(_turns[_turnNumber].IntentAmount);
         }
 
         public void DisplayIntent()
         {
-            if (turns.Count == 0)
-                LoadEnemy();
+            if (_turns.Count == 0)
+                GenerateTurns();
 
-            intentIcon.sprite = turns[turnNumber].icon;
+            intentIcon.sprite = _turns[_turnNumber].Icon;
 
-            if (turns[turnNumber].intentType == EnemyAction.IntentType.Attack)
+            if (_turns[_turnNumber].IntentType == IntentType.Attack)
             {
-                int totalDamage = 0;
+                int totalDamage = _turns[_turnNumber].IntentAmount;
 
                 foreach (var buffs in BuffList)
                 {
-                    if (buffs.BuffType == Buff.Type.Strength)
+                    if (buffs.BuffsType == BuffType.Strength)
                     {
-                        totalDamage = turns[turnNumber].amount + buffs.BuffValue;
+                        totalDamage += buffs.BuffValue;
                     }
                 }
 
                 foreach (var buffs in BattleManager.Instance.Player.BuffList)
                 {
-                    if (buffs.BuffType == Buff.Type.Vulnerable && buffs.BuffValue > 0)
+                    if (buffs.BuffsType == BuffType.Vulnerable && buffs.BuffValue > 0)
                     {
                         totalDamage = (int)(totalDamage * 1.5f);
                     }
@@ -171,7 +173,7 @@ namespace BattleSystem.Characters.Enemy
                 intentAmount.text = totalDamage.ToString();
             }
             else
-                intentAmount.text = turns[turnNumber].amount.ToString();
+                intentAmount.text = _turns[_turnNumber].IntentAmount.ToString();
 
             intentUI.animator.Play("IntentSpawn");
         }

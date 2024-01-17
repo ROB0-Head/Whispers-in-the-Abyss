@@ -7,12 +7,8 @@ using BattleSystem.Characters.Enemy;
 using Navigation;
 using SaveSystem;
 using Settings;
-using Settings.BattleManager;
-using Settings.BattleManager.Cards;
-using TJ;
 using UI.Screens;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace BattleSystem
@@ -73,7 +69,7 @@ namespace BattleSystem
             CurrentEnergyUpdated?.Invoke(_currentEnergy);
         }
 
-        private void DrawCards(int amountToDraw)
+        public void DrawCards(int amountToDraw)
         {
             int cardsDrawn = 0;
             while (cardsDrawn < amountToDraw && _cardsInHand.Count < 10)
@@ -122,7 +118,7 @@ namespace BattleSystem
 
         private void ShuffleCards()
         {
-            Utils.Shuffle(_discardPile);
+            _discardPile.Shuffle();
             _drawPile.AddRange(_discardPile);
             _discardPile = new List<Card>();
         }
@@ -141,9 +137,9 @@ namespace BattleSystem
 
             foreach (Enemy enemy in _enemies)
             {
-                enemy.midTurn = true;
+                enemy.MidTurn = true;
                 enemy.TakeTurn();
-                while (enemy.midTurn)
+                while (enemy.MidTurn)
                     yield return new WaitForEndOfFrame();
             }
 
@@ -169,14 +165,16 @@ namespace BattleSystem
             var characterData = SaveManager.LoadCharacterData();
             _maxEnergy = characterData.Energy;
             _drawPile = BattleScreen.Instance.DrawCards();
-
+            _player.Init();
             switch (enemyType)
             {
                 case EnemyType.Default:
                     int numberOfEnemies = Random.Range(0, 2);
                     //Цикл для нескольких противников
-                    _enemies.Add(Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
-                        _enemyParent));
+                    var enemy = Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
+                        _enemyParent);
+                    enemy.Init();
+                    _enemies.Add(enemy);
                     break;
                 case EnemyType.Elite:
                     _enemies.Add(Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
@@ -190,11 +188,10 @@ namespace BattleSystem
 
             switch (characterData.startingRelic.RelicType)
             {
-                /*case RelicType.PreservedInsect:
+                case RelicType.PreservedInsect:
                     if (enemyType == EnemyType.Elite)
-                        _enemies[0]._currentHealth =
-                            (int)(_enemies[0]._currentHealth * 0.25);
-                    break;*/
+                        _enemies[0].SetupCurrentHealth((int)(_enemies[0].CurrentHealth * 0.25));
+                    break;
                 case RelicType.Anchor:
                     _player.AddBlock(10);
                     break;
@@ -202,19 +199,24 @@ namespace BattleSystem
                     _maxEnergy += 1;
                     break;
                 case RelicType.Marbles:
-                    _enemies[0].GetComponent<Fighter>().AddBuff(Buff.Type.Vulnerable, 1);
+                    _enemies[0].GetComponent<Fighter>().AddBuff(BuffType.Vulnerable, 1);
                     break;
                 case RelicType.Bag:
                     DrawCards(2);
                     break;
                 case RelicType.Varja:
-                    _player.AddBuff(Buff.Type.Strength, 1);
+                    _player.AddBuff(BuffType.Strength, 1);
                     break;
             }
 
             _currentEnergy = _maxEnergy;
+            _drawPile.Shuffle();
             DrawCards(5);
             UpdateTextValueCount();
+            foreach (Enemy e in _enemies)
+            {
+                e.DisplayIntent();
+            }
         }
 
         public void ChangeTurn()
@@ -224,13 +226,13 @@ namespace BattleSystem
                 _currentBattleState = BattleState.EnemyTurn;
                 ClearHandAndTransferToDiscard();
                 BattleScreen.Instance.DiscardCardInHand();
-                foreach (Enemy e in _enemies)
+                foreach (Enemy enemy in _enemies)
                 {
-                    /*if (e.thisEnemy == null)
-                        e.thisEnemy = e.GetComponent<Fighter>();
-
-                    e.thisEnemy.AddBlock(-e.thisEnemy.CurrentBlock);
-                    e.thisEnemy.FighterHealthBar.DisplayBlock(0);*/
+                    if (enemy == null)
+                    {
+                        enemy.AddBlock(-enemy.CurrentBlock);
+                        enemy.HealthBar.DisplayBlock(0);
+                    }
                 }
 
                 _player.EvaluateBuffsAtTurnEnd();
@@ -246,7 +248,7 @@ namespace BattleSystem
 
                 _currentBattleState = BattleState.PlayerTurn;
                 _player.AddBlock(-_player.CurrentBlock);
-                _player.FighterHealthBar.DisplayBlock(0);
+                _player.HealthBar.DisplayBlock(0);
                 _currentEnergy = _maxEnergy;
                 DrawCards(5);
                 UpdateTextValueCount();
@@ -256,23 +258,28 @@ namespace BattleSystem
 
         public void PlayCard(CardUI cardUI)
         {
-            foreach (var buffs in _enemies[0].GetComponent<Fighter>().BuffList)
+            foreach (var buffs in _enemies[0].BuffList)
             {
-                if (cardUI.Card.CardType != CardType.Attack && buffs.BuffType == Buff.Type.Enrage &&
+                if (cardUI.Card.CardType != CardType.Attack && buffs.BuffsType == BuffType.Enrage &&
                     buffs.BuffValue > 0)
-                    _enemies[0].GetComponent<Fighter>()
-                        .AddBuff(Buff.Type.Strength, buffs.BuffValue);
+                    _enemies[0].AddBuff(BuffType.Strength, buffs.BuffValue);
             }
 
             _cardActions.PerformAction(cardUI.Card, _cardTarget);
-
             _currentEnergy -= cardUI.Card.GetCardEnergyAmount();
-            Instantiate(cardUI.DiscardEffect, cardUI.transform);
             SelectedCard = null;
             cardUI.gameObject.SetActive(false);
             DiscardCard(cardUI.Card);
             UpdateTextValueCount();
             _cardsInHand.Remove(cardUI.Card);
+        }
+
+        public void RemoveEnemy(Fighter fighter)
+        {
+            if (fighter is Enemy enemy)
+            {
+                _enemies.Remove(enemy);
+            }
         }
 
         public void EndFight(BattleState battleState)

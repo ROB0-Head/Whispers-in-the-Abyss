@@ -982,8 +982,7 @@ MonoBehaviour:
   _cardDescriptionText: {fileID: 0}
   _cardStat: {fileID: 6475637642496016430}
   _cardEnergy: {fileID: 7135207693476654592}
-  _discardEffect: {fileID: 6430551114553073417, guid: 6c3fae2cc847b7d4db03643cb9dfacba, type: 3}
-  animator: {fileID: 0}
+  _cardFly: {fileID: 5062477912171178413, guid: 6c3fae2cc847b7d4db03643cb9dfacba, type: 3}
 --- !u!114 &399303959712290667
 MonoBehaviour:
   m_ObjectHideFlags: 0

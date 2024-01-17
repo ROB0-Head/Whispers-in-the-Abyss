@@ -572,7 +572,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.1, y: -0.82}
+  m_AnchoredPosition: {x: 5.1, y: -0.8200073}
   m_SizeDelta: {x: 2639.8345, y: 1521.2495}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3422769885352272683
@@ -736,20 +736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9fd9c1b49ef90d4d9dfafbd69fe6d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buffList:
-  - BuffType: 0
-    BuffIcon: {fileID: 21300000, guid: c976812c798dcf24387145e0a137ca22, type: 3}
-    BuffValue: 0
-    BuffGo: {fileID: 0}
-  - BuffType: 1
-    BuffIcon: {fileID: 21300000, guid: c57791cc80e8f0a468fd514923819bf4, type: 3}
-    BuffValue: 0
-    BuffGo: {fileID: 0}
-  - BuffType: 2
-    BuffIcon: {fileID: 21300000, guid: e74497badffcbad4182d2df3a7599b8f, type: 3}
-    BuffValue: 0
-    BuffGo: {fileID: 0}
-  _fighterHealthBar: {fileID: 370572911677944387}
+  FighterHealthBar: {fileID: 370572911677944387}
   buffParent: {fileID: 4045493108226693257}
   damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
 --- !u!1 &3253994055168088358
@@ -1332,7 +1319,7 @@ MonoBehaviour:
   _player: {fileID: 7944656831278066516}
   _enemies: []
   _enemyParent: {fileID: 6042876738902732447}
-  _topParent: {fileID: 0}
+  _topParent: {fileID: 8744766788360065627}
   SelectedCard: {fileID: 0}
 --- !u!114 &4874082671209133391
 MonoBehaviour:
@@ -1346,7 +1333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1793383ed5e4ba44d8b27e86cd5b0143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _player: {fileID: 7944656831278066516}
 --- !u!1 &5601937972365907657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,7 +1612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &237859600438769460
 RectTransform:
   m_ObjectHideFlags: 0

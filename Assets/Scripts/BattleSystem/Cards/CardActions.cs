@@ -1,5 +1,4 @@
 using BattleSystem.Characters;
-using Settings.BattleManager;
 using UnityEngine;
 
 namespace BattleSystem.Cards
@@ -7,9 +6,9 @@ namespace BattleSystem.Cards
     public class CardActions : MonoBehaviour
     {
         [SerializeField] private Fighter _player;
-        
+
         private Fighter _target;
-        
+
         public void PerformAction(Card card, Fighter _fighter)
         {
             _target = _fighter;
@@ -23,16 +22,20 @@ namespace BattleSystem.Cards
                         break;
                     case AttackCardType.Bash:
                         AttackEnemy(card);
-                        ApplyBuff(Buff.Type.Vulnerable,card);
+                        ApplyBuff(BuffType.Vulnerable, card);
                         break;
-                    
+
                     case AttackCardType.Clothesline:
                         AttackEnemy(card);
-                        ApplyBuff(Buff.Type.Weak,card);
+                        ApplyBuff(BuffType.Weak, card);
                         break;
-                    
+
                     case AttackCardType.Bodyslam:
                         BodySlam();
+                        break;
+                    case AttackCardType.IronWave:
+                        AttackEnemy(card);
+                        PerformBlock(card);
                         break;
                     default:
                         Debug.Log("Invalid Attack Type");
@@ -51,11 +54,7 @@ namespace BattleSystem.Cards
                         Entrench();
                         break;
                     case DefenceCardType.ShrugItOff:
-                        Entrench();
-                        break;
-                    case DefenceCardType.IronWave:
-                        AttackEnemy(card);
-                        PerformBlock(card);
+                        ShrugItOff(card);
                         break;
                 }
             }
@@ -66,10 +65,10 @@ namespace BattleSystem.Cards
                 {
                     case SkillCardType.Bloodletting:
                         AttackSelf(card);
-                        BattleManager.Instance.UpdateEnergy(2); 
+                        BattleManager.Instance.UpdateEnergy(2);
                         break;
                     case SkillCardType.Inflame:
-                        ApplyBuffToSelf(Buff.Type.Strength,card);
+                        ApplyBuffToSelf(BuffType.Strength, card);
                         break;
                 }
             }
@@ -78,17 +77,17 @@ namespace BattleSystem.Cards
 
         private void AttackEnemy(Card card)
         {
-            int totalDamage = 0;
+            int totalDamage = card.GetCardStatAmount();
             foreach (var buffs in _player.BuffList)
             {
-                if (buffs.BuffType == Buff.Type.Strength)
+                if (buffs.BuffsType == BuffType.Strength)
                 {
-                    totalDamage = card.GetCardStatAmount() + buffs.BuffValue;
+                    totalDamage += buffs.BuffValue;
                 }
 
                 foreach (var currentBuff in _target.BuffList)
                 {
-                    if (currentBuff.BuffType == Buff.Type.Vulnerable && currentBuff.BuffValue > 0)
+                    if (currentBuff.BuffsType == BuffType.Vulnerable && currentBuff.BuffValue > 0)
                     {
                         float a = totalDamage * 1.5f;
                         Debug.Log("incrased damage from " + totalDamage + " to " + (int)a);
@@ -102,17 +101,17 @@ namespace BattleSystem.Cards
 
         private void AttackStrength(Card card)
         {
-            int totalDamage = 0;
+            int totalDamage = card.GetCardStatAmount();
             foreach (var buffs in _player.BuffList)
             {
-                if (buffs.BuffType == Buff.Type.Strength && buffs.BuffValue > 0)
+                if (buffs.BuffsType == BuffType.Strength && buffs.BuffValue > 0)
                 {
-                    totalDamage = card.GetCardStatAmount() + (buffs.BuffValue * 3);
+                    totalDamage += (buffs.BuffValue * 3);
                 }
 
                 foreach (var currentBuff in _target.BuffList)
                 {
-                    if (currentBuff.BuffType == Buff.Type.Vulnerable && currentBuff.BuffValue > 0)
+                    if (currentBuff.BuffsType == BuffType.Vulnerable && currentBuff.BuffValue > 0)
                     {
                         float a = totalDamage * 1.5f;
                         Debug.Log("incrased damage from " + totalDamage + " to " + (int)a);
@@ -130,7 +129,7 @@ namespace BattleSystem.Cards
 
             foreach (var currentBuff in _target.BuffList)
             {
-                if (currentBuff.BuffType == Buff.Type.Vulnerable && currentBuff.BuffValue > 0)
+                if (currentBuff.BuffsType == BuffType.Vulnerable && currentBuff.BuffValue > 0)
                 {
                     float a = totalDamage * 1.5f;
                     Debug.Log("incrased damage from " + totalDamage + " to " + (int)a);
@@ -146,12 +145,25 @@ namespace BattleSystem.Cards
             _player.AddBlock(_player.CurrentBlock);
         }
 
-        private void ApplyBuff(Buff.Type t,Card card)
+        private void ShrugItOff(Card card)
+        {
+            PerformBlock(card);
+            if (card.IsUpgraded)
+            {
+                BattleManager.Instance.DrawCards(card.BuffAmount.baseAmount);
+            }
+            else
+            {
+                BattleManager.Instance.DrawCards(card.BuffAmount.upgradedAmount);
+            }
+        }
+
+        private void ApplyBuff(BuffType t, Card card)
         {
             _target.AddBuff(t, card.GetBuffAmount());
         }
 
-        private void ApplyBuffToSelf(Buff.Type t,Card card)
+        private void ApplyBuffToSelf(BuffType t, Card card)
         {
             _player.AddBuff(t, card.GetBuffAmount());
         }

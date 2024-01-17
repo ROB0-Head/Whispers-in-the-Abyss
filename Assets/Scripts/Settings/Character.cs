@@ -1,6 +1,5 @@
 using System;
 using BattleSystem.Characters.Reward;
-using TJ;
 
 namespace Settings
 {

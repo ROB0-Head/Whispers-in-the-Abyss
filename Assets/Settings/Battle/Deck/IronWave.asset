@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eac406ebe051484cb233d508caf4b4b5, type: 3}
+  m_Script: {fileID: 11500000, guid: aeaa79f7fc024e72acf99fdbd89052cc, type: 3}
   m_Name: IronWave
-  m_EditorClassIdentifier: Assembly-CSharp:TJ:DefenceCardSettings
+  m_EditorClassIdentifier: 
   CardTitle: Iron Wave
   IsUpgraded: 0
   CardDescription:
-    baseAmount: Gain 5 Block, Deal 5 Damage
-    upgradedAmount: Gain 8 Block, Deal 5 Damage
+    baseAmount: Deal 5 Damage, Gain 5 Block
+    upgradedAmount: Deal 5 Damage, Gain 8 Block
   CardCost:
     baseAmount: 2
     upgradedAmount: 1
@@ -26,5 +26,5 @@ MonoBehaviour:
   BuffAmount:
     baseAmount: 5
     upgradedAmount: 8
-  CardType: 1
-  DefenseType: 4
+  CardType: 0
+  AttackType: 5

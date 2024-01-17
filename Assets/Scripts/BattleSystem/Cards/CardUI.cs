@@ -1,8 +1,8 @@
-using BattleSystem.Cards;
 using TMPro;
+using UI.Screens;
 using UnityEngine;
 
-namespace Settings.BattleManager.Cards
+namespace BattleSystem.Cards
 {
     public class CardUI : MonoBehaviour
     {
@@ -10,14 +10,14 @@ namespace Settings.BattleManager.Cards
         [SerializeField] private TMP_Text _cardDescriptionText;
         [SerializeField] private TMP_Text _cardStat;
         [SerializeField] private TMP_Text _cardEnergy;
-        [SerializeField] private GameObject _discardEffect;
+        [SerializeField] private CardFly _cardFly;
 
 
         private Animator _animator;
         private Card _card;
 
         public Card Card => _card;
-        public GameObject DiscardEffect => _discardEffect;
+        public CardFly DiscardEffect => _cardFly;
         public string CardTitle => _cardTitleText.text;
         public string CardStat => _cardStat.text;
         public string CardEnergy => _cardEnergy.text;
@@ -73,18 +73,20 @@ namespace Settings.BattleManager.Cards
 
         public void HandleEndDrag()
         {
-            if (BattleSystem.BattleManager.Instance.Energy < _card.GetCardEnergyAmount())
+            if (BattleManager.Instance.Energy < _card.GetCardEnergyAmount())
                 return;
 
             if (_card.CardType == CardType.Attack)
             {
-                BattleSystem.BattleManager.Instance.PlayCard(this);
+                BattleManager.Instance.PlayCard(this);
+                Instantiate(DiscardEffect, BattleScreen.Instance.TopParent);
                 _animator.Play("HoverOffCard");
             }
-            else if (_card.CardType != CardType.Attack)
+            else
             {
                 _animator.Play("HoverOffCard");
-                BattleSystem.BattleManager.Instance.PlayCard(this);
+                Instantiate(DiscardEffect, BattleScreen.Instance.TopParent);
+                BattleManager.Instance.PlayCard(this);
             }
         }
     }

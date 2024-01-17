@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Timers;
-using BattleSystem;
 using BattleSystem.Cards;
 using DefaultNamespace;
 using SaveSystem;
 using Settings;
+using Settings.Battle;
 using Settings.BattleManager.Cards;
-using TJ;
-using UI.Popups;
+using UI;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -129,7 +127,7 @@ public class GameManager : MonoBehaviour
                             defenseCardCount++;
                         }
 
-                        if (randomCard is AttackCardSettings attackCard&& attackCardCount < 4)
+                        if (randomCard is AttackCardSettings attackCard && attackCardCount < 4)
                         {
                             deck.Add(new AttackCard(attackCard.CardTitle, isUpgraded, attackCard.CardDescription,
                                 attackCard.CardCost, attackCard.CardEffect, attackCard.BuffAmount,
@@ -141,7 +139,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case CardType.Skill:
-                        if (randomCard is SkillCardSettings skillCard&& skillCardCount < 2)
+                        if (randomCard is SkillCardSettings skillCard && skillCardCount < 2)
                         {
                             deck.Add(new SkillCard(skillCard.CardTitle, isUpgraded, skillCard.CardDescription,
                                 skillCard.CardCost, skillCard.CardEffect, skillCard.BuffAmount, skillCard.CardType,

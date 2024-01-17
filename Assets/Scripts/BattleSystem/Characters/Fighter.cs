@@ -3,33 +3,32 @@ using System.Linq;
 using BattleSystem.Characters.BattleScreen;
 using SaveSystem;
 using Settings;
-using Settings.BattleManager;
 using UnityEngine;
 
 namespace BattleSystem.Characters
 {
     public class Fighter : MonoBehaviour
     {
-        [SerializeField] private List<Buff> _buffList = new List<Buff>();
+        [SerializeField] private FighterHealthBar FighterHealthBar;
+        [SerializeField] private Transform _buffParent;
+        [SerializeField] private GameObject _damageIndicator;
 
-        [SerializeField] private FighterHealthBar _fighterHealthBar;
-        [SerializeField] private Transform buffParent;
-        [SerializeField] private GameObject damageIndicator;
+        public int MaxHealth { get; protected set; }
+        public int CurrentHealth { get; protected set; }
+        public List<Buff> BuffList { get; protected set; }
 
-        private int _maxHealth;
-        private int _currentHealth;
-        private int _currentBlock = 0;
+        private int _currentBlock;
         public int CurrentBlock => _currentBlock;
-        public FighterHealthBar FighterHealthBar => _fighterHealthBar;
-        public List<Buff> BuffList => _buffList;
+        public FighterHealthBar HealthBar => FighterHealthBar;
 
-        private void Awake()
+        public virtual void Init()
         {
             var characterData = SaveManager.LoadCharacterData();
-            _maxHealth = characterData.MaxHealth;
-            _currentHealth = characterData.CurrentHealth;
-            _fighterHealthBar.healthSlider.maxValue = _maxHealth;
-            _fighterHealthBar.DisplayHealth(_currentHealth);
+            BuffList = new List<Buff>();
+            MaxHealth = characterData.MaxHealth;
+            CurrentHealth = characterData.CurrentHealth;
+            FighterHealthBar.healthSlider.maxValue = MaxHealth;
+            FighterHealthBar.DisplayHealth(CurrentHealth);
         }
 
         public void TakeDamage(int amount)
@@ -37,34 +36,34 @@ namespace BattleSystem.Characters
             if (_currentBlock > 0)
                 amount = BlockDamage(amount);
 
-            var di = Instantiate(damageIndicator, transform);
+            var di = Instantiate(_damageIndicator, transform);
             di.GetComponent<DamageIndicator>().DisplayDamage(amount);
             Destroy(di, 2f);
 
-            _currentHealth -= amount;
-            UpdateHealthUI(_currentHealth);
+            CurrentHealth -= amount;
+            UpdateHealthUI(CurrentHealth);
 
-            if (_currentHealth <= 0)
+            if (CurrentHealth <= 0)
             {
-                if (BattleManager.Instance.Enemies != null)
+                Destroy(gameObject);
+                BattleManager.Instance.RemoveEnemy(this);
+                if (BattleManager.Instance.Enemies.IsNullOrEmpty() && BattleManager.Instance.Enemies.Count > 0)
                     BattleManager.Instance.EndFight(BattleState.Defeat);
                 else
                     BattleManager.Instance.EndFight(BattleState.Victory);
-
-                Destroy(gameObject);
             }
         }
 
         public void UpdateHealthUI(int newAmount)
         {
-            _currentHealth = newAmount;
-            _fighterHealthBar.DisplayHealth(newAmount);
+            CurrentHealth = newAmount;
+            FighterHealthBar.DisplayHealth(newAmount);
         }
 
         public void AddBlock(int amount)
         {
             _currentBlock += amount;
-            _fighterHealthBar.DisplayBlock(_currentBlock);
+            FighterHealthBar.DisplayBlock(_currentBlock);
         }
 
         private int BlockDamage(int amount)
@@ -80,17 +79,24 @@ namespace BattleSystem.Characters
                 _currentBlock = 0;
             }
 
-            _fighterHealthBar.DisplayBlock(_currentBlock);
+            FighterHealthBar.DisplayBlock(_currentBlock);
             return amount;
         }
 
-        public void AddBuff(Buff.Type type, int amount)
+        public void AddBuff(BuffType type, int amount)
         {
-            var currentBuff = _buffList.FirstOrDefault(x => x.BuffType == type);
+            var currentBuff = BuffList.FirstOrDefault(x => x.BuffsType == type);
+            var buffSettings = SettingsProvider.Get<BattlePrefabSet>().BuffSettings;
 
-            if (currentBuff.BuffValue <= 0)
+            if (currentBuff == null)
             {
-                currentBuff.BuffGo = Instantiate(SettingsProvider.Get<BattlePrefabSet>().BuffUIPrefab, buffParent);
+                currentBuff = new Buff()
+                {
+                    BuffGo = Instantiate(SettingsProvider.Get<BattlePrefabSet>().BuffUIPrefab, _buffParent),
+                    BuffIcon = buffSettings.Buffs.FirstOrDefault(x => x.BuffType == type)?.BuffIcon,
+                    BuffsType = buffSettings.Buffs.FirstOrDefault(x => x.BuffType == type)!.BuffType,
+                };
+                BuffList.Add(currentBuff);
             }
 
             currentBuff.BuffValue += amount;
@@ -99,42 +105,53 @@ namespace BattleSystem.Characters
 
         public void EvaluateBuffsAtTurnEnd()
         {
-            foreach (var buffs in _buffList)
+            var listToRemove = new List<Buff>();
+            foreach (var buff in BuffList)
             {
-                var buff = buffs;
                 if (buff.BuffValue > 0)
                 {
-                    switch (buff.BuffType)
+                    switch (buff.BuffsType)
                     {
-                        case Buff.Type.Ritual:
-                            AddBuff(Buff.Type.Strength, buff.BuffValue);
+                        case BuffType.Ritual:
+                            AddBuff(BuffType.Strength, buff.BuffValue);
                             break;
                         default:
                             buff.BuffValue -= 1;
                             buff.BuffGo.DisplayBuff(buff);
+                            buff.BuffGo.DisplayBuff(buff);
 
                             if (buff.BuffValue <= 0)
-                                Destroy(buff.BuffGo.gameObject);
+                            {
+                                listToRemove.Add(buff);
+                            }
+
                             break;
                     }
                 }
+            }
+
+            foreach (var buff in listToRemove)
+            {
+                Destroy(buff.BuffGo.gameObject);
+                BuffList.Remove(buff);
             }
         }
 
         public void ResetBuffs()
         {
-            foreach (var buffs in _buffList)
+            foreach (var buffs in BuffList)
             {
                 var buff = buffs;
                 if (buff.BuffValue > 0)
                 {
                     buff.BuffValue = 0;
                     Destroy(buff.BuffGo.gameObject);
+                    BuffList.Remove(buff);
                 }
             }
 
             _currentBlock = 0;
-            _fighterHealthBar.DisplayBlock(0);
+            FighterHealthBar.DisplayBlock(0);
         }
     }
 }

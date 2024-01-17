@@ -1,25 +1,24 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BattleSystem
 {
     [Serializable]
-    public struct Buff
+    public class Buff
     {
-        public Type BuffType;
+        public BuffType BuffsType;
         public Sprite BuffIcon;
         public int BuffValue;
         public BuffUI BuffGo;
-
-        public enum Type
-        {
-            Strength,
-            Vulnerable,
-            Weak,
-            Ritual,
-            Enrage
-        }
+        
     }
-    
-    
+    public enum BuffType
+    {
+        Strength,
+        Vulnerable,
+        Weak,
+        Ritual,
+        Enrage
+    }
 }

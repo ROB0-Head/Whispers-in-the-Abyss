@@ -118,6 +118,7 @@ namespace BattleSystem.Cards
         Bash,
         Clothesline,
         Bodyslam,
+        IronWave
     }
 
     public enum DefenceCardType
@@ -126,7 +127,6 @@ namespace BattleSystem.Cards
         Defense,
         Entrench,
         ShrugItOff,
-        IronWave
     }
 
     public enum SkillCardType
@@ -153,7 +153,7 @@ namespace BattleSystem.Cards
     [Serializable]
     public struct CardBuffs
     {
-        public Buff.Type buffType;
+        public BuffType buffType;
         public CardAmount buffAmount;
     }
 }

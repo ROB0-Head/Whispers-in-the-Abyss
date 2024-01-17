@@ -1,29 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using BattleSystem;
-using Settings.BattleManager;
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace TJ
+namespace BattleSystem.Characters.Enemy
 {
-    [System.Serializable]
+    [Serializable]
     public class EnemyAction
     {
-        public IntentType intentType;
+        public IntentType IntentType;
+        public int IntentAmount;
+        public BuffType BuffType;
+        public int DebuffAmount;
+        public int Chance;
+        public Sprite Icon;
+    }
 
-        public int amount;
-        public int debuffAmount;
-        public Buff.Type buffType;
-        public int chance;
-        public Sprite icon;
-
-        public enum IntentType
-        {
-            Attack,
-            Block,
-            StrategicBuff,
-            StrategicDebuff,
-            AttackDebuff
-        }
+    public enum IntentType
+    {
+        Attack,
+        Block,
+        StrategicBuff,
+        StrategicDebuff,
+        AttackDebuff
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using BattleSystem;
 using BattleSystem.Cards;
 using BattleSystem.Characters.Enemy;
+using Map;
 using Navigation;
 using SaveSystem;
 using Settings;
@@ -31,6 +32,7 @@ namespace UI.Screens
         private List<CardUI> _cardList = new List<CardUI>();
 
         public Transform DiscardPileCount => _discardPileCountText.transform;
+        public Transform TopParent => _topParent;
 
         private void Awake()
         {
@@ -170,7 +172,7 @@ namespace UI.Screens
 
         public void Home()
         {
-            NavigationController.Instance.ScreenTransition<MainScreen>();
+            NavigationController.Instance.ScreenTransition<MapManager>();
         }
 
         public enum BattleTabType
