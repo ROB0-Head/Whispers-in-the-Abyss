@@ -195,7 +195,7 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_ReverseArrangement: 1
 --- !u!1 &1164950523212346430
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,8 +737,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FighterHealthBar: {fileID: 370572911677944387}
-  buffParent: {fileID: 4045493108226693257}
-  damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
+  _buffParent: {fileID: 4045493108226693257}
+  _damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
 --- !u!1 &3253994055168088358
 GameObject:
   m_ObjectHideFlags: 0

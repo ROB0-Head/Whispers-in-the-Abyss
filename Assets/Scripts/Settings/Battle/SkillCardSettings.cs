@@ -1,4 +1,5 @@
 using BattleSystem.Cards;
+using Settings.Battle;
 using UnityEngine;
 
 namespace Settings.BattleManager.Cards

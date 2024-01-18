@@ -77,15 +77,13 @@ namespace UI.Screens
         public List<Card> DrawCards()
         {
             var deck = new List<Card>();
-            var zOffSet = 15f;
             var cardDeck = SaveManager.LoadDeck();
             foreach (var card in cardDeck)
             {
                 var cardTransform = Instantiate(SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.CardPrefab,
                     _deck);
-                cardTransform.transform.rotation = Quaternion.Euler(0, 0, zOffSet);
-                zOffSet -= 5;
-                var cardUI = cardTransform.GetComponent<CardUI>();
+
+                var cardUI = cardTransform.GetComponentInChildren<CardUI>();
                 cardUI.LoadCard(card);
                 deck.Add(cardUI.Card);
                 _cardList.Add(cardUI);
@@ -116,6 +114,23 @@ namespace UI.Screens
                 }
             }
         }
+
+        public void SortingCardInHand()
+        {
+            var activeCards = _cardList.FindAll(x => x.gameObject.activeSelf);
+
+            int centralCardIndex = Mathf.CeilToInt(activeCards.Count / 2f);
+
+            for (int i = 0; i < activeCards.Count; i++)
+            {
+                GameObject currentCard = activeCards[i].gameObject;
+
+                float angle = (i + 1 - centralCardIndex) * 5;
+
+                currentCard.transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
+        }
+
 
         public override void UpdateScreen()
         {

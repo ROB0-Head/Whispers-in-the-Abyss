@@ -17,7 +17,7 @@ namespace BattleSystem.Cards
             {
                 switch (attackCard.AttackType)
                 {
-                    case AttackCardType.Strike:
+                    case AttackCardType.Attack:
                         AttackEnemy(card);
                         break;
                     case AttackCardType.Bash:

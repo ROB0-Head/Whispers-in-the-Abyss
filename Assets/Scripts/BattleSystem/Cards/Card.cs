@@ -114,7 +114,7 @@ namespace BattleSystem.Cards
     public enum AttackCardType
     {
         None,
-        Strike,
+        Attack,
         Bash,
         Clothesline,
         Bodyslam,

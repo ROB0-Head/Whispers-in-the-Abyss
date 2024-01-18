@@ -1003,8 +1003,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FighterHealthBar: {fileID: 5938868779381404939}
-  buffParent: {fileID: 8028767108936048577}
-  damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
+  _buffParent: {fileID: 8028767108936048577}
+  _damageIndicator: {fileID: 6374009983737280953, guid: 8e29b7cfcb887c74a93874d8a5520c16, type: 3}
   enemyActions:
   - IntentType: 0
     IntentAmount: 5

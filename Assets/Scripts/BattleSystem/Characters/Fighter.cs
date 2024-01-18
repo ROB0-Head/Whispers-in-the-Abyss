@@ -139,6 +139,7 @@ namespace BattleSystem.Characters
 
         public void ResetBuffs()
         {
+            
             foreach (var buffs in BuffList)
             {
                 var buff = buffs;

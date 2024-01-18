@@ -90,6 +90,7 @@ namespace BattleSystem
                 }
             }
 
+            BattleScreen.Instance.SortingCardInHand();
             UpdateTextValueCount();
         }
 

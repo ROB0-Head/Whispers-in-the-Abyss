@@ -1,8 +1,7 @@
 using BattleSystem.Cards;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Settings.BattleManager.Cards
+namespace Settings.Battle
 {
     public class CardSettings : ScriptableObject
     {
@@ -13,5 +12,6 @@ namespace Settings.BattleManager.Cards
         public CardAmount CardEffect;
         public CardAmount BuffAmount;
         public CardType CardType;
+        public Sprite CardSprite;
     }
 }
