@@ -23,5 +23,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a94ca80a77d3f04ca9311fdc962f13f, type: 2}
   - {fileID: 11400000, guid: 24b99298c3be4bf4b8878ebd3b2b1dd3, type: 2}
   - {fileID: 11400000, guid: 3589764c75f01b4479cb80f9dea824e2, type: 2}
-  CardPrefab: {fileID: 8286164728509786245, guid: 77f349403f6e44146b28bb31c721bfe0, type: 3}
+  CardPrefab: {fileID: 4107456081745339880, guid: 7ac9a535c95042945bc633952232a03b, type: 3}
   SkillCardPrefab: {fileID: 0}

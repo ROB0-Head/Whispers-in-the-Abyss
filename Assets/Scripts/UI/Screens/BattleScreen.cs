@@ -82,7 +82,6 @@ namespace UI.Screens
             {
                 var cardTransform = Instantiate(SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.CardPrefab,
                     _deck);
-
                 var cardUI = cardTransform.GetComponentInChildren<CardUI>();
                 cardUI.LoadCard(card);
                 deck.Add(cardUI.Card);
@@ -105,25 +104,25 @@ namespace UI.Screens
             }
             else
             {
-                var inactiveCardUI = _cardList.FirstOrDefault(x => !x.gameObject.activeSelf);
+                var inactiveCardUI = _cardList.FirstOrDefault(x => !x.transform.parent.gameObject.activeSelf);
 
                 if (inactiveCardUI != null)
                 {
                     inactiveCardUI.LoadCard(card);
-                    inactiveCardUI.gameObject.SetActive(true);
+                    inactiveCardUI.transform.parent.gameObject.SetActive(true);
                 }
             }
         }
 
         public void SortingCardInHand()
         {
-            var activeCards = _cardList.FindAll(x => x.gameObject.activeSelf);
+            var activeCards = _cardList.FindAll(x => x.transform.parent.gameObject.activeSelf);
 
             int centralCardIndex = Mathf.CeilToInt(activeCards.Count / 2f);
 
             for (int i = 0; i < activeCards.Count; i++)
             {
-                GameObject currentCard = activeCards[i].gameObject;
+                GameObject currentCard = activeCards[i].transform.parent.gameObject;
 
                 float angle = (i + 1 - centralCardIndex) * 5;
 
