@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using BattleSystem.Cards;
 using BattleSystem.Characters;
 using BattleSystem.Characters.Enemy;
 using Navigation;
 using SaveSystem;
 using Settings;
+using Settings.Battle;
 using UI.Screens;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -21,8 +23,7 @@ namespace BattleSystem
         [SerializeField] private Fighter _cardTarget;
         [SerializeField] private Fighter _player;
         [SerializeField] private List<Enemy> _enemies = new List<Enemy>();
-        [SerializeField] private Transform _enemyParent;
-        [SerializeField] private Transform _topParent;
+        [SerializeField] private List<Transform> _enemyParent;
 
         private BattleState _currentBattleState;
         private List<Card> _drawPile;
@@ -167,23 +168,21 @@ namespace BattleSystem
             _maxEnergy = characterData.Energy;
             _drawPile = BattleScreen.Instance.DrawCards();
             _player.Init();
+
             switch (enemyType)
             {
                 case EnemyType.Default:
-                    int numberOfEnemies = Random.Range(0, 2);
-                    //Цикл для нескольких противников
-                    var enemy = Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
-                        _enemyParent);
-                    enemy.Init();
-                    _enemies.Add(enemy);
+                    int numberOfEnemies = Random.Range(1, 6);
+                    SpawnEnemies(numberOfEnemies, EnemyType.Default);
                     break;
                 case EnemyType.Elite:
-                    _enemies.Add(Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
-                        _enemyParent));
+                    SpawnEnemies(1, EnemyType.Elite);
+                    SpawnEnemies(Random.Range(1, 3), EnemyType.Default);
                     break;
                 case EnemyType.Boss:
-                    _enemies.Add(Instantiate(SettingsProvider.Get<BattlePrefabSet>().GetEnemy<Enemy>(),
-                        _enemyParent));
+                    int numberOfBossEnemies = Random.Range(1, 5);
+                    SpawnEnemies(numberOfBossEnemies, EnemyType.Boss);
+                    SpawnEnemies(Random.Range(1, 5), EnemyType.Default);
                     break;
             }
 
@@ -218,6 +217,63 @@ namespace BattleSystem
             {
                 e.DisplayIntent();
             }
+        }
+
+        private void SpawnEnemies(int numberOfEnemies, EnemyType enemyType)
+        {
+            for (int i = 0; i < numberOfEnemies; i++)
+            {
+                Enemy enemy = new Enemy();
+                EnemySetting enemySetting = new EnemySetting();
+                Sprite enemysprite = null;
+                Transform spawnPoint = GetRandomSpawnPoint(enemyType);
+                if (spawnPoint != null)
+                {
+                    switch (enemyType)
+                    {
+                        case EnemyType.Default:
+                            enemySetting = SettingsProvider.Get<BattlePrefabSet>().EnemyLibrary
+                                .GetRandomDefaultEnemySetting();
+                            enemysprite = SettingsProvider.Get<BattlePrefabSet>().EnemyLibrary
+                                .GetRandomDefaultEnemySprite();
+                            enemy = Instantiate(enemySetting.EnemyPrefab, spawnPoint);
+                            break;
+                        case EnemyType.Elite:
+                            enemySetting = SettingsProvider.Get<BattlePrefabSet>().EnemyLibrary
+                                .GetRandomEliteEnemySetting();
+                            enemysprite = SettingsProvider.Get<BattlePrefabSet>().EnemyLibrary
+                                .GetRandomEliteEnemySprite();
+                            enemy = Instantiate(enemySetting.EnemyPrefab, spawnPoint);
+                            break;
+                        case EnemyType.Boss:
+                            enemySetting = SettingsProvider.Get<BattlePrefabSet>().EnemyLibrary
+                                .GetRandomBossEnemySetting();
+                            enemysprite = SettingsProvider.Get<BattlePrefabSet>().EnemyLibrary
+                                .GetRandomBossEnemySprite();
+                            enemy = Instantiate(enemySetting.EnemyPrefab, spawnPoint);
+                            break;
+                    }
+
+                    enemy.Init(enemySetting, enemysprite);
+                    _enemies.Add(enemy);
+                }
+            }
+        }
+
+        private Transform GetRandomSpawnPoint(EnemyType enemyType)
+        {
+            List<Transform> spawnPoints = (enemyType == EnemyType.Elite || enemyType == EnemyType.Boss)
+                ? _enemyParent
+                : _enemyParent.GetRange(0, _enemyParent.Count - 1);
+
+            List<Transform> emptySpawnPoints = spawnPoints.Where(sp => sp.childCount == 0).ToList();
+
+            if (emptySpawnPoints.Count > 0)
+            {
+                return emptySpawnPoints[Random.Range(0, emptySpawnPoints.Count)];
+            }
+
+            return null;
         }
 
         public void ChangeTurn()
@@ -269,9 +325,10 @@ namespace BattleSystem
             _cardActions.PerformAction(cardUI.Card, _cardTarget);
             _currentEnergy -= cardUI.Card.GetCardEnergyAmount();
             SelectedCard = null;
-            cardUI.gameObject.SetActive(false);
+            cardUI.transform.parent.gameObject.SetActive(false);
             DiscardCard(cardUI.Card);
             UpdateTextValueCount();
+            BattleScreen.Instance.SortingCardInHand();
             _cardsInHand.Remove(cardUI.Card);
         }
 

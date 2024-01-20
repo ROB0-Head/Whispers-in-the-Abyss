@@ -6,7 +6,7 @@ using DefaultNamespace;
 using SaveSystem;
 using Settings;
 using Settings.Battle;
-using Settings.BattleManager.Cards;
+using Settings.Battle.Cards;
 using UI;
 using UnityEngine;
 

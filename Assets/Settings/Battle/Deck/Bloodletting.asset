@@ -27,5 +27,5 @@ MonoBehaviour:
     baseAmount: 3
     upgradedAmount: 3
   CardType: 2
-  CardSprite: {fileID: 21300000, guid: 5e39af0dccf926040b1252aeff1ee9da, type: 3}
+  CardSprite: {fileID: 21300000, guid: a7e689cb77471c145bb69f42ae4a5fb4, type: 3}
   SkillType: 1

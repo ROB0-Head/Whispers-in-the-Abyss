@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleSystem;
 using BattleSystem.Characters.Enemy;
-using BattleSystem.Characters.Reward;
 using Settings.Battle;
-using Settings.BattleManager.Cards;
+using Settings.Battle.Cards;
 using UnityEngine;
 
 namespace Settings
@@ -14,8 +13,7 @@ namespace Settings
     {
         [field: SerializeField] public DeckLibrary DeckLibrary { private set; get; }
         [field: SerializeField] public RelicLibrary RelicLibrary { private set; get; }
-        
-        [field: SerializeField] public TarotLibrary TarotLibrary { private set; get; }
+        [field: SerializeField] public EnemyLibrary EnemyLibrary { private set; get; }
         [field: SerializeField] public BuffSettings BuffSettings { private set; get; }
         [field: SerializeField] public List<Enemy> Enemies { private set; get; }
         [field: SerializeField] public BuffUI BuffUIPrefab { private set; get; }

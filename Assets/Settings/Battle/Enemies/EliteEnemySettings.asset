@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5db25017b844f5ab88ca5073f96ebbd, type: 3}
+  m_Name: EliteEnemySettings
+  m_EditorClassIdentifier: 
+  EnemySprites:
+  - {fileID: 21300000, guid: bcf01fdb9bf5b8d4eb93d803be855e88, type: 3}
+  - {fileID: 21300000, guid: e67effb64edebff499e9305d23742fce, type: 3}
+  - {fileID: 21300000, guid: f831fcf2fc0d9d144aff0b9a26c8311a, type: 3}
+  - {fileID: 21300000, guid: 2a10d94a23573da44a446de906b75aed, type: 3}
+  - {fileID: 21300000, guid: 125b2c8fa73462345a7ff82e31db1e81, type: 3}
+  - {fileID: 21300000, guid: 77fcf1125c6789042917bc24c6fa9c19, type: 3}
+  EnemySetting: []

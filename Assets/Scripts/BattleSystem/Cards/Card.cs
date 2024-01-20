@@ -1,7 +1,4 @@
 using System;
-using Newtonsoft.Json;
-using SaveSystem;
-using Settings.BattleManager;
 
 namespace BattleSystem.Cards
 {

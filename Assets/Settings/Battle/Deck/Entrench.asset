@@ -21,11 +21,11 @@ MonoBehaviour:
     baseAmount: 1
     upgradedAmount: 1
   CardEffect:
-    baseAmount: 5
-    upgradedAmount: 8
+    baseAmount: 0
+    upgradedAmount: 0
   BuffAmount:
     baseAmount: 0
     upgradedAmount: 0
   CardType: 1
-  CardSprite: {fileID: 21300000, guid: 26fe4470dc85b0541bee79afe54d372c, type: 3}
+  CardSprite: {fileID: 21300000, guid: 7ad9d3b8928ab5c49b4f95303c3a15e9, type: 3}
   DefenseType: 2

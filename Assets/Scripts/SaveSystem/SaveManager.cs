@@ -5,7 +5,6 @@ using System.Text;
 using BattleSystem.Cards;
 using Newtonsoft.Json;
 using Settings;
-using Settings.BattleManager.Cards;
 using UnityEngine;
 
 namespace SaveSystem

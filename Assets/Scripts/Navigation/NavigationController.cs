@@ -29,6 +29,11 @@ namespace Navigation
             ScreenTransition<MainScreen>();
         }
 
+        public void UpdateCanvas()
+        {
+            UnityEngine.Canvas.ForceUpdateCanvases();
+        }
+
         public void ScreenTransition<T>(ScreenSettings settings = null) where T : DefaultScreen
         {
             if (_currentScreen != null)

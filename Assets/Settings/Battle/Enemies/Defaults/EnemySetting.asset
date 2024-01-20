@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66a218b07be49eba4615663cecfee8c, type: 3}
+  m_Name: EnemySetting
+  m_EditorClassIdentifier: 
+  EnemyPrefab: {fileID: 2632914828706860689, guid: c01c012a475960948888e67a127d04d8, type: 3}
+  enemyActions:
+  - IntentType: 0
+    IntentAmount: 5
+    BuffType: 0
+    DebuffAmount: 0
+    Chance: 2
+    Icon: {fileID: 21300000, guid: c058a37556b675c4aba73550727d39e2, type: 3}
+  - IntentType: 1
+    IntentAmount: 5
+    BuffType: 0
+    DebuffAmount: 5
+    Chance: 2
+    Icon: {fileID: 21300000, guid: eae95f83c05714241bc6e059027c0248, type: 3}
+  - IntentType: 3
+    IntentAmount: 2
+    BuffType: 1
+    DebuffAmount: 2
+    Chance: 2
+    Icon: {fileID: 21300000, guid: 02ec904ee85c37c45b0226e918bc2e26, type: 3}
+  - IntentType: 2
+    IntentAmount: 2
+    BuffType: 0
+    DebuffAmount: 3
+    Chance: 2
+    Icon: {fileID: 21300000, guid: f643a45e495a7794f92701f5c157e2ca, type: 3}
+  - IntentType: 4
+    IntentAmount: 3
+    BuffType: 2
+    DebuffAmount: 3
+    Chance: 2
+    Icon: {fileID: 21300000, guid: 62f96ab558363b245a6a6b0f40432dfe, type: 3}
+  MaxHeath: 25

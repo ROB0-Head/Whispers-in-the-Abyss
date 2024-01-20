@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DeckLibrary>k__BackingField: {fileID: 11400000, guid: 671232e95fc6b3942b5e063ecffdb4e6, type: 2}
   <RelicLibrary>k__BackingField: {fileID: 11400000, guid: 15fc8b3ed2e8cc44e87c63cb0c54c88e, type: 2}
-  <TarotLibrary>k__BackingField: {fileID: 0}
+  <EnemyLibrary>k__BackingField: {fileID: 11400000, guid: 0f49378379cf37048988830a0dc7915b, type: 2}
   <BuffSettings>k__BackingField: {fileID: 11400000, guid: bebbc7876fd5cc64bb98f039ff704e13, type: 2}
   <Enemies>k__BackingField:
-  - {fileID: 4344677424976684165, guid: 2c7fa458abf5ab14ba18ed8aca41983a, type: 3}
+  - {fileID: 2632914828706860689, guid: c01c012a475960948888e67a127d04d8, type: 3}
   <BuffUIPrefab>k__BackingField: {fileID: 7144118227057181739, guid: d4369f77044250749b7bccda4d6cdfd1, type: 3}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Settings.Battle;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,27 +9,29 @@ namespace BattleSystem.Characters.Enemy
 {
     public class Enemy : Fighter
     {
-        [SerializeField] private List<EnemyAction> enemyActions;
-        [SerializeField] private Image intentIcon;
-        [SerializeField] private TMP_Text intentAmount;
-        [SerializeField] private BuffUI intentUI;
+        [SerializeField] private Image _enemyCard;
+        [SerializeField] private Image _intentIcon;
+        [SerializeField] private TMP_Text _intentAmount;
+        [SerializeField] private BuffUI _intentUI;
 
         private List<EnemyAction> _turns = new List<EnemyAction>();
         private Animator _animator;
         private int _turnNumber;
-        
+        private List<EnemyAction> _enemyActions;
         public bool MidTurn { get; set; }
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
         }
-        public override void Init()
+
+        public override void Init(EnemySetting setting, Sprite enemyCard)
         {
+            _enemyCard.sprite = enemyCard;
             BuffList = new List<Buff>();
-            MaxHealth = 75;
-            SetupCurrentHealth(1);
-            HealthBar.healthSlider.maxValue = MaxHealth;
+            _enemyActions = setting.enemyActions;
+            MaxHealth = setting.MaxHeath;
+            SetupCurrentHealth(setting.MaxHeath);
             HealthBar.DisplayHealth(CurrentHealth);
         }
 
@@ -36,10 +39,10 @@ namespace BattleSystem.Characters.Enemy
         {
             CurrentHealth = value;
         }
-        
+
         public void TakeTurn()
         {
-            intentUI.animator.Play("IntentFade");
+            _intentUI.animator.Play("IntentFade");
 
             switch (_turns[_turnNumber].IntentType)
             {
@@ -70,7 +73,7 @@ namespace BattleSystem.Characters.Enemy
 
         public void GenerateTurns()
         {
-            foreach (EnemyAction enemyAction in enemyActions)
+            foreach (EnemyAction enemyAction in _enemyActions)
             {
                 for (int i = 0; i < enemyAction.Chance; i++)
                 {
@@ -148,7 +151,7 @@ namespace BattleSystem.Characters.Enemy
             if (_turns.Count == 0)
                 GenerateTurns();
 
-            intentIcon.sprite = _turns[_turnNumber].Icon;
+            _intentIcon.sprite = _turns[_turnNumber].Icon;
 
             if (_turns[_turnNumber].IntentType == IntentType.Attack)
             {
@@ -170,12 +173,12 @@ namespace BattleSystem.Characters.Enemy
                     }
                 }
 
-                intentAmount.text = totalDamage.ToString();
+                _intentAmount.text = totalDamage.ToString();
             }
             else
-                intentAmount.text = _turns[_turnNumber].IntentAmount.ToString();
+                _intentAmount.text = _turns[_turnNumber].IntentAmount.ToString();
 
-            intentUI.animator.Play("IntentSpawn");
+            _intentUI.animator.Play("IntentSpawn");
         }
 
         /*public void CurlUp()

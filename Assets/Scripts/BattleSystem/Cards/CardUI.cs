@@ -2,7 +2,6 @@ using System.Linq;
 using Settings;
 using TMPro;
 using UI.Screens;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using SettingsProvider = Settings.SettingsProvider;
@@ -15,6 +14,7 @@ namespace BattleSystem.Cards
         [SerializeField] private GameObject _cardDescription;
         [SerializeField] private TMP_Text _cardDefense;
         [SerializeField] private TMP_Text _cardAttack;
+        [SerializeField] private TMP_Text _cardSkill;
         [SerializeField] private TMP_Text _cardEnergy;
         [SerializeField] private CardFly _cardFly;
         [SerializeField] private Image _cardSprite;
@@ -42,26 +42,61 @@ namespace BattleSystem.Cards
         public void LoadCard(Card card)
         {
             _card = card;
-
             gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            
             _cardSprite.sprite = SettingsProvider.Get<BattlePrefabSet>().DeckLibrary.Deck
                 .FirstOrDefault(x => x.CardTitle == card.CardTitle)?.CardSprite;
+            
             _cardTitleText.text = card.CardTitle;
             _cardDescription.GetComponentInChildren<TMP_Text>().text = _card.GetCardDescriptionAmount();
             _cardDescription.SetActive(false);
             _cardEnergy.text = card.GetCardEnergyAmount().ToString();
             if (card is AttackCard attackCard)
             {
-                _cardAttack.text = attackCard.GetCardStatAmount().ToString();
+                if (attackCard.AttackType != AttackCardType.Bodyslam)
+                {
+                    _cardAttack.text = attackCard.GetCardStatAmount().ToString();
+                }
+                else
+                {
+                    _cardAttack.text = "-/-";
+                }
+
                 _cardAttack.gameObject.SetActive(true);
                 _cardDefense.gameObject.SetActive(false);
+                _cardSkill.gameObject.SetActive(false);
             }
 
             if (card is DefenseCard defenseCard)
             {
-                _cardDefense.text = defenseCard.GetCardStatAmount().ToString();
+                if (defenseCard.DefenseType != DefenceCardType.Entrench)
+                {
+                    _cardDefense.text = defenseCard.GetCardStatAmount().ToString();
+                }
+                else
+                {
+                    _cardDefense.text = "-/-";
+                }
+
                 _cardDefense.gameObject.SetActive(true);
                 _cardAttack.gameObject.SetActive(false);
+                _cardSkill.gameObject.SetActive(false);
+            }
+
+            if (card is SkillCard skillCard)
+            {
+                if (skillCard.SkillType != SkillCardType.Inflame)
+                {
+                    _cardSkill.text = skillCard.GetCardStatAmount().ToString();
+                }
+                else
+                {
+                    _cardSkill.text = "-/-";
+                }
+
+                _cardSkill.gameObject.SetActive(true);
+                _cardAttack.gameObject.SetActive(false);
+                _cardDefense.gameObject.SetActive(false);
             }
         }
 
@@ -109,13 +144,13 @@ namespace BattleSystem.Cards
             if (_card.CardType == CardType.Attack)
             {
                 BattleManager.Instance.PlayCard(this);
-                Instantiate(DiscardEffect, BattleScreen.Instance.TopParent);
+                Instantiate(DiscardEffect, BattleScreen.Instance.DiscardParent);
                 _animator.Play("HoverOffCard");
             }
             else
             {
                 _animator.Play("HoverOffCard");
-                Instantiate(DiscardEffect, BattleScreen.Instance.TopParent);
+                Instantiate(DiscardEffect, BattleScreen.Instance.DiscardParent);
                 BattleManager.Instance.PlayCard(this);
             }
         }

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5db25017b844f5ab88ca5073f96ebbd, type: 3}
+  m_Name: BossEnemySettings
+  m_EditorClassIdentifier: 
+  EnemySprites:
+  - {fileID: 21300000, guid: 1844877e7ba1ce44b872a21f7729e550, type: 3}
+  - {fileID: 21300000, guid: 3201f49e141a6b14fa1f9502bfb63399, type: 3}
+  - {fileID: 21300000, guid: 8c3f11d397a244242b71ffe55718d60c, type: 3}
+  - {fileID: 21300000, guid: e600ae4d2f8f36b43a347088d1deab5b, type: 3}
+  - {fileID: 21300000, guid: 031201723ca3d3944a368b8df6e29e4e, type: 3}
+  - {fileID: 21300000, guid: 5aa5ffbd04e93d141a4b13cc4bb6747c, type: 3}
+  - {fileID: 21300000, guid: 1b04162d14eb63743821f55475e0021b, type: 3}
+  EnemySetting: []

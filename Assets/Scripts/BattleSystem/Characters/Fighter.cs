@@ -3,6 +3,7 @@ using System.Linq;
 using BattleSystem.Characters.BattleScreen;
 using SaveSystem;
 using Settings;
+using Settings.Battle;
 using UnityEngine;
 
 namespace BattleSystem.Characters
@@ -21,13 +22,12 @@ namespace BattleSystem.Characters
         public int CurrentBlock => _currentBlock;
         public FighterHealthBar HealthBar => FighterHealthBar;
 
-        public virtual void Init()
+        public virtual void Init(EnemySetting setting = null, Sprite enemyCard = null)
         {
             var characterData = SaveManager.LoadCharacterData();
             BuffList = new List<Buff>();
             MaxHealth = characterData.MaxHealth;
             CurrentHealth = characterData.CurrentHealth;
-            FighterHealthBar.healthSlider.maxValue = MaxHealth;
             FighterHealthBar.DisplayHealth(CurrentHealth);
         }
 
@@ -106,6 +106,7 @@ namespace BattleSystem.Characters
         public void EvaluateBuffsAtTurnEnd()
         {
             var listToRemove = new List<Buff>();
+
             foreach (var buff in BuffList)
             {
                 if (buff.BuffValue > 0)
@@ -117,7 +118,6 @@ namespace BattleSystem.Characters
                             break;
                         default:
                             buff.BuffValue -= 1;
-                            buff.BuffGo.DisplayBuff(buff);
                             buff.BuffGo.DisplayBuff(buff);
 
                             if (buff.BuffValue <= 0)
@@ -139,16 +139,22 @@ namespace BattleSystem.Characters
 
         public void ResetBuffs()
         {
-            
+            var listToRemove = new List<Buff>();
+
             foreach (var buffs in BuffList)
             {
                 var buff = buffs;
                 if (buff.BuffValue > 0)
                 {
                     buff.BuffValue = 0;
-                    Destroy(buff.BuffGo.gameObject);
-                    BuffList.Remove(buff);
+                    listToRemove.Add(buff);
                 }
+            }
+
+            foreach (var buff in listToRemove)
+            {
+                Destroy(buff.BuffGo.gameObject);
+                BuffList.Remove(buff);
             }
 
             _currentBlock = 0;

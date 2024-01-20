@@ -7,7 +7,6 @@ using Map;
 using Navigation;
 using SaveSystem;
 using Settings;
-using Settings.BattleManager.Cards;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,13 +25,13 @@ namespace UI.Screens
         [SerializeField] private TMP_Text _discardPileCountText;
         [SerializeField] private TMP_Text _energyText;
         [SerializeField] private Transform _deck;
-        [SerializeField] private Transform _topParent;
+        [SerializeField] private Transform _discardParent;
 
         private BattleTabType _currentTab;
         private List<CardUI> _cardList = new List<CardUI>();
 
         public Transform DiscardPileCount => _discardPileCountText.transform;
-        public Transform TopParent => _topParent;
+        public Transform DiscardParent => _discardParent;
 
         private void Awake()
         {
@@ -174,13 +173,12 @@ namespace UI.Screens
 
         public void DiscardCardInHand()
         {
-            foreach (Transform card in _deck)
-            {
-                var cardUI = card.GetComponent<CardUI>();
-                if (cardUI.gameObject.activeSelf)
-                    Instantiate(cardUI.DiscardEffect, cardUI.transform.position, Quaternion.identity, _topParent);
+            var activeCards = _cardList.FindAll(x => x.transform.parent.gameObject.activeSelf);
 
-                cardUI.gameObject.SetActive(false);
+            foreach (var cardUI in activeCards)
+            {
+                Instantiate(cardUI.DiscardEffect, cardUI.transform.position, Quaternion.identity, _discardParent);
+                cardUI.transform.parent.gameObject.SetActive(false);
             }
         }
 

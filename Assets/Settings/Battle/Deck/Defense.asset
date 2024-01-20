@@ -27,5 +27,5 @@ MonoBehaviour:
     baseAmount: 0
     upgradedAmount: 0
   CardType: 1
-  CardSprite: {fileID: 21300000, guid: eb73c44f8fd969f4983d696e87b271aa, type: 3}
+  CardSprite: {fileID: 21300000, guid: 88a72f2843b827147a888c526ec8dbd4, type: 3}
   DefenseType: 1
