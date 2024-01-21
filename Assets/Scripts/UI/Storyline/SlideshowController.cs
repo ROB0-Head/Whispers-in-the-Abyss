@@ -61,13 +61,13 @@ namespace UI.Storyline
             for (int i = 0; i < _leftPhotos.Count; i++)
             {
                 _leftPhotos[i].gameObject.transform.localPosition =
-                    new Vector3(-2000f, leftPhotosOriginalPositions[i].y, 0);
+                    new Vector3(-3000f, leftPhotosOriginalPositions[i].y, 0);
             }
 
             for (int i = 0; i < _rightPhotos.Count; i++)
             {
                 _rightPhotos[i].gameObject.transform.localPosition =
-                    new Vector3(2000f, rightPhotosOriginalPositions[i].y, 0);
+                    new Vector3(3000f, rightPhotosOriginalPositions[i].y, 0);
             }
 
             yield return new WaitForSeconds(1f);
@@ -77,13 +77,19 @@ namespace UI.Storyline
         {
             Sequence mySequence = DOTween.Sequence();
 
-            mySequence.Append(_leftPhotos[index].gameObject.transform
-                .DOLocalMoveX(leftPhotosOriginalPositions[index].x, 0.2f));
-            mySequence.Play();
+            if (_leftPhotos.Count - 1 >= index)
+            {
+                mySequence.Append(_leftPhotos[index].gameObject.transform
+                    .DOLocalMoveX(leftPhotosOriginalPositions[index].x, 0.2f));
+                mySequence.Play();
+            }
 
-            mySequence.Append(_rightPhotos[index].gameObject.transform
-                .DOLocalMoveX(rightPhotosOriginalPositions[index].x, 0.2f));
-            mySequence.Play();
+            if (_rightPhotos.Count - 1 >= index)
+            {
+                mySequence.Append(_rightPhotos[index].gameObject.transform
+                    .DOLocalMoveX(rightPhotosOriginalPositions[index].x, 0.2f));
+                mySequence.Play();
+            }
 
             yield return new WaitForSeconds(1f);
         }
