@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3077ab562724c76ad74a2457b66cb35, type: 3}
+  m_Name: HistorySettings
+  m_EditorClassIdentifier: 
+  Name: StartHistory
+  History:
+  - {fileID: 5390968873853317246, guid: 259f2ee9bf4328b479fcc962f4e937aa, type: 3}
+  - {fileID: 4227197001894401449, guid: 0686bb64b4cef6c468f76bd885b86323, type: 3}
+  - {fileID: 6859731556356846616, guid: 06e933473e0f08344bb60d1da896b7ad, type: 3}
+  - {fileID: 2003283509216263622, guid: 85de645d7f5017a479e36eff1edb1cd8, type: 3}

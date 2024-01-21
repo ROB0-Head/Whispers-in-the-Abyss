@@ -5,9 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Storyline
+namespace UI.Screens
 {
-    public class SlideshowController : MonoBehaviour
+    public class SlideshowScreen : MonoBehaviour
     {
         [SerializeField] private TMP_Text _narratorText;
         [SerializeField] private float _textTypingSpeed = 0.05f;
@@ -15,19 +15,20 @@ namespace UI.Storyline
         [SerializeField] private List<Image> _rightPhotos;
         [SerializeField] private List<string> _narratorTexts;
 
+
         private int currentIndex;
         private List<Vector3> leftPhotosOriginalPositions = new List<Vector3>();
         private List<Vector3> rightPhotosOriginalPositions = new List<Vector3>();
 
-        void Start()
-        {
-            // Сохраняем исходные позиции фотографий
-            SaveOriginalPositions();
+        public bool IsSlideshowFinished;
 
+        public void Start()
+        {
+            SaveOriginalPositions();
             StartCoroutine(StartSlideshow());
         }
 
-        void SaveOriginalPositions()
+        private void SaveOriginalPositions()
         {
             for (int i = 0; i < _leftPhotos.Count; i++)
             {
@@ -40,7 +41,7 @@ namespace UI.Storyline
             }
         }
 
-        IEnumerator StartSlideshow()
+        public IEnumerator StartSlideshow()
         {
             yield return MovePhotosOntoCanvas();
 
@@ -53,10 +54,11 @@ namespace UI.Storyline
                 currentIndex++;
             }
 
+            IsSlideshowFinished = true;
             Debug.Log("Slideshow finished!");
         }
 
-        IEnumerator MovePhotosOntoCanvas()
+        private IEnumerator MovePhotosOntoCanvas()
         {
             for (int i = 0; i < _leftPhotos.Count; i++)
             {
@@ -73,7 +75,7 @@ namespace UI.Storyline
             yield return new WaitForSeconds(1f);
         }
 
-        IEnumerator MovePhotosOutOfCanvas(int index)
+        private IEnumerator MovePhotosOutOfCanvas(int index)
         {
             Sequence mySequence = DOTween.Sequence();
 
@@ -94,7 +96,7 @@ namespace UI.Storyline
             yield return new WaitForSeconds(1f);
         }
 
-        IEnumerator TypeNarratorText(string text)
+        private IEnumerator TypeNarratorText(string text)
         {
             _narratorText.text = "";
 

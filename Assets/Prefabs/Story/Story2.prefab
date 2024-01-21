@@ -215,13 +215,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _narratorText: {fileID: 2673312623702419798}
-  _textTypingSpeed: 0.25
+  _textTypingSpeed: 0.1
   _leftPhotos: []
   _rightPhotos:
   - {fileID: 3575190304260237287}
   _narratorTexts:
   - 
   - "\u0422\u0430\u043A \u0432\u043E\u0442 \u043E\u043D\u043E \u0447\u0442\u043E..."
+  IsSlideshowFinished: 0
 --- !u!1 &8022895273646418860
 GameObject:
   m_ObjectHideFlags: 0

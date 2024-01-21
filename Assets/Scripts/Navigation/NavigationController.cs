@@ -9,7 +9,7 @@ namespace Navigation
 {
     public class NavigationController : MonoBehaviour
     {
-        public GameObject Canvas;
+        [SerializeField] private GameObject _canvas;
 
         private static NavigationController _instance;
 
@@ -17,8 +17,10 @@ namespace Navigation
 
         private DefaultScreen _currentScreen;
 
+        public GameObject Canvas => _canvas;
+        
         public DefaultScreen CurrentScreen => _currentScreen;
-    
+
         public void Awake()
         {
             _instance = this;
@@ -40,11 +42,11 @@ namespace Navigation
             {
                 var startPos = _currentScreen is MainScreen ? 1000 : -1000;
                 var endPos = _currentScreen is MainScreen ? -1000 : 1000;
-            
+
                 Sequence mySequence = DOTween.Sequence();
                 var screen = _currentScreen;
 
-                _currentScreen = Instantiate(SettingsProvider.Get<PrefabSet>().GetScreen<T>(), Canvas.transform);
+                _currentScreen = Instantiate(SettingsProvider.Get<PrefabSet>().GetScreen<T>(), _canvas.transform);
                 _currentScreen.gameObject.transform.localPosition = new Vector3(startPos, 0, 0);
                 screen.Deactivate();
                 _currentScreen.Setup(settings);
@@ -55,7 +57,7 @@ namespace Navigation
             }
             else
             {
-                _currentScreen = Instantiate(SettingsProvider.Get<PrefabSet>().GetScreen<T>(), Canvas.transform);
+                _currentScreen = Instantiate(SettingsProvider.Get<PrefabSet>().GetScreen<T>(), _canvas.transform);
                 _currentScreen.Setup(settings);
             }
         }
