@@ -220,9 +220,8 @@ MonoBehaviour:
   _rightPhotos:
   - {fileID: 3575190304260237287}
   _narratorTexts:
-  - 
-  - "\u0422\u0430\u043A \u0432\u043E\u0442 \u043E\u043D\u043E \u0447\u0442\u043E..."
-  IsSlideshowFinished: 0
+  - "\u042F..."
+  - "\u042F \u0432\u0441\u043F\u043E\u043C\u043D\u0438\u043B..."
 --- !u!1 &8022895273646418860
 GameObject:
   m_ObjectHideFlags: 0
