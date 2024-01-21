@@ -5,6 +5,7 @@ using System.Linq;
 using BattleSystem.Cards;
 using BattleSystem.Characters;
 using BattleSystem.Characters.Enemy;
+using BattleSystem.Characters.Reward;
 using Navigation;
 using SaveSystem;
 using Settings;
@@ -186,7 +187,7 @@ namespace BattleSystem
                     break;
             }
 
-            switch (characterData.startingRelic.RelicType)
+            switch (characterData.startingRelic)
             {
                 case RelicType.PreservedInsect:
                     if (enemyType == EnemyType.Elite)
@@ -347,7 +348,7 @@ namespace BattleSystem
             else
             {
                 var characterData = SaveManager.LoadCharacterData();
-                if (characterData.startingRelic.RelicType == RelicType.BurningBlood)
+                if (characterData.startingRelic == RelicType.BurningBlood)
                 {
                     characterData.CurrentHealth += 6;
                     if (characterData.CurrentHealth > characterData.MaxHealth)

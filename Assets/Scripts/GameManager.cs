@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BattleSystem.Cards;
+using BattleSystem.Characters.Reward;
 using DefaultNamespace;
 using SaveSystem;
 using Settings;
@@ -150,11 +151,10 @@ public class GameManager : MonoBehaviour
 
                         break;
                 }
-            }
-
-
+            } 
+            
             var characterData = SaveManager.LoadCharacterData();
-            characterData.startingRelic = SettingsProvider.Get<BattlePrefabSet>().RelicLibrary.GetRandomRelic();
+            characterData.startingRelic = SettingsProvider.Get<BattlePrefabSet>().RelicLibrary.GetRandomRelic().RelicType;
             IsFirstSessionForAnalytics = true;
             IsFirstLaunch = false;
             DailyRewardSystem.ShowRewardPopup();

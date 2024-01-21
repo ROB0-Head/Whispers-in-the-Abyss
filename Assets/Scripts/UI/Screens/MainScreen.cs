@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Navigation;
+using SaveSystem;
 using Settings;
 using Settings.Storyline;
 using TMPro;
@@ -35,20 +36,26 @@ namespace UI.Screens
         public void SelectTab(MainTabType tabType)
         {
             _titleText.text = tabType.ToString();
-
+            var characterData = SaveManager.LoadCharacterData();
             switch (tabType)
             {
                 case MainTabType.Start:
-
                     NavigationController.Instance.ScreenTransition<CityScreen>(new CityScreenSettings()
                     {
                         TabType = CityScreen.CityTabType.City
                     });
-
+                    var needStartHistory = characterData.HistoriesNames.FirstOrDefault(x => x.Contains("StartHistory"));
+                    if (needStartHistory.IsNullOrEmpty())
+                    {
+                        characterData.HistoriesNames.Add("StartHistory");
+                        SlideshowManager.Instance.StartSlideshow(SettingsProvider.Get<HistoriesLibrary>()
+                            .Histories.FirstOrDefault(x => x.Name == "StartHistory")?.History);
+                        
+                    }
+                    SaveManager.SaveCharacterData(characterData);
                     break;
                 case MainTabType.Settings:
-                    SlideshowManager.Instance.StartSlideshow(SettingsProvider.Get<HistoriesLibrary>()
-                        .Histories.FirstOrDefault(x => x.Name == "StartHistory")?.History);
+
                     break;
                 case MainTabType.Exit:
 

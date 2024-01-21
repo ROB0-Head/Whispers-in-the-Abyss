@@ -11,4 +11,16 @@ namespace BattleSystem.Characters.Reward
         public string relicDescription;
         public Sprite relicIcon;
     }
+
+    public enum RelicType
+    {
+        None,
+        PreservedInsect,
+        Anchor,
+        Lantern,
+        Marbles,
+        Bag,
+        Varja,
+        BurningBlood
+    }
 }

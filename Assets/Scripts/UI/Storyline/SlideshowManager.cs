@@ -34,7 +34,6 @@ namespace UI.Storyline
             }
 
             _currentSlideshowIndex = 0;
-            NavigationController.Instance.ScreenTransition<MainScreen>();
             Debug.Log("All slideshows finished!");
         }
     }
