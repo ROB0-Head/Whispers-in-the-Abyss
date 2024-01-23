@@ -16,6 +16,7 @@ namespace UI.Screens
         [SerializeField] private Button _guildButton;
         [SerializeField] private Button _shopButton;
         [SerializeField] private Button _forgeButton;
+        [SerializeField] private Button _dungeonButton;
         [SerializeField] private Button _backButton;
 
         /*
@@ -27,6 +28,7 @@ namespace UI.Screens
             _guildButton.onClick.AddListener(() => { SelectTab(CityTabType.Guild); });
             _shopButton.onClick.AddListener(() => { SelectTab(CityTabType.Shop); });
             _forgeButton.onClick.AddListener(() => { SelectTab(CityTabType.Forge); });
+            _dungeonButton.onClick.AddListener(() => { SelectTab(CityTabType.Dungeon); });
             _backButton.onClick.AddListener(() => { SelectTab(CityTabType.Exit); });
         }
 
@@ -81,6 +83,8 @@ namespace UI.Screens
                     NavigationController.Instance.ScreenTransition<DialogManager>();
                     break;
                 case CityTabType.Shop:
+                    break;
+                case CityTabType.Dungeon:
                     NavigationController.Instance.ScreenTransition<MapManager>();
                     break;
                 case CityTabType.Exit:
@@ -106,7 +110,8 @@ namespace UI.Screens
             Guild = 1,
             Shop = 2,
             Forge = 3,
-            Exit = 4
+            Dungeon = 4,
+            Exit = 5
         }
 
         /*[Serializable]
