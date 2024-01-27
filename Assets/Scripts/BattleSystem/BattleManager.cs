@@ -40,6 +40,7 @@ namespace BattleSystem
         public event Action<int> DrawPileCountUpdated;
         public event Action<int> DiscardPileCountUpdated;
         public event Action<int> CurrentEnergyUpdated;
+        public event Action<BattleState> EndBattle;
 
 
         private void Awake()
@@ -48,20 +49,6 @@ namespace BattleSystem
             _cardsInHand = new List<Card>();
             _drawPile = new List<Card>();
             _discardPile = new List<Card>();
-        }
-
-        private void OnEnable()
-        {
-            DrawPileCountUpdated += BattleScreen.Instance.UpdateDrawPileCountText;
-            DiscardPileCountUpdated += BattleScreen.Instance.UpdateDiscardPileCountText;
-            CurrentEnergyUpdated += BattleScreen.Instance.UpdateEnergyText;
-        }
-
-        private void OnDisable()
-        {
-            DrawPileCountUpdated -= BattleScreen.Instance.UpdateDrawPileCountText;
-            DiscardPileCountUpdated -= BattleScreen.Instance.UpdateDiscardPileCountText;
-            CurrentEnergyUpdated -= BattleScreen.Instance.UpdateEnergyText;
         }
 
         private void UpdateTextValueCount()
@@ -343,29 +330,32 @@ namespace BattleSystem
 
         public void EndFight(BattleState battleState)
         {
-            if (battleState == BattleState.Defeat)
-                NavigationController.Instance.ScreenTransition<MainScreen>();
-            else
+            var characterData = SaveManager.LoadCharacterData();
+
+            if (battleState == BattleState.Victory)
             {
-                var characterData = SaveManager.LoadCharacterData();
                 if (characterData.startingRelic == RelicType.BurningBlood)
                 {
                     characterData.CurrentHealth += 6;
-                    if (characterData.CurrentHealth > characterData.MaxHealth)
-                        characterData.CurrentHealth = characterData.MaxHealth;
-                    _player.UpdateHealthUI(characterData.CurrentHealth);
                 }
 
-                _player.ResetBuffs();
+                if (characterData.CurrentHealth > characterData.MaxHealth)
+                    characterData.CurrentHealth = characterData.MaxHealth;
             }
+
+            characterData.CurrentHealth = _player.CurrentHealth;
+            SaveManager.SaveCharacterData(characterData);
+            _player.UpdateHealthUI(characterData.CurrentHealth);
+            _player.ResetBuffs();
+            EndBattle?.Invoke(battleState);
         }
     }
 
     public enum BattleState
     {
-        PlayerTurn,
-        EnemyTurn,
-        Victory,
-        Defeat
+        PlayerTurn = 0,
+        EnemyTurn = 1,
+        Victory = 2,
+        Defeat = 3
     }
 }

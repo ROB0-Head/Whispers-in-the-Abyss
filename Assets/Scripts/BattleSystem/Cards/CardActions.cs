@@ -150,11 +150,11 @@ namespace BattleSystem.Cards
             PerformBlock(card);
             if (card.IsUpgraded)
             {
-                BattleManager.Instance.DrawCards(card.BuffAmount.baseAmount);
+                BattleManager.Instance.DrawCards(card.BuffAmount.upgradedAmount);
             }
             else
             {
-                BattleManager.Instance.DrawCards(card.BuffAmount.upgradedAmount);
+                BattleManager.Instance.DrawCards(card.BuffAmount.baseAmount);
             }
         }
 

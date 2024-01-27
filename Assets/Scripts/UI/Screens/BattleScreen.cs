@@ -27,6 +27,9 @@ namespace UI.Screens
         [SerializeField] private Transform _deck;
         [SerializeField] private Transform _discardParent;
 
+        [SerializeField] private EndBatte _endBattle;
+
+
         private BattleTabType _currentTab;
         private List<CardUI> _cardList = new List<CardUI>();
 
@@ -44,6 +47,8 @@ namespace UI.Screens
             BattleManager.Instance.DrawPileCountUpdated -= UpdateDrawPileCountText;
             BattleManager.Instance.DiscardPileCountUpdated -= UpdateDiscardPileCountText;
             BattleManager.Instance.CurrentEnergyUpdated -= UpdateEnergyText;
+            BattleManager.Instance.EndBattle -= _endBattle.EndBattle;
+
         }
 
         public void UpdateDrawPileCountText(int newDrawPileCount)
@@ -66,6 +71,7 @@ namespace UI.Screens
             BattleManager.Instance.DrawPileCountUpdated += UpdateDrawPileCountText;
             BattleManager.Instance.DiscardPileCountUpdated += UpdateDiscardPileCountText;
             BattleManager.Instance.CurrentEnergyUpdated += UpdateEnergyText;
+            BattleManager.Instance.EndBattle += _endBattle.EndBattle;
             if (settings is not BattleScreenSettings battleScreenSettings)
                 return;
 
@@ -181,7 +187,7 @@ namespace UI.Screens
                 cardUI.transform.parent.gameObject.SetActive(false);
             }
         }
-
+        
         public void Home()
         {
             NavigationController.Instance.ScreenTransition<MapManager>();

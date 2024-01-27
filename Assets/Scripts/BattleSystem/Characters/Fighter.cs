@@ -39,18 +39,26 @@ namespace BattleSystem.Characters
             var di = Instantiate(_damageIndicator, transform);
             di.GetComponent<DamageIndicator>().DisplayDamage(amount);
             Destroy(di, 2f);
-
+            
             CurrentHealth -= amount;
+
+           
             UpdateHealthUI(CurrentHealth);
 
             if (CurrentHealth <= 0)
             {
-                Destroy(gameObject);
-                BattleManager.Instance.RemoveEnemy(this);
-                if (BattleManager.Instance.Enemies.IsNullOrEmpty() && BattleManager.Instance.Enemies.Count > 0)
-                    BattleManager.Instance.EndFight(BattleState.Defeat);
+                if (this is Enemy.Enemy enemy)
+                {
+                    Destroy(gameObject);
+                    BattleManager.Instance.RemoveEnemy(enemy);
+                    if (BattleManager.Instance.Enemies.IsNullOrEmpty() && BattleManager.Instance.Enemies.Count <= 0)
+                        BattleManager.Instance.EndFight(BattleState.Victory);
+                }
                 else
-                    BattleManager.Instance.EndFight(BattleState.Victory);
+                {
+                    if (!BattleManager.Instance.Enemies.IsNullOrEmpty() && BattleManager.Instance.Enemies.Count >= 0)
+                        BattleManager.Instance.EndFight(BattleState.Defeat);
+                }
             }
         }
 
